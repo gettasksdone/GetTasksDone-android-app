@@ -9,7 +9,6 @@ import android.widget.EditText
 import android.widget.TextView
 import android.widget.Toast
 import com.example.myapplication.io.ApiService
-import com.example.myapplication.io.LoginRequest
 import com.example.myapplication.io.RegisterRequest
 import com.example.myapplication.util.PreferenceHelper
 import com.example.myapplication.util.PreferenceHelper.get
@@ -49,8 +48,8 @@ class Registro : AppCompatActivity() {
         finish()
     }
 
-    private fun goToMenu(){
-        val i = Intent(this, Menu::class.java)
+    private fun goToCompleteRegister(){
+        val i = Intent(this, CompletarRegistro::class.java)
         //createSessionPreference()
         startActivity(i)
         finish()
@@ -63,8 +62,8 @@ class Registro : AppCompatActivity() {
 
     private fun performRegister(){
         val etNombre = findViewById<EditText>(R.id.etNombre).text.toString()
-        val etEmail = findViewById<EditText>(R.id.etEmail).text.toString()
-        val etPassword = findViewById<EditText>(R.id.etPassword).text.toString()
+        val etEmail = findViewById<EditText>(R.id.etTelefono).text.toString()
+        val etPassword = findViewById<EditText>(R.id.etDepartamento).text.toString()
 
         val registerRequest = RegisterRequest(username = etNombre, email = etEmail, password = etPassword)
         //Log.d("username:", "$etEmail")
@@ -86,7 +85,7 @@ class Registro : AppCompatActivity() {
                     }
                     Toast.makeText(applicationContext, "Usuario creado correctamente", Toast.LENGTH_SHORT).show()
                     createSessionPreference(registerResponse)
-                    goToMenu()
+                    goToCompleteRegister()
 
                 } else {
                     // Añade aquí el manejo del caso en el que la respuesta HTTP no es exitosa

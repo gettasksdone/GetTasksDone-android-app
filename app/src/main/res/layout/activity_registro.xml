@@ -66,10 +66,10 @@
         android:textSize="20sp"
         android:textStyle="bold"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/etEmail" />
+        app:layout_constraintTop_toBottomOf="@+id/etTelefono" />
 
     <EditText
-        android:id="@+id/etPassword"
+        android:id="@+id/etDepartamento"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="18dp"
@@ -95,7 +95,7 @@
         app:layout_constraintTop_toBottomOf="@+id/etNombre" />
 
     <EditText
-        android:id="@+id/etEmail"
+        android:id="@+id/etTelefono"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="19dp"
@@ -114,12 +114,12 @@
         android:layout_marginStart="143dp"
         android:layout_marginTop="129dp"
         android:backgroundTint="#024D6D"
-        android:text="Inicia Sesión"
+        android:text="Crear Cuenta"
         android:textColor="#FFFFFF"
         android:textSize="16sp"
         android:textStyle="bold"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/etPassword" />
+        app:layout_constraintTop_toBottomOf="@+id/etDepartamento" />
 
     <TextView
         android:id="@+id/textView11"
