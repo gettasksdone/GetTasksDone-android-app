@@ -26,7 +26,7 @@ class Menu : AppCompatActivity() {
         setSupportActionBar(binding.appBarMenu.toolbar)
 
         binding.appBarMenu.fab.setOnClickListener { view ->
-            Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
+            Snackbar.make(view, "Invocar crear tarea", Snackbar.LENGTH_LONG)
                     .setAction("Action", null)
                     .setAnchorView(R.id.fab).show()
         }

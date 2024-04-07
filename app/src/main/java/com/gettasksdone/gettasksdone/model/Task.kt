@@ -4,10 +4,10 @@ import java.time.LocalDateTime
 
 data class Task (
     val id: Long,
-    val description: String,
+    val descripcion: String,
     val status: String,
     val priority: Int,
-    val context: Context,
+    val contexto: Context,
     val creation: LocalDateTime?,
     val expiring: LocalDateTime?,
     val checkItems: List<CheckItem> = emptyList(),
