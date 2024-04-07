@@ -9,8 +9,8 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.example.myapplication.data.JwtHelper
 import com.example.myapplication.io.ApiService
-import com.example.myapplication.io.CompleteRegisterRequest
-import com.example.myapplication.io.UsuarioId
+import com.example.myapplication.io.Requests.CompleteRegisterRequest
+import com.example.myapplication.io.Requests.UsuarioId
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response

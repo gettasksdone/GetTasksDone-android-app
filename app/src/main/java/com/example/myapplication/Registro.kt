@@ -9,7 +9,7 @@ import android.widget.EditText
 import android.widget.TextView
 import android.widget.Toast
 import com.example.myapplication.io.ApiService
-import com.example.myapplication.io.RegisterRequest
+import com.example.myapplication.io.Requests.RegisterRequest
 import com.example.myapplication.util.PreferenceHelper
 import com.example.myapplication.util.PreferenceHelper.get
 import com.example.myapplication.util.PreferenceHelper.set
@@ -57,7 +57,7 @@ class Registro : AppCompatActivity() {
 
     private fun createSessionPreference(jwt: String){
         val preferences=PreferenceHelper.defaultPrefs(this)
-        preferences ["jwt"]=jwt;
+        preferences["jwt"] = jwt
     }
 
     private fun performRegister(){
@@ -83,6 +83,7 @@ class Registro : AppCompatActivity() {
                         ).show()
                         return
                     }
+                    Log.e("API_RESPONSE", "Response from server: $registerResponse")
                     Toast.makeText(applicationContext, "Usuario creado correctamente", Toast.LENGTH_SHORT).show()
                     createSessionPreference(registerResponse)
                     goToCompleteRegister()

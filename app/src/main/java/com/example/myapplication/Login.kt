@@ -9,7 +9,7 @@ import android.widget.EditText
 import android.widget.TextView
 import android.widget.Toast
 import com.example.myapplication.io.ApiService
-import com.example.myapplication.io.LoginRequest
+import com.example.myapplication.io.Requests.LoginRequest
 import com.example.myapplication.util.PreferenceHelper
 import com.example.myapplication.util.PreferenceHelper.get
 import com.example.myapplication.util.PreferenceHelper.set
@@ -86,7 +86,7 @@ class Login : AppCompatActivity() {
                         ).show()
                         return
                     }
-
+                    Log.e("API_RESPONSE", "Response from server: $loginResponse")
                     createSessionPreference(loginResponse)
                     goToMenu()
 
