@@ -9,7 +9,7 @@ import android.widget.EditText
 import android.widget.TextView
 import android.widget.Toast
 import com.gettasksdone.gettasksdone.io.ApiService
-import com.gettasksdone.gettasksdone.io.Requests.RegisterRequest
+import com.gettasksdone.gettasksdone.io.requests.RegisterRequest
 import com.gettasksdone.gettasksdone.util.PreferenceHelper
 import com.gettasksdone.gettasksdone.util.PreferenceHelper.get
 import com.gettasksdone.gettasksdone.util.PreferenceHelper.set

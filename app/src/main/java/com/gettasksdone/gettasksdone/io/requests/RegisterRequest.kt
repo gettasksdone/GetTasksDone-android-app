@@ -1,4 +1,4 @@
-package com.gettasksdone.gettasksdone.io.Requests
+package com.gettasksdone.gettasksdone.io.requests
 
 data class RegisterRequest(
     val username: String,

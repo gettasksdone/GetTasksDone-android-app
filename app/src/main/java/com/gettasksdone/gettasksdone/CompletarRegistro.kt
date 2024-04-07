@@ -9,8 +9,7 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.gettasksdone.gettasksdone.data.JwtHelper
 import com.gettasksdone.gettasksdone.io.ApiService
-import com.gettasksdone.gettasksdone.io.Requests.CompleteRegisterRequest
-import com.gettasksdone.gettasksdone.io.Requests.UsuarioId
+import com.gettasksdone.gettasksdone.io.requests.UserDataRequest
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -47,11 +46,9 @@ class CompletarRegistro : AppCompatActivity() {
         val etDpto = findViewById<EditText>(R.id.etDepartamento).text.toString()
         val etPuesto = findViewById<EditText>(R.id.etPuesto).text.toString()
 
-        jwtHelper.getId()
-        val usuarioId = UsuarioId(id = jwtHelper.getId())
+        //jwtHelper.getId()
 
-        val registerRequest = CompleteRegisterRequest(
-            usuario = usuarioId,
+        val registerRequest = UserDataRequest(
             nombre = etNombre,
             telefono = etTelefono,
             departamento = etDpto,

@@ -9,7 +9,7 @@ import android.widget.EditText
 import android.widget.TextView
 import android.widget.Toast
 import com.gettasksdone.gettasksdone.io.ApiService
-import com.gettasksdone.gettasksdone.io.Requests.LoginRequest
+import com.gettasksdone.gettasksdone.io.requests.LoginRequest
 import com.gettasksdone.gettasksdone.util.PreferenceHelper
 import com.gettasksdone.gettasksdone.util.PreferenceHelper.get
 import com.gettasksdone.gettasksdone.util.PreferenceHelper.set
@@ -61,7 +61,7 @@ class Login : AppCompatActivity() {
 
     private fun createSessionPreference(jwt: String){
         val preferences=PreferenceHelper.defaultPrefs(this)
-        preferences ["jwt"]=jwt;
+        preferences ["jwt"]=jwt
     }
 
     private fun performLogin(){
