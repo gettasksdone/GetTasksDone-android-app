@@ -1,6 +1,11 @@
 package com.example.myapplication.io
 
 
+import com.example.myapplication.io.Requests.CompleteRegisterRequest
+import com.example.myapplication.io.Requests.CreateTaskRequest
+import com.example.myapplication.io.Requests.LoginRequest
+import com.example.myapplication.io.Requests.RegisterRequest
+import com.example.myapplication.io.Responses.GetTasksResponse
 import com.google.gson.Gson
 import com.google.gson.GsonBuilder
 import retrofit2.Call
@@ -8,13 +13,10 @@ import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import retrofit2.converter.scalars.ScalarsConverterFactory
 import retrofit2.http.Body
+import retrofit2.http.GET
 import retrofit2.http.Header
 import retrofit2.http.POST
 
-data class LoginRequest(val username: String, val password: String)
-data class RegisterRequest(val username: String, val password: String, val email: String)
-data class UsuarioId(val id: Int)
-data class CompleteRegisterRequest(val usuario: UsuarioId, val nombre: String, val telefono: String, val puesto: String, val departamento: String)
 fun provideGson(): Gson {
     val builder = GsonBuilder()
     builder.setLenient()
@@ -32,6 +34,17 @@ interface ApiService {
         @Header("Authorization") authHeader: String?,
         @Body request: CompleteRegisterRequest
     ): Call<String>
+
+    @POST(value = "/task/create")
+    fun createTask(
+        @Header("Authorization") authHeader: String?,
+        @Body request: CreateTaskRequest
+    ): Call<String>
+
+    @GET(value = "/task/authed")
+    fun getTasks(
+        @Header("Authorization") authHeader: String?
+    ): Call<GetTasksResponse>
 
     companion object Factory{
         private const val BASE_URL = "https://lopezgeraghty.com:8080"
