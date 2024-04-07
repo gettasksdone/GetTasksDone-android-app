@@ -2,9 +2,11 @@ package com.example.myapplication.io
 
 
 import com.example.myapplication.io.Requests.CompleteRegisterRequest
+import com.example.myapplication.io.Requests.Contexto
 import com.example.myapplication.io.Requests.CreateTaskRequest
 import com.example.myapplication.io.Requests.LoginRequest
 import com.example.myapplication.io.Requests.RegisterRequest
+import com.example.myapplication.io.Responses.GetContextResponse
 import com.example.myapplication.io.Responses.GetTasksResponse
 import com.google.gson.Gson
 import com.google.gson.GsonBuilder
@@ -45,6 +47,18 @@ interface ApiService {
     fun getTasks(
         @Header("Authorization") authHeader: String?
     ): Call<GetTasksResponse>
+
+    @GET(value= "/context/authed")
+    fun getContexts(
+        @Header("Authorization") authHeader: String?
+    ): Call<GetContextResponse>
+
+    @POST(value = "/context/createContext")
+    fun createContext(
+        @Header("Authorization") authHeader: String?,
+        @Body request: Contexto
+    ): Call<String>
+
 
     companion object Factory{
         private const val BASE_URL = "https://lopezgeraghty.com:8080"
