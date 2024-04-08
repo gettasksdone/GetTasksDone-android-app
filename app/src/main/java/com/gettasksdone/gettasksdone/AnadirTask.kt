@@ -1,22 +1,49 @@
 package com.gettasksdone.gettasksdone
 
-import android.graphics.Color
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
-import android.widget.ImageButton
+import android.widget.Button
+import android.widget.EditText
 import android.widget.Spinner
-import androidx.activity.enableEdgeToEdge
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
-import com.gettasksdone.gettasksdone.R
+import com.gettasksdone.gettasksdone.data.JwtHelper
+import com.gettasksdone.gettasksdone.io.ApiService
+import com.gettasksdone.gettasksdone.io.requests.TaskRequest
+import com.gettasksdone.gettasksdone.model.Context
+import com.gettasksdone.gettasksdone.model.Task
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
 
 class AnadirTask : AppCompatActivity() {
+
+    private val apiService: ApiService by lazy {
+        ApiService.create()
+    }
+
+    private val jwtHelper: JwtHelper by lazy {
+        JwtHelper(this)
+    }
+
+    private lateinit var spinner1: Spinner
+    private lateinit var spinner2: Spinner
+    private lateinit var spinner3: Spinner
+    private lateinit var adapter1: ArrayAdapter<String>
+    private lateinit var adapter2: ArrayAdapter<String>
+    private lateinit var adapter3: ArrayAdapter<String>
+    private lateinit var selectedContext: String
+    private lateinit var selectedState: String
+    private lateinit var selectedProject: String
+    private var contextList: List<Context> = listOf()
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        enableEdgeToEdge()
         setContentView(R.layout.activity_anadir_task)
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main)) { v, insets ->
             val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
@@ -24,32 +51,148 @@ class AnadirTask : AppCompatActivity() {
             insets
         }
 
-        //Spinner
-        val contextos = mutableListOf("contexto", "Contexto 1", "Contexto 2", "añadir nuevo contexto") //contextos de ejemplo luego seran los de la API
-        val spinner: Spinner = findViewById(R.id.spinner)
-        val adapter = ArrayAdapter(this, android.R.layout.simple_spinner_item, contextos)
-        spinner.adapter = adapter
-        spinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+        spinner1 = findViewById(R.id.contexto)
+        adapter1 = ArrayAdapter(this, android.R.layout.simple_spinner_item, mutableListOf())
+        adapter1.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+        spinner1.adapter = adapter1
+        spinner1.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
             override fun onItemSelected(parent: AdapterView<*>, view: View, position: Int, id: Long) {
-                val seleccionado = parent.getItemAtPosition(position).toString()
-                if (seleccionado == "añadir nuevo contexto") {
-                    // Aquí puedes manejar la acción de añadir un nuevo contexto
-                } else {
-                    // Aquí puedes manejar la selección de un contexto
-                }
+                selectedContext = parent.getItemAtPosition(position).toString()
+                // Hacer algo con el contexto seleccionado
             }
 
             override fun onNothingSelected(parent: AdapterView<*>?) {
-                TODO("Not yet implemented")
+                // Manejar el caso en que no se seleccione nada
             }
         }
+
+        loadContexts()
+
+        val estados = mutableListOf("empezar")
+        spinner2 = findViewById(R.id.estado)
+        adapter2 = ArrayAdapter(this, android.R.layout.simple_spinner_item, mutableListOf())
+        adapter2.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+        spinner2.adapter = adapter2
+        adapter2.clear()
+        adapter2.addAll(estados)
+        spinner2.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+            override fun onItemSelected(parent: AdapterView<*>, view: View, position: Int, id: Long) {
+                selectedState = parent.getItemAtPosition(position).toString()
+                // Hacer algo con el estado seleccionado
+            }
+
+            override fun onNothingSelected(parent: AdapterView<*>?) {
+                // Manejar el caso en que no se seleccione nada
+            }
+        }
+
+        val proyectos = mutableListOf("inbox")
+        spinner3 = findViewById(R.id.proyecto)
+        adapter3 = ArrayAdapter(this, android.R.layout.simple_spinner_item, mutableListOf())
+        adapter3.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+        spinner3.adapter = adapter3
+        adapter3.clear()
+        adapter3.addAll(proyectos)
+        spinner3.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+            override fun onItemSelected(parent: AdapterView<*>, view: View, position: Int, id: Long) {
+                selectedProject = parent.getItemAtPosition(position).toString()
+                // Hacer algo con el proyecto seleccionado
+            }
+
+            override fun onNothingSelected(parent: AdapterView<*>?) {
+                // Manejar el caso en que no se seleccione nada
+            }
+        }
+
+        val btnCrear = findViewById<Button>(R.id.crearTarea)
+        btnCrear.setOnClickListener{
+            performCreateTask()
+        }
     }
-    fun onStarClick(view: View) { //Descomentar cuando este hecho lo del booleano
 
+    private fun performCreateTask(){
+
+        val etTitulo = findViewById<EditText>(R.id.descripcion).text.toString()
+
+        val contexto = Context( //esto en realidad es un churro y solo esta hardcodeado para ver que funcione...
+                id = 1,
+                nombre = selectedContext
+        )
+
+        val createTaskRequest = TaskRequest(
+            descripcion = etTitulo,
+            estado = selectedState,
+            prioridad = 0,
+            contexto = contexto,
+            vencimiento = null,
+        )
+
+        val authHeader = "Bearer ${jwtHelper.getToken()}"
+        val call = apiService.createTask(authHeader, 1, createTaskRequest)
+
+        call.enqueue(object : Callback<String> {
+            override fun onResponse(call: Call<String>, response: Response<String>) {
+                val registerResponse = response.body()
+                if(response.isSuccessful) {
+                    if (registerResponse == null) {
+                        Toast.makeText(
+                            applicationContext,
+                            "Se produjo un error en el servidor (onResponse)",
+                            Toast.LENGTH_SHORT
+                        ).show()
+                        return
+                    }
+                    Toast.makeText(applicationContext, "Nota creada correctamente", Toast.LENGTH_SHORT).show()
+
+                } else {
+                    // Añade aquí el manejo del caso en el que la respuesta HTTP no es exitosa
+                    Toast.makeText(applicationContext, "Error al crear la nota", Toast.LENGTH_SHORT).show()
+                }
+            }
+
+            override fun onFailure(call: Call<String>, t: Throwable) {
+                Log.e("API_CALL", "Error en onFailure(): ${t.message}")
+
+                Toast.makeText(applicationContext, "Se produjo un error en el servidor", Toast.LENGTH_SHORT).show()
+
+            }
+        })
+
+    }
+
+    private fun loadContexts() {
+        val authHeader = "Bearer ${jwtHelper.getToken()}"
+        val call = apiService.getContexts(authHeader)
+
+        call.enqueue(object : Callback<List<Context>> {
+            override fun onResponse(call: Call<List<Context>>, response: Response<List<Context>>) {
+                if (response.isSuccessful) {
+                    val contextResponse = response.body()
+                    if (contextResponse != null) {
+                        contextList = contextResponse
+                        val contextNames = contextResponse.map { it.nombre }
+                        adapter1.clear()
+                        adapter1.addAll(contextNames)
+                    } else {
+                        Toast.makeText(applicationContext, "La respuesta de la API está vacía", Toast.LENGTH_SHORT).show()
+                    }
+                } else {
+                    Toast.makeText(applicationContext, "Error al obtener los contextos", Toast.LENGTH_SHORT).show()
+                }
+            }
+
+            override fun onFailure(call: Call<List<Context>>, t: Throwable) {
+                Log.e("API_CALL", "Error en onFailure(): ${t.message}")
+                Toast.makeText(applicationContext, "Se produjo un error en el servidor", Toast.LENGTH_SHORT).show()
+            }
+        })
+    }
+
+    fun onStarClick(view: View) {
+        // Descomentar cuando este hecho lo del booleano
         // val starButton = view as ImageButton
-        //val isStarred = // obtén el valor booleano de alguna parte
-
-        //val color = if (isStarred) Color.YELLOW else Color.GRAY
-        //starButton.setColorFilter(color)
+        // val isStarred = // obtén el valor booleano de alguna parte
+        // val color = if (isStarred) Color.YELLOW else Color.GRAY
+        // starButton.setColorFilter(color)
     }
 }

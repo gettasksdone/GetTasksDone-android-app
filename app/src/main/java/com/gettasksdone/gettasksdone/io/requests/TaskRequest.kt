@@ -1,6 +1,7 @@
 package com.gettasksdone.gettasksdone.io.requests
 
 import android.annotation.SuppressLint
+import com.gettasksdone.gettasksdone.model.Context
 import java.text.SimpleDateFormat
 import java.util.Date
 
@@ -10,7 +11,8 @@ data class TaskRequest(
     val creacion: String = getCurrentDate(),
     val vencimiento: String?,
     val estado: String,
-    val prioridad: Int
+    val prioridad: Int,
+    val contexto: Context
 )
 
 @SuppressLint("SimpleDateFormat")

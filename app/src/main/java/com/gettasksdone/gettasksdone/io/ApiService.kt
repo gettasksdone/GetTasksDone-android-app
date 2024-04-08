@@ -88,6 +88,7 @@ interface ApiService {
     @POST(value = "/task/create")
     fun createTask(
         @Header("Authorization") authHeader: String?,
+        @Query("ProjectID") projectId: Int, // Aquí se agrega el parámetro ProjectID
         @Body request: TaskRequest
     ): Call<String>
 
