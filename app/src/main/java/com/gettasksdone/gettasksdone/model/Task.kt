@@ -5,12 +5,12 @@ import java.time.LocalDateTime
 data class Task (
     val id: Long,
     val descripcion: String,
-    val status: String,
-    val priority: Int,
+    val estado: String,
+    val prioridad: Int,
     val contexto: Context,
-    val creation: LocalDateTime?,
-    val expiring: LocalDateTime?,
+    val creacion: LocalDateTime?,
+    val vencimiento: LocalDateTime?,
     val checkItems: List<CheckItem> = emptyList(),
-    val notes: List<Note> = emptyList(),
-    val tags: List<Tag> = emptyList()
+    val notas: List<Note> = emptyList(),
+    val etiquetas: List<Tag> = emptyList()
 )

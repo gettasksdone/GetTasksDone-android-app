@@ -9,6 +9,6 @@ package com.gettasksdone.gettasksdone.model
 */
 data class CheckItem (
     val id: Long,
-    val content: String,
-    val isMarked: Boolean
+    val contenido: String,
+    val esta_marcado: Boolean
 )

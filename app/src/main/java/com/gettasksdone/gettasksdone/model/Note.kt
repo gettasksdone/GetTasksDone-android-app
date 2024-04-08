@@ -11,6 +11,6 @@ import java.time.LocalDateTime
 */
 data class Note (
     val id: Long,
-    val content: String,
-    val creation: LocalDateTime
+    val contenido: String,
+    val creacion: LocalDateTime
 )

@@ -8,5 +8,5 @@ package com.gettasksdone.gettasksdone.model
 */
 data class Tag(
     val id: Long,
-    val name: String
+    val nombre: String
 )

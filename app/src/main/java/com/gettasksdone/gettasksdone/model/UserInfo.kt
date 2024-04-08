@@ -11,8 +11,8 @@ package com.gettasksdone.gettasksdone.model
 */
 data class UserInfo(
     val id: Long,
-    val name: String,
-    val phone: Long,
-    val role: String,
-    val team: String
+    val nombre: String,
+    val telefono: Long,
+    val puesto: String,
+    val departamento: String
 )
