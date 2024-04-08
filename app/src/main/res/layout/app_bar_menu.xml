@@ -33,4 +33,5 @@
         app:srcCompat="@android:drawable/ic_menu_add"
         android:contentDescription="@string/fab_description"/>
 
-  </androidx.coordinatorlayout.widget.CoordinatorLayout>
+
+</androidx.coordinatorlayout.widget.CoordinatorLayout>

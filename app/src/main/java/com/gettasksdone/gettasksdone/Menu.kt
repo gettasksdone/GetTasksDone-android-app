@@ -1,4 +1,5 @@
 package com.gettasksdone.gettasksdone
+import android.content.Intent
 import android.os.Bundle
 import android.view.Menu
 import com.google.android.material.snackbar.Snackbar
@@ -27,8 +28,10 @@ class Menu : AppCompatActivity() {
 
         binding.appBarMenu.fab.setOnClickListener { view ->
             Snackbar.make(view, "Invocar crear tarea", Snackbar.LENGTH_LONG)
-                    .setAction("Action", null)
-                    .setAnchorView(R.id.fab).show()
+                .setAction("Action", null)
+                .setAnchorView(R.id.fab).show()
+            val intent = Intent(view.context, AnadirTask::class.java)
+            startActivity(intent)
         }
         val drawerLayout: DrawerLayout = binding.drawerLayout
         val navView: NavigationView = binding.navView
