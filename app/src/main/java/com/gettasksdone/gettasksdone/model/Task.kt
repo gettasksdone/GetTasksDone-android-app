@@ -8,8 +8,8 @@ data class Task (
     val estado: String,
     val prioridad: Int,
     val contexto: Context,
-    val creacion: LocalDateTime?,
-    val vencimiento: LocalDateTime?,
+    val creacion: String,
+    val vencimiento: String,
     val checkItems: List<CheckItem> = emptyList(),
     val notas: List<Note> = emptyList(),
     val etiquetas: List<Tag> = emptyList()

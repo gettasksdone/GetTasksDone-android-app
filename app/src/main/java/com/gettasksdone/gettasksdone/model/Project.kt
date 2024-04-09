@@ -7,8 +7,8 @@ data class Project (
     val nombre: String,
     val descripcion: String,
     val estado: String,
-    val inicio: LocalDateTime?,
-    val fin: LocalDateTime,
+    val inicio: String,
+    val fin: String,
     val tareas: List<Task> = emptyList(),
     val notas: List<Note> = emptyList(),
     val etiquetas: List<Tag> = emptyList()

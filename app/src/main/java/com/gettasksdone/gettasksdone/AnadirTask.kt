@@ -16,10 +16,11 @@ import com.gettasksdone.gettasksdone.data.JwtHelper
 import com.gettasksdone.gettasksdone.io.ApiService
 import com.gettasksdone.gettasksdone.io.requests.TaskRequest
 import com.gettasksdone.gettasksdone.model.Context
-import com.gettasksdone.gettasksdone.model.Task
+import com.gettasksdone.gettasksdone.model.Project
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
+import kotlin.properties.Delegates
 
 class AnadirTask : AppCompatActivity() {
 
@@ -37,10 +38,11 @@ class AnadirTask : AppCompatActivity() {
     private lateinit var adapter1: ArrayAdapter<String>
     private lateinit var adapter2: ArrayAdapter<String>
     private lateinit var adapter3: ArrayAdapter<String>
-    private lateinit var selectedContext: String
+    private var selectedContext by Delegates.notNull<Long>()
     private lateinit var selectedState: String
-    private lateinit var selectedProject: String
+    private var selectedProject by Delegates.notNull<Long>()
     private var contextList: List<Context> = listOf()
+    private var projectList: List<Project> = listOf()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -57,8 +59,13 @@ class AnadirTask : AppCompatActivity() {
         spinner1.adapter = adapter1
         spinner1.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
             override fun onItemSelected(parent: AdapterView<*>, view: View, position: Int, id: Long) {
-                selectedContext = parent.getItemAtPosition(position).toString()
-                // Hacer algo con el contexto seleccionado
+                if (position == contextList.size) {
+                    // Abrir la actividad o fragmento para crear un nuevo contexto
+                    openNewContextActivity()
+                } else {
+                    selectedContext = contextList[position].id
+                    // Hacer algo con el contexto seleccionado
+                }
             }
 
             override fun onNothingSelected(parent: AdapterView<*>?) {
@@ -86,16 +93,14 @@ class AnadirTask : AppCompatActivity() {
             }
         }
 
-        val proyectos = mutableListOf("inbox")
         spinner3 = findViewById(R.id.proyecto)
         adapter3 = ArrayAdapter(this, android.R.layout.simple_spinner_item, mutableListOf())
         adapter3.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
         spinner3.adapter = adapter3
-        adapter3.clear()
-        adapter3.addAll(proyectos)
+
         spinner3.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
             override fun onItemSelected(parent: AdapterView<*>, view: View, position: Int, id: Long) {
-                selectedProject = parent.getItemAtPosition(position).toString()
+                selectedProject = projectList[position].id
                 // Hacer algo con el proyecto seleccionado
             }
 
@@ -103,6 +108,8 @@ class AnadirTask : AppCompatActivity() {
                 // Manejar el caso en que no se seleccione nada
             }
         }
+
+        loadProjects()
 
         val btnCrear = findViewById<Button>(R.id.crearTarea)
         btnCrear.setOnClickListener{
@@ -114,9 +121,9 @@ class AnadirTask : AppCompatActivity() {
 
         val etTitulo = findViewById<EditText>(R.id.descripcion).text.toString()
 
-        val contexto = Context( //esto en realidad es un churro y solo esta hardcodeado para ver que funcione...
-                id = 1,
-                nombre = selectedContext
+        val contexto = Context(
+                id = selectedContext,
+                nombre = ""
         )
 
         val createTaskRequest = TaskRequest(
@@ -128,7 +135,7 @@ class AnadirTask : AppCompatActivity() {
         )
 
         val authHeader = "Bearer ${jwtHelper.getToken()}"
-        val call = apiService.createTask(authHeader, 1, createTaskRequest)
+        val call = apiService.createTask(authHeader, selectedProject, createTaskRequest)
 
         call.enqueue(object : Callback<String> {
             override fun onResponse(call: Call<String>, response: Response<String>) {
@@ -157,7 +164,6 @@ class AnadirTask : AppCompatActivity() {
 
             }
         })
-
     }
 
     private fun loadContexts() {
@@ -170,7 +176,8 @@ class AnadirTask : AppCompatActivity() {
                     val contextResponse = response.body()
                     if (contextResponse != null) {
                         contextList = contextResponse
-                        val contextNames = contextResponse.map { it.nombre }
+                        val contextNames = contextResponse.map { it.nombre }.toMutableList()
+                        contextNames.add("Crear nuevo contexto")
                         adapter1.clear()
                         adapter1.addAll(contextNames)
                     } else {
@@ -188,11 +195,45 @@ class AnadirTask : AppCompatActivity() {
         })
     }
 
+    private fun loadProjects() {
+        val authHeader = "Bearer ${jwtHelper.getToken()}"
+        val call = apiService.getProjects(authHeader)
+
+        call.enqueue(object : Callback<List<Project>> {
+            override fun onResponse(call: Call<List<Project>>, response: Response<List<Project>>) {
+                if (response.isSuccessful) {
+                    val projectResponse = response.body()
+                    if (projectResponse != null) {
+                        projectList = projectResponse
+                        val projectNames = projectResponse.map { it.nombre }
+                        adapter3.clear()
+                        adapter3.addAll(projectNames)
+                    } else {
+                        Toast.makeText(applicationContext, "La respuesta de la API está vacía", Toast.LENGTH_SHORT).show()
+                    }
+                } else {
+                    Toast.makeText(applicationContext, "Error al obtener los proyectos", Toast.LENGTH_SHORT).show()
+                }
+            }
+
+            override fun onFailure(call: Call<List<Project>>, t: Throwable) {
+                Log.e("API_CALL", "Error en onFailure(): ${t.message}")
+                Toast.makeText(applicationContext, "Se produjo un error en el servidor", Toast.LENGTH_SHORT).show()
+            }
+        })
+    }
+
     fun onStarClick(view: View) {
         // Descomentar cuando este hecho lo del booleano
         // val starButton = view as ImageButton
         // val isStarred = // obtén el valor booleano de alguna parte
         // val color = if (isStarred) Color.YELLOW else Color.GRAY
         // starButton.setColorFilter(color)
+    }
+
+    private fun openNewContextActivity() {
+        //la idea es abrir una nueva pantalla o algo donde se pueda crear el contexto...o no se como se haria
+        Toast.makeText(applicationContext, "CREAR NUEVO CONTEXTO TO BE DONE!", Toast.LENGTH_SHORT).show()
+
     }
 }

@@ -51,7 +51,7 @@ private var _binding: FragmentHomeBinding? = null
         val descriptions = StringBuilder()
         for (task in tasks) {
             descriptions.append(task.descripcion)
-            descriptions.append("\n") // Agregar un salto de línea después de cada descripción
+            descriptions.append("\n\n") // Agregar un salto de línea después de cada descripción
         }
         return descriptions.toString()
     }
