@@ -23,38 +23,33 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/proyecto" />
 
-    <EditText
-        android:id="@+id/editTextText3"
-        android:layout_width="wrap_content"
-        android:layout_height="45dp"
-        android:layout_marginStart="44dp"
-        android:ems="10"
-        android:inputType="text"
-        android:text="ESTADO"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/descripcion" />
-
     <Spinner
         android:id="@+id/contexto"
         android:layout_width="317dp"
         android:layout_height="53dp"
-        android:layout_marginStart="44dp"
+        android:layout_marginStart="48dp"
+        android:layout_marginTop="65dp"
         android:backgroundTint="#FFFFFF"
-        android:foregroundTint="#FFFFFF"
+        android:textColor="#FFFFFF"
         android:visibility="visible"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/editTextText" />
+        app:layout_constraintTop_toBottomOf="@+id/estado" />
 
-    <Spinner
-        android:id="@+id/estado"
+    <EditText
+        android:id="@+id/contextoOtro"
         android:layout_width="317dp"
-        android:layout_height="53dp"
-        android:layout_marginStart="44dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="48dp"
+        android:layout_marginTop="8dp"
         android:backgroundTint="#FFFFFF"
-        android:foregroundTint="#FFFFFF"
-        android:visibility="visible"
+        android:ems="10"
+        android:inputType="text"
+        android:hint="Otro contexto"
+        android:textColor="#FFFFFF"
+        android:textColorHint="#FFFFFF"
+        android:visibility="gone"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/editTextText3" />
+        app:layout_constraintTop_toBottomOf="@+id/contexto" />
 
     <EditText
         android:id="@+id/descripcion"
@@ -66,8 +61,8 @@
         android:backgroundTint="#FFFFFF"
         android:ems="10"
         android:inputType="text"
-        android:text="Título"
-        android:textColor="#FFFFFF"
+        android:hint="Título"
+        android:textColorHint="#FFFFFF"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
@@ -75,7 +70,7 @@
 
     <ImageButton
         android:id="@+id/starButton"
-        android:layout_width="50dp"
+        android:layout_width="58dp"
         android:layout_height="58dp"
         android:layout_marginStart="44dp"
         android:layout_marginTop="100dp"
@@ -90,36 +85,56 @@
         app:layout_constraintVertical_bias="0.0" />
 
     <Spinner
-        android:id="@+id/proyecto"
-        android:layout_width="317dp"
-        android:layout_height="53dp"
+        android:id="@+id/estado"
+        android:layout_width="323dp"
+        android:layout_height="52dp"
         android:layout_marginStart="44dp"
         android:backgroundTint="#FFFFFF"
         android:foregroundTint="#FFFFFF"
         android:visibility="visible"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/editTextText2" />
+        app:layout_constraintTop_toBottomOf="@+id/descripcion" />
 
     <EditText
-        android:id="@+id/editTextText"
-        android:layout_width="wrap_content"
+        android:id="@+id/estadoOtro"
+        android:layout_width="323dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="44dp"
+        android:layout_marginTop="8dp"
+        android:backgroundTint="#FFFFFF"
         android:ems="10"
         android:inputType="text"
-        android:text="CONTEXTO"
+        android:hint="Nuevo estado"
+        android:textColorHint="#FFFFFF"
+        android:visibility="gone"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/estado" />
 
-    <EditText
-        android:id="@+id/editTextText2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="44dp"
-        android:ems="10"
-        android:inputType="text"
-        android:text="PROYECTO"
+    <Spinner
+        android:id="@+id/proyecto"
+        android:layout_width="317dp"
+        android:layout_height="53dp"
+        android:layout_marginStart="48dp"
+        android:layout_marginTop="68dp"
+        android:backgroundTint="#FFFFFF"
+        android:foregroundTint="#FFFFFF"
+        android:visibility="visible"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/contexto" />
+
+    <EditText
+        android:id="@+id/proyectoOtro"
+        android:layout_width="317dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="48dp"
+        android:layout_marginTop="8dp"
+        android:backgroundTint="#FFFFFF"
+        android:ems="10"
+        android:inputType="text"
+        android:hint="Nuevo proyecto"
+        android:textColorHint="#FFFFFF"
+        android:visibility="gone"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/proyecto" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

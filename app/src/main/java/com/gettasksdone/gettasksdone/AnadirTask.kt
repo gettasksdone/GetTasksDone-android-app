@@ -59,36 +59,58 @@ class AnadirTask : AppCompatActivity() {
         spinner1.adapter = adapter1
         spinner1.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
             override fun onItemSelected(parent: AdapterView<*>, view: View, position: Int, id: Long) {
-                if (position == contextList.size) {
-                    // Abrir la actividad o fragmento para crear un nuevo contexto
-                    openNewContextActivity()
+                val selectedItem = parent.getItemAtPosition(position).toString()
+                if (selectedItem == "Otro...") {
+                    val editText: EditText = findViewById(R.id.contextoOtro)
+                    editText.visibility = View.VISIBLE
                 } else {
-                    selectedContext = contextList[position].id
-                    // Hacer algo con el contexto seleccionado
+                    val editText: EditText = findViewById(R.id.contextoOtro)
+                    editText.visibility = View.GONE
+                    if (position == contextList.size) {
+                        openNewContextActivity()
+                    } else {
+                        selectedContext = contextList[position].id
+                    }
                 }
             }
 
-            override fun onNothingSelected(parent: AdapterView<*>?) {
+            override fun onNothingSelected(parent: AdapterView<*>) {
                 // Manejar el caso en que no se seleccione nada
             }
         }
+        // Asumiendo que esta es tu lista de contextos
+        val contextos = listOf("Contexto 1", "Contexto 2", "Contexto 3", "Otro...")
 
-        loadContexts()
+        // Creas un ArrayAdapter usando la lista de contextos
+        val adapter = ArrayAdapter(this, android.R.layout.simple_spinner_item, contextos)
 
-        val estados = mutableListOf("empezar")
+        // Especificas el layout a usar cuando la lista de opciones aparece
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+
+        // Aplicas el adapter a tu Spinner
+        spinner1.adapter = adapter
+
+       // loadContexts()
+
+        val estados = mutableListOf("empezar", "Otro...")
         spinner2 = findViewById(R.id.estado)
-        adapter2 = ArrayAdapter(this, android.R.layout.simple_spinner_item, mutableListOf())
+        adapter2 = ArrayAdapter(this, android.R.layout.simple_spinner_item, estados)
         adapter2.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
         spinner2.adapter = adapter2
-        adapter2.clear()
-        adapter2.addAll(estados)
         spinner2.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
             override fun onItemSelected(parent: AdapterView<*>, view: View, position: Int, id: Long) {
-                selectedState = parent.getItemAtPosition(position).toString()
-                // Hacer algo con el estado seleccionado
+                val selectedItem = parent.getItemAtPosition(position).toString()
+                if (selectedItem == "Otro...") {
+                    val editText: EditText = findViewById(R.id.estadoOtro)
+                    editText.visibility = View.VISIBLE
+                } else {
+                    val editText: EditText = findViewById(R.id.estadoOtro)
+                    editText.visibility = View.GONE
+                    selectedState = selectedItem
+                }
             }
 
-            override fun onNothingSelected(parent: AdapterView<*>?) {
+            override fun onNothingSelected(parent: AdapterView<*>) {
                 // Manejar el caso en que no se seleccione nada
             }
         }
@@ -97,14 +119,20 @@ class AnadirTask : AppCompatActivity() {
         adapter3 = ArrayAdapter(this, android.R.layout.simple_spinner_item, mutableListOf())
         adapter3.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
         spinner3.adapter = adapter3
-
         spinner3.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
             override fun onItemSelected(parent: AdapterView<*>, view: View, position: Int, id: Long) {
-                selectedProject = projectList[position].id
-                // Hacer algo con el proyecto seleccionado
+                val selectedItem = parent.getItemAtPosition(position).toString()
+                if (selectedItem == "Otro...") {
+                    val editText: EditText = findViewById(R.id.proyectoOtro)
+                    editText.visibility = View.VISIBLE
+                } else {
+                    val editText: EditText = findViewById(R.id.proyectoOtro)
+                    editText.visibility = View.GONE
+                    selectedProject = projectList[position].id
+                }
             }
 
-            override fun onNothingSelected(parent: AdapterView<*>?) {
+            override fun onNothingSelected(parent: AdapterView<*>) {
                 // Manejar el caso en que no se seleccione nada
             }
         }
