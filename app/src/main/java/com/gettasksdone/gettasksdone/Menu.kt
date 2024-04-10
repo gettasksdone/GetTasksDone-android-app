@@ -21,25 +21,27 @@ class Menu : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-     binding = ActivityMenuBinding.inflate(layoutInflater)
-     setContentView(binding.root)
+        binding = ActivityMenuBinding.inflate(layoutInflater)
+        setContentView(binding.root)
 
         setSupportActionBar(binding.appBarMenu.toolbar)
 
         binding.appBarMenu.fab.setOnClickListener { view ->
-            Snackbar.make(view, "Invocar crear tarea", Snackbar.LENGTH_LONG)
-                .setAction("Action", null)
-                .setAnchorView(R.id.fab).show()
-            val intent = Intent(view.context, AnadirTask::class.java)
+            // Crear un Intent para abrir la actividad AñadirTask
+            val intent = Intent(this, AnadirTask::class.java)
+            // Iniciar la actividad
             startActivity(intent)
+
         }
         val drawerLayout: DrawerLayout = binding.drawerLayout
         val navView: NavigationView = binding.navView
         val navController = findNavController(R.id.nav_host_fragment_content_menu)
         // Passing each menu ID as a set of Ids because each
         // menu should be considered as top level destinations.
+
+
         appBarConfiguration = AppBarConfiguration(setOf(
-            R.id.nav_home, R.id.nav_gallery, R.id.nav_slideshow), drawerLayout)
+            R.id.nav_home, R.id.nav_gallery, R.id.nav_inbox), drawerLayout)
         setupActionBarWithNavController(navController, appBarConfiguration)
         navView.setupWithNavController(navController)
     }
