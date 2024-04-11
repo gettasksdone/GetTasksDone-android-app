@@ -1,10 +1,13 @@
 package com.gettasksdone.gettasksdone.ui.inBox
 
+import android.graphics.Color
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
+import android.widget.ImageButton
+import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
@@ -14,6 +17,7 @@ import com.gettasksdone.gettasksdone.R
 import com.gettasksdone.gettasksdone.data.JwtHelper
 import com.gettasksdone.gettasksdone.databinding.FragmentInboxBinding
 import com.gettasksdone.gettasksdone.model.Task
+import androidx.cardview.widget.CardView
 
 class InBoxFragment : Fragment() {
 
@@ -67,9 +71,9 @@ class InBoxFragment : Fragment() {
 
 class TaskAdapter(private val tasks: List<Task>, private val fragment: Fragment) : RecyclerView.Adapter<TaskAdapter.TaskViewHolder>() {
 
-    inner class TaskViewHolder(val textView: TextView) : RecyclerView.ViewHolder(textView) {
+    inner class TaskViewHolder(val cardView: CardView) : RecyclerView.ViewHolder(cardView) {
         init {
-            textView.setOnClickListener {
+            cardView.setOnClickListener {
                 val task = tasks[adapterPosition]
 
                 // Encuentra el RecyclerView, el TextView y el botón en la actividad
@@ -98,12 +102,34 @@ class TaskAdapter(private val tasks: List<Task>, private val fragment: Fragment)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): TaskViewHolder {
-        val textView = TextView(parent.context)
-        return TaskViewHolder(textView)
+        val cardView = CardView(parent.context).apply {
+            layoutParams = ViewGroup.LayoutParams(
+                ViewGroup.LayoutParams.MATCH_PARENT,
+                ViewGroup.LayoutParams.WRAP_CONTENT
+            )
+            // Aquí puedes personalizar el aspecto de tu CardView
+            setCardBackgroundColor(Color.LTGRAY)
+            radius = 15f
+            setContentPadding(25, 25, 25, 25)
+            val linearLayout = LinearLayout(parent.context).apply {
+                orientation = LinearLayout.HORIZONTAL
+                addView(TextView(parent.context))
+                addView(ImageButton(parent.context).apply {
+                    setImageResource(R.drawable.ic_done) // Asegúrate de tener un recurso drawable llamado ic_done
+                    setBackgroundColor(Color.TRANSPARENT)
+                    setOnClickListener {
+                        // Aquí puedes agregar la lógica para marcar la tarea como hecha
+                    }
+                })
+            }
+            addView(linearLayout)
+        }
+        return TaskViewHolder(cardView)
     }
 
     override fun onBindViewHolder(holder: TaskViewHolder, position: Int) {
-        holder.textView.text = tasks[position].descripcion
+        val linearLayout = holder.cardView.getChildAt(0) as LinearLayout
+        (linearLayout.getChildAt(0) as TextView).text = tasks[position].descripcion
     }
 
     override fun getItemCount() = tasks.size
