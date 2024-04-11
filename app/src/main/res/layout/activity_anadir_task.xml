@@ -8,6 +8,18 @@
     android:background="#001928"
     tools:context=".AnadirTask">
 
+    <TextView
+        android:id="@+id/textView18"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="166dp"
+        android:text="Estado"
+        android:textColor="#FEFEFE"
+        android:textSize="24sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
     <Button
         android:id="@+id/crearTarea"
         android:layout_width="wrap_content"
@@ -30,6 +42,7 @@
         android:layout_marginStart="48dp"
         android:layout_marginTop="65dp"
         android:backgroundTint="#FFFFFF"
+        android:foregroundTint="#FFFFFF"
         android:textColor="#FFFFFF"
         android:visibility="visible"
         app:layout_constraintStart_toStartOf="parent"
@@ -42,9 +55,10 @@
         android:layout_marginStart="48dp"
         android:layout_marginTop="8dp"
         android:backgroundTint="#FFFFFF"
+        android:foregroundTint="#FFFFFF"
         android:ems="10"
-        android:inputType="text"
         android:hint="Otro contexto"
+        android:inputType="text"
         android:textColor="#FFFFFF"
         android:textColorHint="#FFFFFF"
         android:visibility="gone"
@@ -56,12 +70,14 @@
         android:layout_width="316dp"
         android:layout_height="58dp"
         android:layout_marginStart="48dp"
-        android:layout_marginTop="164dp"
+        android:layout_marginTop="108dp"
         android:layout_marginEnd="48dp"
         android:backgroundTint="#FFFFFF"
         android:ems="10"
-        android:inputType="text"
+        android:foregroundTint="#FFFFFF"
         android:hint="Título"
+        android:inputType="text"
+        android:textColor="#FEFEFE"
         android:textColorHint="#FFFFFF"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="1.0"
@@ -73,7 +89,7 @@
         android:layout_width="58dp"
         android:layout_height="58dp"
         android:layout_marginStart="44dp"
-        android:layout_marginTop="100dp"
+        android:layout_marginTop="50dp"
         android:layout_marginBottom="20dp"
         android:background="@drawable/star"
         android:backgroundTint="#FFFFFF"
@@ -88,7 +104,8 @@
         android:id="@+id/estado"
         android:layout_width="323dp"
         android:layout_height="52dp"
-        android:layout_marginStart="44dp"
+        android:layout_marginStart="48dp"
+        android:layout_marginTop="36dp"
         android:backgroundTint="#FFFFFF"
         android:foregroundTint="#FFFFFF"
         android:visibility="visible"
@@ -103,8 +120,8 @@
         android:layout_marginTop="8dp"
         android:backgroundTint="#FFFFFF"
         android:ems="10"
-        android:inputType="text"
         android:hint="Nuevo estado"
+        android:inputType="text"
         android:textColorHint="#FFFFFF"
         android:visibility="gone"
         app:layout_constraintStart_toStartOf="parent"
@@ -119,6 +136,7 @@
         android:backgroundTint="#FFFFFF"
         android:foregroundTint="#FFFFFF"
         android:visibility="visible"
+        android:textColor="@android:color/white"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/contexto" />
 
@@ -130,11 +148,36 @@
         android:layout_marginTop="8dp"
         android:backgroundTint="#FFFFFF"
         android:ems="10"
-        android:inputType="text"
         android:hint="Nuevo proyecto"
+        android:inputType="text"
         android:textColorHint="#FFFFFF"
         android:visibility="gone"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/proyecto" />
+
+    <TextView
+        android:id="@+id/textView2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="408dp"
+        android:text="Proyecto"
+        android:textColor="#FEFEFE"
+        android:textSize="24sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.49"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/textView19"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="288dp"
+        android:text="Contexto"
+        android:textColor="#FEFEFE"
+        android:textSize="24sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
