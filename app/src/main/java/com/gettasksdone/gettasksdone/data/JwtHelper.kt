@@ -27,4 +27,11 @@ class JwtHelper(private val context: Context){
     public fun getToken(): String {
         return getJwt()
     }
+
+    public fun getUsername(): String{
+        val token = getJwt()
+        val decodedToken = decodeJWT(token)
+        val subClaim = decodedToken.getClaim("sub")
+        return subClaim.toString()
+    }
 }

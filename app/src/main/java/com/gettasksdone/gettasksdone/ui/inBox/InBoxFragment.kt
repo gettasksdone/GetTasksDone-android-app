@@ -105,7 +105,7 @@ class TaskAdapter(private val tasks: List<Task>, private val fragment: Fragment)
         val cardView = CardView(parent.context).apply {
             layoutParams = ViewGroup.LayoutParams(
                 ViewGroup.LayoutParams.MATCH_PARENT,
-                ViewGroup.LayoutParams.WRAP_CONTENT
+                ViewGroup.LayoutParams.WRAP_CONTENT,
             )
             // Aquí puedes personalizar el aspecto de tu CardView
             setCardBackgroundColor(Color.LTGRAY)
