@@ -20,6 +20,23 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
+    <EditText
+        android:id="@+id/et_fecha"
+        android:layout_width="254dp"
+        android:layout_height="52dp"
+        android:layout_marginStart="7dp"
+        android:layout_marginTop="50dp"
+        android:layout_marginEnd="48dp"
+        android:backgroundTint="#FFFFFF"
+        android:drawableRight="@android:drawable/ic_menu_today"
+        android:focusable="false"
+        android:hint="Selecciona una fecha"
+        android:onClick="showDatePickerDialog"
+        android:textColor="#FFFFFF"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/starButton"
+        app:layout_constraintTop_toTopOf="parent" />
+
     <Button
         android:id="@+id/crearTarea"
         android:layout_width="wrap_content"

@@ -1,5 +1,7 @@
 package com.gettasksdone.gettasksdone
 
+import android.app.DatePickerDialog
+import android.app.Dialog
 import android.content.Intent
 import android.content.res.ColorStateList
 import android.graphics.Color
@@ -17,6 +19,7 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
+import androidx.fragment.app.DialogFragment
 import com.gettasksdone.gettasksdone.data.JwtHelper
 import com.gettasksdone.gettasksdone.io.ApiService
 import com.gettasksdone.gettasksdone.io.requests.ContextRequest
@@ -27,6 +30,7 @@ import com.gettasksdone.gettasksdone.ui.Utils.NewContextDialogFragment
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
+import java.util.Calendar
 import kotlin.properties.Delegates
 
 class AnadirTask : AppCompatActivity(), NewContextDialogFragment.NewContextDialogListener {
@@ -38,7 +42,7 @@ class AnadirTask : AppCompatActivity(), NewContextDialogFragment.NewContextDialo
     private val jwtHelper: JwtHelper by lazy {
         JwtHelper(this)
     }
-
+    private lateinit var et_fecha: EditText
     private lateinit var spinner1: Spinner
     private lateinit var spinner2: Spinner
     private lateinit var spinner3: Spinner
@@ -60,7 +64,7 @@ class AnadirTask : AppCompatActivity(), NewContextDialogFragment.NewContextDialo
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
             insets
         }
-
+        et_fecha = findViewById(R.id.et_fecha)
         spinner1 = findViewById(R.id.contexto)
         adapter1 = ArrayAdapter(this, R.layout.spinner_list, mutableListOf())
         adapter1.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
@@ -292,5 +296,36 @@ class AnadirTask : AppCompatActivity(), NewContextDialogFragment.NewContextDialo
 
     private fun openNewContextActivity() {
         openNewContextDialog()
+    }
+    fun showDatePickerDialog(view: View) {
+        val newFragment = DatePickerFragment.newInstance(DatePickerDialog.OnDateSetListener { _, year, month, day ->
+            // +1 porque enero es cero
+            val selectedDate = day.toString() + "/" + (month+1) + "/" + year
+            et_fecha.setText(selectedDate)
+        })
+
+        newFragment.show(supportFragmentManager, "datePicker")
+    }
+}
+
+class DatePickerFragment : DialogFragment() {
+
+    private var listener: DatePickerDialog.OnDateSetListener? = null
+
+    override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
+        val c = Calendar.getInstance()
+        val year = c.get(Calendar.YEAR)
+        val month = c.get(Calendar.MONTH)
+        val day = c.get(Calendar.DAY_OF_MONTH)
+
+        return DatePickerDialog(requireActivity(), listener, year, month, day)
+    }
+
+    companion object {
+        fun newInstance(listener: DatePickerDialog.OnDateSetListener): DatePickerFragment {
+            val fragment = DatePickerFragment()
+            fragment.listener = listener
+            return fragment
+        }
     }
 }
