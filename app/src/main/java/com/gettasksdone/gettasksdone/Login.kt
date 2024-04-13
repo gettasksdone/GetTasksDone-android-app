@@ -11,7 +11,6 @@ import android.widget.TextView
 import android.widget.Toast
 import com.gettasksdone.gettasksdone.io.ApiService
 import com.gettasksdone.gettasksdone.io.requests.LoginRequest
-import com.gettasksdone.gettasksdone.model.Task
 import com.gettasksdone.gettasksdone.util.PreferenceHelper
 import com.gettasksdone.gettasksdone.util.PreferenceHelper.get
 import com.gettasksdone.gettasksdone.util.PreferenceHelper.set
@@ -107,10 +106,10 @@ class Login : AppCompatActivity() {
     }
 
     private fun performLogin(){
-        val etEmail = findViewById<EditText>(R.id.et_email).text.toString()
+        val etUsername = findViewById<EditText>(R.id.et_username).text.toString()
         val etPassword = findViewById<EditText>(R.id.et_password).text.toString()
 
-        val loginRequest = LoginRequest(username = etEmail, password = etPassword)
+        val loginRequest = LoginRequest(username = etUsername, password = etPassword)
         //Log.d("username:", "$etEmail")
         //Log.d("password:", "$etPassword")
 
