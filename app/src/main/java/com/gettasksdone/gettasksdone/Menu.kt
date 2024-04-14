@@ -38,7 +38,11 @@ class Menu : AppCompatActivity() {
                         true
                     }
                     //Aqui se añade la actividad de crear proyecto
-                    R.id.action_proyecto -> true
+                    R.id.action_proyecto -> {
+                        val intent = Intent(this, CreateProject::class.java)
+                        startActivity(intent)
+                        true
+                    }
 
                     else -> false
                 }

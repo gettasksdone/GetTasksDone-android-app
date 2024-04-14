@@ -1,0 +1,135 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#001928"
+    tools:context=".CreateProject">
+
+  <!-- Campo: Nombre -->
+  <EditText
+      android:id="@+id/nombreProyecto"
+      android:layout_width="0dp"
+      android:layout_height="wrap_content"
+      android:hint="Nombre"
+      app:layout_constraintStart_toStartOf="parent"
+      app:layout_constraintEnd_toEndOf="parent"
+      app:layout_constraintTop_toTopOf="parent"
+      android:layout_marginStart="16dp"
+      android:layout_marginTop="16dp"
+      android:layout_gravity="center"
+      android:layout_marginEnd="16dp"
+      android:textColor="#FEFEFE"
+      android:backgroundTint="#FFFFFF"
+      android:foregroundTint="#FFFFFF"
+      android:textColorHint="#FFFFFF"
+      android:inputType="text"/>
+
+  <!-- Campo: Inicio -->
+  <EditText
+      android:id="@+id/inicioProyecto"
+      android:layout_width="0dp"
+      android:layout_height="wrap_content"
+      android:hint="Inicio"
+      app:layout_constraintStart_toStartOf="parent"
+      app:layout_constraintEnd_toEndOf="parent"
+      app:layout_constraintTop_toBottomOf="@id/nombreProyecto"
+      android:layout_marginStart="16dp"
+      android:layout_marginTop="8dp"
+      android:layout_gravity="center"
+      android:layout_marginEnd="16dp"
+      android:textColor="#FEFEFE"
+      android:backgroundTint="#FFFFFF"
+      android:foregroundTint="#FFFFFF"
+      android:textColorHint="#FFFFFF"
+      android:onClick="showDatePickerDialog"
+      android:drawableRight="@android:drawable/ic_menu_today"/>
+
+  <!-- Campo: Fin -->
+  <EditText
+      android:id="@+id/finProyecto"
+      android:layout_width="0dp"
+      android:layout_height="wrap_content"
+      android:hint="Fin"
+      app:layout_constraintStart_toStartOf="parent"
+      app:layout_constraintEnd_toEndOf="parent"
+      app:layout_constraintTop_toBottomOf="@id/inicioProyecto"
+      android:layout_marginStart="16dp"
+      android:layout_marginTop="8dp"
+      android:layout_marginEnd="16dp"
+      android:layout_gravity="center"
+      android:textColor="#FEFEFE"
+      android:backgroundTint="#FFFFFF"
+      android:foregroundTint="#FFFFFF"
+      android:textColorHint="#FFFFFF"
+      android:onClick="showDatePickerDialog"
+      android:drawableRight="@android:drawable/ic_menu_today"/>
+
+  <!-- Campo: Descripción -->
+  <EditText
+      android:id="@+id/descripcionProyecto"
+      android:layout_width="0dp"
+      android:layout_height="wrap_content"
+      android:hint="Descripción"
+      app:layout_constraintStart_toStartOf="parent"
+      app:layout_constraintEnd_toEndOf="parent"
+      app:layout_constraintTop_toBottomOf="@id/finProyecto"
+      android:layout_gravity="center"
+      android:layout_marginStart="16dp"
+      android:layout_marginTop="8dp"
+      android:layout_marginEnd="16dp"
+      android:textColor="#FEFEFE"
+      android:backgroundTint="#FFFFFF"
+      android:foregroundTint="#FFFFFF"
+      android:textColorHint="#FFFFFF"
+      android:inputType="textMultiLine"/>
+
+  <TextView
+      android:id="@+id/textEstado"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:text="Estado"
+      android:textColor="#FEFEFE"
+      android:textSize="24sp"
+      android:layout_marginStart="16dp"
+      android:layout_marginTop="8dp"
+      android:layout_marginEnd="16dp"
+      app:layout_constraintStart_toStartOf="parent"
+      app:layout_constraintEnd_toEndOf="parent"
+      app:layout_constraintTop_toBottomOf="@id/descripcionProyecto" />
+
+  <!-- Campo: Estado -->
+  <Spinner
+      android:id="@+id/estadoProyecto"
+      android:layout_width="0dp"
+      android:layout_height="wrap_content"
+      app:layout_constraintStart_toStartOf="parent"
+      app:layout_constraintEnd_toEndOf="parent"
+      app:layout_constraintTop_toBottomOf="@id/textEstado"
+      android:textColor="#FEFEFE"
+      android:backgroundTint="#FFFFFF"
+      android:foregroundTint="#FFFFFF"
+      android:textColorHint="#FFFFFF"
+      android:layout_gravity="center"
+      android:layout_marginStart="16dp"
+      android:layout_marginTop="8dp"
+      android:layout_marginEnd="16dp"/>
+
+  <!-- Botón: Crear -->
+  <Button
+      android:id="@+id/botonCrearProyecto"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:text="Crear"
+      app:layout_constraintTop_toBottomOf="@id/estadoProyecto"
+      app:layout_constraintStart_toStartOf="parent"
+      app:layout_constraintEnd_toEndOf="parent"
+      android:layout_gravity="center"
+      android:backgroundTint="#024D6D"
+      android:layout_marginTop="16dp"/>
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

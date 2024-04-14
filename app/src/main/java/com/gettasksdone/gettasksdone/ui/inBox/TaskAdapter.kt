@@ -1,5 +1,6 @@
 package com.gettasksdone.gettasksdone.ui.inBox
 
+import android.app.AlertDialog
 import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
@@ -44,7 +45,7 @@ class TaskAdapter(
         override fun onClick(v: View?) {
             val task = tasks[adapterPosition]
             val taskDetails = buildTaskDetails(task)
-            Toast.makeText(context, taskDetails, Toast.LENGTH_LONG).show()
+            showTaskDetailsDialog(context, taskDetails)
         }
     }
 }
@@ -58,4 +59,16 @@ private fun buildTaskDetails(task: Task): String {
     // Agrega más detalles según sea necesario
 
     return builder.toString()
+}
+
+private fun showTaskDetailsDialog(context: Context, taskDetails: String) {
+    val builder = AlertDialog.Builder(context)
+    builder.setTitle("Detalles de la tarea")
+    builder.setMessage(taskDetails)
+    builder.setPositiveButton("Aceptar") { dialog, which ->
+        dialog.dismiss()
+    }
+
+    val dialog = builder.create()
+    dialog.show()
 }
