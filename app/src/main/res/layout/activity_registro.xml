@@ -36,7 +36,7 @@
         android:layout_height="27dp"
         android:layout_marginStart="19dp"
         android:layout_marginTop="102dp"
-        android:text="Nombre"
+        android:text="Nombre de usuario"
         android:textColor="#FFFFFF"
         android:textSize="20sp"
         android:textStyle="bold"
@@ -51,10 +51,10 @@
         android:backgroundTint="#FFFFFF"
         android:ems="10"
         android:inputType="text"
-        android:text="nombre"
         android:textColor="#FFFFFF"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView15" />
+        app:layout_constraintTop_toBottomOf="@+id/textView15"
+        tools:text="Username" />
 
     <TextView
         android:id="@+id/textView12"
