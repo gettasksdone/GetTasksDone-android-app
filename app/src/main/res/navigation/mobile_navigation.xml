@@ -3,28 +3,43 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/mobile_navigation"
-    app:startDestination="@+id/inBox">
+    app:startDestination="@+id/nav_inbox">
 
     <fragment
-        android:id="@+id/inBox"
-        android:name="com.example.myapplication.ui.inBox.InBoxFragment"
-        android:label="@Bandeja de entrada"
+        android:id="@+id/nav_inbox"
+        android:name="com.gettasksdone.gettasksdone.ui.inBox.InBoxFragment"
+        android:label="Bandeja de entrada"
         tools:layout="@layout/fragment_inbox" />
     <fragment
+        android:id="@+id/nav_proyectos"
+        android:name="com.gettasksdone.gettasksdone.ui.proyectos.ProyectosFragment"
+        android:label="Proyectos"
+        tools:layout="@layout/fragment_proyectos" />
+    <fragment
+        android:id="@+id/nav_esperando"
+        android:name="com.gettasksdone.gettasksdone.ui.esperando.EsperandoFragment"
+        android:label="Esperando"
+        tools:layout="@layout/fragment_esperando" />
+    <fragment
+        android:id="@+id/nav_agendado"
+        android:name="com.gettasksdone.gettasksdone.ui.agendado.AgendadoFragment"
+        android:label="Agendado"
+        tools:layout="@layout/fragment_agendado" />
+    <fragment
+        android:id="@+id/nav_ad"
+        android:name="com.gettasksdone.gettasksdone.ui.ad.AdFragment"
+        android:label="Algún Dia"
+        tools:layout="@layout/fragment_ad" />
+    <fragment
         android:id="@+id/nav_home"
-        android:name="com.example.myapplication.ui.home.HomeFragment"
+        android:name="com.gettasksdone.gettasksdone.ui.home.HomeFragment"
         android:label="@string/menu_home"
         tools:layout="@layout/fragment_home" />
 
     <fragment
         android:id="@+id/nav_gallery"
-        android:name="com.example.myapplication.ui.gallery.GalleryFragment"
+        android:name="com.gettasksdone.gettasksdone.ui.gallery.GalleryFragment"
         android:label="@string/menu_gallery"
         tools:layout="@layout/fragment_gallery" />
 
-    <fragment
-        android:id="@+id/nav_slideshow"
-        android:name="com.example.myapplication.ui.slideshow.SlideshowFragment"
-        android:label="@string/menu_slideshow"
-        tools:layout="@layout/fragment_slideshow" />
 </navigation>

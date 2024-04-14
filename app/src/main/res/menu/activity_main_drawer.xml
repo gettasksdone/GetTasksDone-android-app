@@ -11,6 +11,22 @@
             android:icon="@android:drawable/ic_menu_day"
             android:title="Bandeja de entrada" />
         <item
+            android:id="@+id/nav_proyectos"
+            android:icon="@drawable/ic_menu_gallery"
+            android:title="Proyectos" />
+        <item
+            android:id="@+id/nav_esperando"
+            android:icon="@drawable/ic_menu_gallery"
+            android:title="Esperando" />
+        <item
+            android:id="@+id/nav_agendado"
+            android:icon="@drawable/ic_menu_gallery"
+            android:title="Agendado" />
+        <item
+            android:id="@+id/nav_ad"
+            android:icon="@drawable/ic_menu_gallery"
+            android:title="Algún Día" />
+        <item
             android:id="@+id/nav_home"
             android:icon="@drawable/ic_menu_camera"
             android:title="@string/menu_home" />
@@ -18,5 +34,17 @@
             android:id="@+id/nav_gallery"
             android:icon="@drawable/ic_menu_gallery"
             android:title="@string/menu_gallery" />
+    </group>
+    <!-- Nuevo grupo para el ítem de menú de cierre de sesión -->
+    <group android:checkableBehavior="none">
+        <item android:id="@+id/menu_space"
+            android:checkable="false"
+            android:enabled="false"
+            android:visible="true"
+            android:icon="@android:color/transparent"
+            android:title=""/>
+        <item
+            android:id="@+id/nav_logout"
+            android:title="Cerrar sesión" />
     </group>
 </menu>
