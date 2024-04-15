@@ -1,5 +1,6 @@
 package com.gettasksdone.gettasksdone
 
+import android.app.DatePickerDialog
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
@@ -20,6 +21,7 @@ import com.gettasksdone.gettasksdone.io.requests.ProjectRequest
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
+import java.util.Calendar
 
 class CreateProject : AppCompatActivity() {
 
@@ -67,6 +69,17 @@ class CreateProject : AppCompatActivity() {
         }
     }
 
+    fun showDatePickerDialog(view: View) {
+        val calendar = Calendar.getInstance()
+        val year = calendar.get(Calendar.YEAR)
+        val month = calendar.get(Calendar.MONTH)
+        val day = calendar.get(Calendar.DAY_OF_MONTH)
+
+        DatePickerDialog(this, { _, selectedYear, selectedMonth, selectedDay ->
+            val selectedDate = "$selectedDay/${selectedMonth+1}/$selectedYear"
+            (view as EditText).setText(selectedDate)
+        }, year, month, day).show()
+    }
     private fun goToMenu(){
         val i = Intent(this, Menu::class.java)
         startActivity(i)
