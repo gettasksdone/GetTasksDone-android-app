@@ -18,8 +18,12 @@ import com.gettasksdone.gettasksdone.data.JwtHelper
 import com.gettasksdone.gettasksdone.databinding.FragmentInboxBinding
 import com.gettasksdone.gettasksdone.model.Task
 import androidx.cardview.widget.CardView
+import com.gettasksdone.gettasksdone.io.ApiService
 
-class InBoxFragment : Fragment() {
+interface TaskCompletionListener {
+    fun onTaskCompleted()
+}
+class InBoxFragment : Fragment(), TaskCompletionListener {
 
     private var _binding: FragmentInboxBinding? = null
     // This property is only valid between onCreateView and
@@ -29,13 +33,19 @@ class InBoxFragment : Fragment() {
     // Define inboxViewModel a nivel de clase
     private lateinit var inboxViewModel: InboxViewModel
 
+    private val apiService: ApiService by lazy {
+        ApiService.create()
+    }
+
+    private lateinit var jwtHelper: JwtHelper
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
         val context = requireContext()
-        val jwtHelper = JwtHelper(context)
+        jwtHelper = JwtHelper(context)
         val factory = InboxViewModelFactory(jwtHelper)
         inboxViewModel = ViewModelProvider(this, factory).get(InboxViewModel::class.java)
 
@@ -56,7 +66,7 @@ class InBoxFragment : Fragment() {
         inboxViewModel.tasks.observe(viewLifecycleOwner) { tasks ->
             // Actualiza la interfaz de usuario con las tareas obtenidas
             // Configura el RecyclerView con un Adapter que muestra las tareas
-            recyclerView.adapter = TaskAdapter(tasks, this)
+            recyclerView.adapter = TaskAdapter(tasks, apiService, jwtHelper, this@InBoxFragment, this)
         }
 
         // Llama al método para obtener las tareas
@@ -66,6 +76,11 @@ class InBoxFragment : Fragment() {
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
+    }
+
+    override fun onTaskCompleted() {
+        // Llama a getTasks() para actualizar la lista de tareas
+        inboxViewModel.getTasks()
     }
 }
 

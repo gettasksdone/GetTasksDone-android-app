@@ -36,8 +36,12 @@ class InboxViewModel(private val jwtHelper: JwtHelper) : ViewModel() {
                     override fun onResponse(call: Call<List<Task>>, response: Response<List<Task>>) {
                         if (response.isSuccessful) {
                             val tasksFromApi = response.body()
-                            // Actualizar el LiveData con las tareas obtenidas
-                            _tasks.value = tasksFromApi ?: _tasks.value
+                            // Filtrar las tareas para excluir aquellas con el estado "completado"
+                            val filteredTasks = tasksFromApi?.filter { task ->
+                                task.estado != "completado"
+                            }
+                            // Actualizar el LiveData con las tareas filtradas
+                            _tasks.value = filteredTasks ?: emptyList()
                         } else {
 
                         }
