@@ -12,7 +12,7 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
 
 
-        val tvGoLogin = findViewById<ImageView>(R.id.imageView7)
+        val tvGoLogin = findViewById<ImageView>(R.id.startButton)
         tvGoLogin.setOnClickListener{
             goToLogin()
         }

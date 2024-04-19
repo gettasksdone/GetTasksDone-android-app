@@ -28,7 +28,7 @@ class CompletarRegistro : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_completar_registro2)
 
-        val btnGoMenu = findViewById<Button>(R.id.button2)
+        val btnGoMenu = findViewById<Button>(R.id.btnCompletar)
         btnGoMenu.setOnClickListener{
             performCompleteRegister()
         }

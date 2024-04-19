@@ -12,107 +12,92 @@
         android:layout_height="match_parent"
         android:background="#001928"
         tools:context=".Registro"
-        tools:layout_editor_absoluteX="-33dp"
-        tools:layout_editor_absoluteY="0dp">
-
-        <TextView
-            android:id="@+id/textView9"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="16dp"
-            android:layout_marginTop="72dp"
-            android:text="Departamento"
-            android:textColor="#FFFFFF"
-            android:textSize="20sp"
-            android:textStyle="bold"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.5"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/etTelefono" />
+        tools:layout_editor_absoluteX="0dp"
+        tools:layout_editor_absoluteY="-90dp">
 
         <EditText
             android:id="@+id/etPuesto"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="16dp"
-            android:layout_marginTop="1dp"
+            android:layout_marginTop="8dp"
             android:backgroundTint="#FFFFFF"
             android:ems="10"
+            android:hint="@string/ejemploPuesto"
+            android:importantForAutofill="no"
             android:inputType="text"
+            android:minHeight="48dp"
             android:textColor="#FFFFFF"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textView12" />
+            app:layout_constraintTop_toBottomOf="@+id/textPuesto" />
 
         <TextView
-            android:id="@+id/textView16"
+            android:id="@+id/textCompletaReg"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="123dp"
-            android:text="Completar registro"
+            android:layout_marginTop="64dp"
+            android:text="@string/completar_registro"
             android:textColor="#FFFFFF"
             android:textSize="24sp"
             android:textStyle="bold"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
-            android:id="@+id/textView17"
-            android:layout_width="wrap_content"
+            android:id="@+id/textDescCompletaReg"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginStart="16dp"
-            android:text="Por favor completa tu registro introduciendo los siguientes datos"
+            android:layout_marginStart="32dp"
+            android:layout_marginTop="36dp"
+            android:layout_marginEnd="32dp"
+            android:text="@string/por_favor_completa_tu_registro_introduciendo_los_siguientes_datos"
+            android:textAlignment="center"
             android:textColor="#FFFFFF"
             android:textSize="16sp"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintHorizontal_bias="0.488"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textView16" />
+            app:layout_constraintTop_toBottomOf="@+id/textCompletaReg" />
 
         <TextView
-            android:id="@+id/textView15"
+            android:id="@+id/textNombre"
             android:layout_width="wrap_content"
-            android:layout_height="27dp"
-            android:layout_marginStart="19dp"
-            android:layout_marginTop="102dp"
-            android:text="Nombre"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="56dp"
+            android:text="@string/nombre"
             android:textColor="#FFFFFF"
             android:textSize="20sp"
             android:textStyle="bold"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textView17" />
+            app:layout_constraintTop_toBottomOf="@+id/textDescCompletaReg" />
 
         <EditText
             android:id="@+id/etNombre"
             android:layout_width="wrap_content"
-            android:layout_height="45dp"
-            android:layout_marginStart="18dp"
+            android:layout_height="48dp"
+            android:layout_marginTop="8dp"
+            android:autofillHints="name"
             android:backgroundTint="#FFFFFF"
             android:ems="10"
+            android:hint="@string/ejemploNombre"
             android:inputType="text"
-            android:text="nombre"
             android:textColor="#FFFFFF"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textView15" />
+            app:layout_constraintTop_toBottomOf="@+id/textNombre" />
 
         <TextView
-            android:id="@+id/textView12"
+            android:id="@+id/textPuesto"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="19dp"
-            android:text="Puesto"
+            android:layout_marginTop="8dp"
+            android:text="@string/puesto"
             android:textColor="#FFFFFF"
             android:textSize="20sp"
             android:textStyle="bold"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/etTelefono" />
 
@@ -120,29 +105,41 @@
             android:id="@+id/etDepartamento"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="16dp"
-            android:layout_marginTop="72dp"
+            android:layout_marginTop="8dp"
             android:backgroundTint="#FFFFFF"
             android:ems="10"
+            android:hint="@string/ejemploDepartamento"
+            android:importantForAutofill="no"
             android:inputType="text"
+            android:minHeight="48dp"
             android:textColor="#FFFFFF"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textView12" />
+            app:layout_constraintTop_toBottomOf="@+id/textDepartamento" />
 
         <TextView
-            android:id="@+id/textView13"
+            android:id="@+id/textDepartamento"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="19dp"
-            android:layout_marginTop="4dp"
-            android:text="Telefono"
+            android:layout_marginTop="8dp"
+            android:text="@string/departamento"
             android:textColor="#FFFFFF"
             android:textSize="20sp"
             android:textStyle="bold"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/etPuesto" />
+
+        <TextView
+            android:id="@+id/textTelefono"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:text="@string/telefono"
+            android:textColor="#FFFFFF"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/etNombre" />
 
@@ -150,32 +147,46 @@
             android:id="@+id/etTelefono"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="19dp"
+            android:layout_marginTop="8dp"
+            android:autofillHints="phone"
             android:backgroundTint="#FFFFFF"
             android:ems="10"
-            android:hint="612345678"
+            android:hint="@string/ejemploTelefono"
             android:inputType="phone"
-            android:text="612345678"
+            android:minHeight="48dp"
             android:textColor="#FFFFFF"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textView13"
+            app:layout_constraintTop_toBottomOf="@+id/textTelefono"
             tools:text="612345678" />
 
         <Button
-            android:id="@+id/button2"
+            android:id="@+id/btnCompletar"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="132dp"
             android:layout_marginTop="32dp"
             android:backgroundTint="#024D6D"
-            android:text="Completar"
+            android:text="@string/completar"
             android:textColor="#FFFFFF"
             android:textSize="16sp"
             android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/etDepartamento" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_begin="205dp" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_begin="20dp" />
 </androidx.constraintlayout.widget.ConstraintLayout>

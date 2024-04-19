@@ -10,95 +10,98 @@
     tools:context=".CreateProject">
 
   <!-- Campo: Nombre -->
-  <EditText
-      android:id="@+id/nombreProyecto"
-      android:layout_width="0dp"
-      android:layout_height="wrap_content"
-      android:hint="Nombre"
-      app:layout_constraintStart_toStartOf="parent"
-      app:layout_constraintEnd_toEndOf="parent"
-      app:layout_constraintTop_toTopOf="parent"
-      android:layout_marginStart="16dp"
-      android:layout_marginTop="16dp"
-      android:layout_gravity="center"
-      android:layout_marginEnd="16dp"
-      android:textColor="#FEFEFE"
-      android:backgroundTint="#FFFFFF"
-      android:foregroundTint="#FFFFFF"
-      android:textColorHint="#FFFFFF"
-      android:inputType="text"/>
 
   <!-- Campo: Inicio -->
+
   <EditText
-      android:id="@+id/inicioProyecto"
-      android:layout_width="0dp"
+      android:id="@+id/nombreProyecto"
+      android:layout_width="300dp"
       android:layout_height="wrap_content"
-      android:hint="Inicio"
-      app:layout_constraintStart_toStartOf="parent"
-      app:layout_constraintEnd_toEndOf="parent"
-      app:layout_constraintTop_toBottomOf="@id/nombreProyecto"
-      android:layout_marginStart="16dp"
-      android:layout_marginTop="8dp"
       android:layout_gravity="center"
-      android:layout_marginEnd="16dp"
-      android:textColor="#FEFEFE"
+      android:layout_marginTop="60dp"
       android:backgroundTint="#FFFFFF"
       android:foregroundTint="#FFFFFF"
+      android:hint="@string/pistaNombreProyecto"
+      android:importantForAutofill="no"
+      android:inputType="text"
+      android:minHeight="48dp"
+      android:textColor="#FEFEFE"
       android:textColorHint="#FFFFFF"
+      app:layout_constraintEnd_toEndOf="parent"
+      app:layout_constraintHorizontal_bias="0.497"
+      app:layout_constraintStart_toStartOf="parent"
+      app:layout_constraintTop_toBottomOf="@+id/textCrearProyecto" />
+
+  <EditText
+      android:id="@+id/inicioProyecto"
+      android:layout_width="300dp"
+      android:layout_height="wrap_content"
+      android:layout_gravity="center"
+      android:layout_marginTop="24dp"
+      android:backgroundTint="#FFFFFF"
+      android:drawableEnd="@android:drawable/ic_menu_today"
+      android:foregroundTint="#FFFFFF"
+      android:hint="@string/pistaFechaInicio"
+      android:importantForAutofill="no"
+      android:inputType="datetime"
       android:onClick="showDatePickerDialog"
-      android:drawableRight="@android:drawable/ic_menu_today"/>
+      android:textColor="#FEFEFE"
+      android:textColorHint="#FFFFFF"
+      app:layout_constraintEnd_toEndOf="parent"
+      app:layout_constraintStart_toStartOf="parent"
+      app:layout_constraintTop_toBottomOf="@id/nombreProyecto" />
 
   <!-- Campo: Fin -->
   <EditText
       android:id="@+id/finProyecto"
-      android:layout_width="0dp"
+      android:layout_width="300dp"
       android:layout_height="wrap_content"
-      android:hint="Fin"
-      app:layout_constraintStart_toStartOf="parent"
-      app:layout_constraintEnd_toEndOf="parent"
-      app:layout_constraintTop_toBottomOf="@id/inicioProyecto"
-      android:layout_marginStart="16dp"
-      android:layout_marginTop="8dp"
-      android:layout_marginEnd="16dp"
       android:layout_gravity="center"
-      android:textColor="#FEFEFE"
+      android:layout_marginTop="24dp"
       android:backgroundTint="#FFFFFF"
+      android:drawableEnd="@android:drawable/ic_menu_today"
       android:foregroundTint="#FFFFFF"
-      android:textColorHint="#FFFFFF"
+      android:hint="@string/ejemploFechaFin"
+      android:importantForAutofill="no"
+      android:inputType="datetime"
       android:onClick="showDatePickerDialog"
-      android:drawableRight="@android:drawable/ic_menu_today"/>
+      android:textColor="#FEFEFE"
+      android:textColorHint="#FFFFFF"
+      app:layout_constraintEnd_toEndOf="parent"
+      app:layout_constraintStart_toStartOf="parent"
+      app:layout_constraintTop_toBottomOf="@id/inicioProyecto" />
 
   <!-- Campo: Descripción -->
   <EditText
       android:id="@+id/descripcionProyecto"
-      android:layout_width="0dp"
+      android:layout_width="300dp"
       android:layout_height="wrap_content"
-      android:hint="Descripción"
-      app:layout_constraintStart_toStartOf="parent"
-      app:layout_constraintEnd_toEndOf="parent"
-      app:layout_constraintTop_toBottomOf="@id/finProyecto"
       android:layout_gravity="center"
-      android:layout_marginStart="16dp"
-      android:layout_marginTop="8dp"
-      android:layout_marginEnd="16dp"
-      android:textColor="#FEFEFE"
+      android:layout_marginTop="24dp"
       android:backgroundTint="#FFFFFF"
       android:foregroundTint="#FFFFFF"
+      android:hint="@string/hintDescripcion"
+      android:importantForAutofill="no"
+      android:inputType="textMultiLine"
+      android:minHeight="48dp"
+      android:textColor="#FEFEFE"
       android:textColorHint="#FFFFFF"
-      android:inputType="textMultiLine"/>
+      app:layout_constraintEnd_toEndOf="parent"
+      app:layout_constraintStart_toStartOf="parent"
+      app:layout_constraintTop_toBottomOf="@id/finProyecto" />
 
   <TextView
       android:id="@+id/textEstado"
       android:layout_width="wrap_content"
       android:layout_height="wrap_content"
-      android:text="Estado"
+      android:layout_marginStart="16dp"
+      android:layout_marginTop="24dp"
+      android:layout_marginEnd="16dp"
+      android:text="@string/textoEstado"
       android:textColor="#FEFEFE"
       android:textSize="24sp"
-      android:layout_marginStart="16dp"
-      android:layout_marginTop="8dp"
-      android:layout_marginEnd="16dp"
-      app:layout_constraintStart_toStartOf="parent"
       app:layout_constraintEnd_toEndOf="parent"
+      app:layout_constraintStart_toStartOf="parent"
       app:layout_constraintTop_toBottomOf="@id/descripcionProyecto" />
 
   <!-- Campo: Estado -->
@@ -106,30 +109,45 @@
       android:id="@+id/estadoProyecto"
       android:layout_width="0dp"
       android:layout_height="wrap_content"
-      app:layout_constraintStart_toStartOf="parent"
-      app:layout_constraintEnd_toEndOf="parent"
-      app:layout_constraintTop_toBottomOf="@id/textEstado"
-      android:textColor="#FEFEFE"
-      android:backgroundTint="#FFFFFF"
-      android:foregroundTint="#FFFFFF"
-      android:textColorHint="#FFFFFF"
       android:layout_gravity="center"
       android:layout_marginStart="16dp"
       android:layout_marginTop="8dp"
-      android:layout_marginEnd="16dp"/>
+      android:layout_marginEnd="16dp"
+      android:backgroundTint="#FFFFFF"
+      android:foregroundTint="#FFFFFF"
+      android:minHeight="48dp"
+      android:textColor="#FEFEFE"
+      android:textColorHint="#FFFFFF"
+      app:layout_constraintEnd_toEndOf="parent"
+      app:layout_constraintStart_toStartOf="parent"
+      app:layout_constraintTop_toBottomOf="@id/textEstado" />
 
   <!-- Botón: Crear -->
   <Button
       android:id="@+id/botonCrearProyecto"
       android:layout_width="wrap_content"
       android:layout_height="wrap_content"
-      android:text="Crear"
-      app:layout_constraintTop_toBottomOf="@id/estadoProyecto"
-      app:layout_constraintStart_toStartOf="parent"
-      app:layout_constraintEnd_toEndOf="parent"
       android:layout_gravity="center"
+      android:layout_marginTop="24dp"
       android:backgroundTint="#024D6D"
-      android:layout_marginTop="16dp"/>
+      android:text="@string/btnCrear"
+      app:layout_constraintEnd_toEndOf="parent"
+      app:layout_constraintStart_toStartOf="parent"
+      app:layout_constraintTop_toBottomOf="@id/estadoProyecto" />
+
+  <TextView
+      android:id="@+id/textCrearProyecto"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:layout_marginStart="94dp"
+      android:layout_marginTop="64dp"
+      android:layout_marginEnd="94dp"
+      android:text="@string/textoCrearProyecto"
+      android:textColor="@color/white"
+      android:textSize="34sp"
+      app:layout_constraintEnd_toEndOf="parent"
+      app:layout_constraintStart_toStartOf="parent"
+      app:layout_constraintTop_toTopOf="parent" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

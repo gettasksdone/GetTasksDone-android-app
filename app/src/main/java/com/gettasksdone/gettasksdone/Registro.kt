@@ -31,7 +31,7 @@ class Registro : AppCompatActivity() {
             //goToMenu()
         }
 
-        val btnGoMenu=findViewById<Button>(R.id.button2)
+        val btnGoMenu=findViewById<Button>(R.id.btnCompletar)
         btnGoMenu.setOnClickListener{
             performRegister()
         }
@@ -61,9 +61,9 @@ class Registro : AppCompatActivity() {
     }
 
     private fun performRegister(){
-        val etNombre = findViewById<EditText>(R.id.etNombre).text.toString()
-        val etEmail = findViewById<EditText>(R.id.etTelefono).text.toString()
-        val etPassword = findViewById<EditText>(R.id.etDepartamento).text.toString()
+        val etNombre = findViewById<EditText>(R.id.etUsername).text.toString()
+        val etEmail = findViewById<EditText>(R.id.etCorreo).text.toString()
+        val etPassword = findViewById<EditText>(R.id.etPassword).text.toString()
 
         val registerRequest = RegisterRequest(username = etNombre, email = etEmail, password = etPassword)
         //Log.d("username:", "$etEmail")
