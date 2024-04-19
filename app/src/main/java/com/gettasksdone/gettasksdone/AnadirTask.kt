@@ -14,7 +14,6 @@ import android.widget.Button
 import android.widget.EditText
 import android.widget.ImageButton
 import android.widget.Spinner
-import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
@@ -141,19 +140,35 @@ class AnadirTask : AppCompatActivity(), NewContextDialogFragment.NewContextDialo
     }
     private fun performCreateTask(){
 
-        val etTitulo = findViewById<EditText>(R.id.descripcion).text.toString()
-
+        val etTitulo = findViewById<EditText>(R.id.titulo).text.toString()
+        val etDescripcion = findViewById<EditText>(R.id.etDescripcion).text.toString()
+        var vencimiento: String? = null
+        if(findViewById<EditText>(R.id.et_fecha).text.toString().isNotEmpty()){
+            val fechaVencimiento = findViewById<EditText>(R.id.et_fecha).text.toString().split("/")
+            val diaVencimientoInt = fechaVencimiento[0].toInt()
+            val mesVencimientoInt = fechaVencimiento[1].toInt()
+            var diaVencimiento = "$diaVencimientoInt"
+            var mesVencimiento = "$mesVencimientoInt"
+            if(diaVencimientoInt < 10){
+                diaVencimiento = "0$diaVencimientoInt"
+            }
+            if(mesVencimientoInt < 10){
+                mesVencimiento = "0$mesVencimientoInt"
+            }
+            vencimiento = "${fechaVencimiento[2]}-$mesVencimiento-$diaVencimiento 00:00:00"
+        }
         val contexto = Context(
                 id = selectedContext,
                 nombre = ""
         )
 
         val createTaskRequest = TaskRequest(
-            descripcion = etTitulo,
+            titulo = etTitulo,
+            descripcion = etDescripcion,
             estado = selectedState,
             prioridad = if (isStarred) 1 else 0,
             contexto = contexto,
-            vencimiento = null,
+            vencimiento = vencimiento,
         )
 
         val authHeader = "Bearer ${jwtHelper.getToken()}"
@@ -171,12 +186,12 @@ class AnadirTask : AppCompatActivity(), NewContextDialogFragment.NewContextDialo
                         ).show()
                         return
                     }
-                    Toast.makeText(applicationContext, "Nota creada correctamente", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(applicationContext, "Tarea creada correctamente", Toast.LENGTH_SHORT).show()
                     goToMenu()
 
                 } else {
                     // Añade aquí el manejo del caso en el que la respuesta HTTP no es exitosa
-                    Toast.makeText(applicationContext, "Error al crear la nota", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(applicationContext, "Error al crear la tarea", Toast.LENGTH_SHORT).show()
                 }
             }
 

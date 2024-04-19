@@ -87,11 +87,34 @@ class CreateProject : AppCompatActivity() {
     }
 
     private fun performCreateProject(){
-
+        //Convierte la fecha a formato AÑO-MES-DIA 00:00:00
+        val fechaInicio = findViewById<EditText>(R.id.inicioProyecto).text.toString().split("/")
+        val diaInicioInt = fechaInicio[0].toInt()
+        val mesInicioInt = fechaInicio[1].toInt()
+        var diaInicio = "$diaInicioInt"
+        var mesInicio = "$mesInicioInt"
+        if(diaInicioInt < 10){
+            diaInicio = "0$diaInicioInt"
+        }
+        if(mesInicioInt < 10){
+            mesInicio = "0$mesInicioInt"
+        }
+        val fechaFin = findViewById<EditText>(R.id.finProyecto).text.toString().split("/")
+        val diaFinInt = fechaFin[0].toInt()
+        val mesFinInt = fechaFin[1].toInt()
+        var diaFin = "$diaFinInt"
+        var mesFin = "$mesFinInt"
+        if(diaFinInt < 10){
+            diaFin = "0$diaFinInt"
+        }
+        if(mesFinInt < 10){
+            mesFin = "0$mesFinInt"
+        }
+        Log.e("DATE", "${fechaInicio[2]}-$fechaInicio[1]-$fechaInicio[0] 00:00:00")
         val createProjectRequest = ProjectRequest(
             nombre = findViewById<EditText>(R.id.nombreProyecto).text.toString(),
-            inicio = findViewById<EditText>(R.id.inicioProyecto).text.toString(),
-            fin = findViewById<EditText>(R.id.finProyecto).text.toString(),
+            inicio = "${fechaInicio[2]}-$mesInicio-$diaInicio 00:00:00",
+            fin = "${fechaFin[2]}-$mesFin-$diaFin 00:00:00",
             descripcion = findViewById<EditText>(R.id.descripcionProyecto).text.toString(),
             estado = selectedState
         )

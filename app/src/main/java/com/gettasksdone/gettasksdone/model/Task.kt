@@ -4,6 +4,7 @@ import java.time.LocalDateTime
 
 data class Task (
     val id: Long,
+    val titulo: String,
     val descripcion: String,
     val estado: String,
     val prioridad: Int,

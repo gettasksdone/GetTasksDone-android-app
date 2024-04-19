@@ -60,21 +60,21 @@
         android:id="@+id/proyecto"
         android:layout_width="317dp"
         android:layout_height="53dp"
-        android:layout_marginTop="16dp"
+        android:layout_marginTop="8dp"
         android:backgroundTint="#FFFFFF"
         android:foregroundTint="#FFFFFF"
         android:textColor="@android:color/white"
         android:visibility="visible"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView2" />
+        app:layout_constraintTop_toBottomOf="@+id/textProyectoTarea" />
 
     <ImageButton
         android:id="@+id/starButton"
         android:layout_width="58dp"
         android:layout_height="58dp"
         android:layout_marginStart="44dp"
-        android:layout_marginTop="108dp"
+        android:layout_marginTop="92dp"
         android:background="@drawable/star"
         android:backgroundTint="#FFFFFF"
         android:contentDescription="@string/prioridadImgDesc"
@@ -86,67 +86,67 @@
         android:id="@+id/et_fecha"
         android:layout_width="254dp"
         android:layout_height="52dp"
-        android:layout_marginTop="32dp"
+        android:layout_marginTop="16dp"
         android:backgroundTint="#FFFFFF"
         android:drawableEnd="@android:drawable/ic_menu_today"
         android:focusable="false"
         android:hint="@string/pistaFechaTarea"
+        android:importantForAutofill="no"
+        android:inputType="datetime"
         android:onClick="showDatePickerDialog"
         android:textColor="#FFFFFF"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.145"
         app:layout_constraintStart_toEndOf="@+id/starButton"
-        app:layout_constraintTop_toBottomOf="@+id/textView"
-        android:importantForAutofill="no"
-        android:inputType="datetime" />
+        app:layout_constraintTop_toBottomOf="@+id/textCrearTarea" />
 
     <EditText
-        android:id="@+id/descripcion"
+        android:id="@+id/titulo"
         android:layout_width="316dp"
         android:layout_height="58dp"
-        android:layout_marginTop="16dp"
+        android:layout_marginTop="8dp"
         android:backgroundTint="#FFFFFF"
         android:ems="10"
         android:foregroundTint="#FFFFFF"
         android:hint="@string/pistaTituloTarea"
+        android:importantForAutofill="no"
         android:inputType="text"
         android:textColor="#FEFEFE"
         android:textColorHint="#FFFFFF"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.505"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/et_fecha"
-        android:importantForAutofill="no" />
+        app:layout_constraintTop_toBottomOf="@+id/et_fecha" />
 
     <TextView
-        android:id="@+id/textView18"
+        android:id="@+id/textEstadoTarea"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
+        android:layout_marginTop="8dp"
         android:text="@string/textEstadoTarea"
         android:textColor="#FEFEFE"
         android:textSize="24sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/descripcion" />
+        app:layout_constraintTop_toBottomOf="@+id/etDescripcion" />
 
     <Spinner
         android:id="@+id/estado"
         android:layout_width="323dp"
         android:layout_height="52dp"
-        android:layout_marginTop="16dp"
+        android:layout_marginTop="8dp"
         android:backgroundTint="#FFFFFF"
         android:foregroundTint="#FFFFFF"
         android:visibility="visible"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView18" />
+        app:layout_constraintTop_toBottomOf="@+id/textEstadoTarea" />
 
     <TextView
-        android:id="@+id/textView19"
+        android:id="@+id/textContextoTarea"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
+        android:layout_marginTop="8dp"
         android:text="@string/textContextoTarea"
         android:textColor="#FEFEFE"
         android:textSize="24sp"
@@ -158,20 +158,20 @@
         android:id="@+id/contexto"
         android:layout_width="317dp"
         android:layout_height="53dp"
-        android:layout_marginTop="16dp"
+        android:layout_marginTop="8dp"
         android:backgroundTint="#FFFFFF"
         android:foregroundTint="#FFFFFF"
         android:textColor="#FFFFFF"
         android:visibility="visible"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView19" />
+        app:layout_constraintTop_toBottomOf="@+id/textContextoTarea" />
 
     <TextView
-        android:id="@+id/textView2"
+        android:id="@+id/textProyectoTarea"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
+        android:layout_marginTop="8dp"
         android:text="@string/textProyectoTarea"
         android:textColor="#FEFEFE"
         android:textSize="24sp"
@@ -197,7 +197,7 @@
         android:importantForAutofill="no" />
 
     <TextView
-        android:id="@+id/textView"
+        android:id="@+id/textCrearTarea"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="36dp"
@@ -207,5 +207,20 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+
+    <EditText
+        android:id="@+id/etDescripcion"
+        android:layout_width="316dp"
+        android:layout_height="58dp"
+        android:layout_marginTop="8dp"
+        android:backgroundTint="#FEFEFE"
+        android:ems="10"
+        android:inputType="text"
+        android:hint="@string/pistaDescTarea"
+        android:textColor="@color/white"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/titulo"
+        android:importantForAutofill="no" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -137,4 +137,5 @@
     <string name="textProyectoTarea">Proyecto</string>
     <string name="btnNuevoProyectoTarea">Nuevo proyecto</string>
     <string name="textCrearTarea">Crear Tarea</string>
+    <string name="pistaDescTarea">Descripción</string>
 </resources>

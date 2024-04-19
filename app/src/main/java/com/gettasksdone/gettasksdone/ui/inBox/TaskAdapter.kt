@@ -72,11 +72,12 @@ class TaskAdapter(
             alertDialogBuilder.setPositiveButton("Aceptar") { dialog, _ ->
 
                 val createTaskRequest = TaskRequest(
+                    titulo = task.titulo,
                     descripcion = task.descripcion,
                     estado = "completado",
                     prioridad = task.prioridad,
                     contexto = task.contexto,
-                    vencimiento = null,
+                    vencimiento = task.vencimiento,
                 )
 
                 val authHeader = "Bearer ${jwtHelper.getToken()}"
