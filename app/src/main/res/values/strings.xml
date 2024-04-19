@@ -126,4 +126,15 @@
     <string name="navCierre">Cerrar sesión</string>
     <string name="navProyectos">Proyectos</string>
     <string name="pistaEmail">tucorreo@email.com</string>
+    <string name="btnCreate">Crear</string>
+    <string name="btnOtroContexto">Otro contexto</string>
+    <string name="btnNuevoEstado">Nuevo estado</string>
+    <string name="prioridadImgDesc">prioridad</string>
+    <string name="pistaFechaTarea">Selecciona una fecha</string>
+    <string name="pistaTituloTarea">Título</string>
+    <string name="textEstadoTarea">Estado</string>
+    <string name="textContextoTarea">Contexto</string>
+    <string name="textProyectoTarea">Proyecto</string>
+    <string name="btnNuevoProyectoTarea">Nuevo proyecto</string>
+    <string name="textCrearTarea">Crear Tarea</string>
 </resources>

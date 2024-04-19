@@ -8,62 +8,19 @@
     android:background="#001928"
     tools:context=".AnadirTask">
 
-    <TextView
-        android:id="@+id/textView18"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="166dp"
-        android:text="Estado"
-        android:textColor="#FEFEFE"
-        android:textSize="24sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <EditText
-        android:id="@+id/et_fecha"
-        android:layout_width="254dp"
-        android:layout_height="52dp"
-        android:layout_marginStart="7dp"
-        android:layout_marginTop="50dp"
-        android:layout_marginEnd="48dp"
-        android:backgroundTint="#FFFFFF"
-        android:drawableRight="@android:drawable/ic_menu_today"
-        android:focusable="false"
-        android:hint="Selecciona una fecha"
-        android:onClick="showDatePickerDialog"
-        android:textColor="#FFFFFF"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/starButton"
-        app:layout_constraintTop_toTopOf="parent" />
-
     <Button
         android:id="@+id/crearTarea"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="98dp"
+        android:layout_marginTop="32dp"
         android:backgroundTint="#024D6D"
-        android:text="Crear"
+        android:text="@string/btnCreate"
         android:textColor="#FFFFFF"
         android:textSize="16sp"
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/proyecto" />
-
-    <Spinner
-        android:id="@+id/contexto"
-        android:layout_width="317dp"
-        android:layout_height="53dp"
-        android:layout_marginStart="48dp"
-        android:layout_marginTop="65dp"
-        android:backgroundTint="#FFFFFF"
-        android:foregroundTint="#FFFFFF"
-        android:textColor="#FFFFFF"
-        android:visibility="visible"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/estado" />
 
     <EditText
         android:id="@+id/contextoOtro"
@@ -74,60 +31,14 @@
         android:backgroundTint="#FFFFFF"
         android:foregroundTint="#FFFFFF"
         android:ems="10"
-        android:hint="Otro contexto"
+        android:hint="@string/btnOtroContexto"
         android:inputType="text"
         android:textColor="#FFFFFF"
         android:textColorHint="#FFFFFF"
         android:visibility="gone"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/contexto" />
-
-    <EditText
-        android:id="@+id/descripcion"
-        android:layout_width="316dp"
-        android:layout_height="58dp"
-        android:layout_marginStart="48dp"
-        android:layout_marginTop="108dp"
-        android:layout_marginEnd="48dp"
-        android:backgroundTint="#FFFFFF"
-        android:ems="10"
-        android:foregroundTint="#FFFFFF"
-        android:hint="Título"
-        android:inputType="text"
-        android:textColor="#FEFEFE"
-        android:textColorHint="#FFFFFF"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="1.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <ImageButton
-        android:id="@+id/starButton"
-        android:layout_width="58dp"
-        android:layout_height="58dp"
-        android:layout_marginStart="44dp"
-        android:layout_marginTop="50dp"
-        android:layout_marginBottom="20dp"
-        android:background="@drawable/star"
-        android:backgroundTint="#FFFFFF"
-        android:contentDescription="prioridad"
-        android:onClick="onStarClick"
-        app:layout_constraintBottom_toTopOf="@+id/descripcion"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.0" />
-
-    <Spinner
-        android:id="@+id/estado"
-        android:layout_width="323dp"
-        android:layout_height="52dp"
-        android:layout_marginStart="48dp"
-        android:layout_marginTop="36dp"
-        android:backgroundTint="#FFFFFF"
-        android:foregroundTint="#FFFFFF"
-        android:visibility="visible"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/descripcion" />
+        app:layout_constraintTop_toBottomOf="@+id/contexto"
+        android:importantForAutofill="no" />
 
     <EditText
         android:id="@+id/estadoOtro"
@@ -137,23 +48,135 @@
         android:layout_marginTop="8dp"
         android:backgroundTint="#FFFFFF"
         android:ems="10"
-        android:hint="Nuevo estado"
+        android:hint="@string/btnNuevoEstado"
         android:inputType="text"
         android:textColorHint="#FFFFFF"
         android:visibility="gone"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/estado" />
+        app:layout_constraintTop_toBottomOf="@+id/estado"
+        android:importantForAutofill="no" />
 
     <Spinner
         android:id="@+id/proyecto"
         android:layout_width="317dp"
         android:layout_height="53dp"
-        android:layout_marginStart="48dp"
-        android:layout_marginTop="68dp"
+        android:layout_marginTop="16dp"
+        android:backgroundTint="#FFFFFF"
+        android:foregroundTint="#FFFFFF"
+        android:textColor="@android:color/white"
+        android:visibility="visible"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView2" />
+
+    <ImageButton
+        android:id="@+id/starButton"
+        android:layout_width="58dp"
+        android:layout_height="58dp"
+        android:layout_marginStart="44dp"
+        android:layout_marginTop="108dp"
+        android:background="@drawable/star"
+        android:backgroundTint="#FFFFFF"
+        android:contentDescription="@string/prioridadImgDesc"
+        android:onClick="onStarClick"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <EditText
+        android:id="@+id/et_fecha"
+        android:layout_width="254dp"
+        android:layout_height="52dp"
+        android:layout_marginTop="32dp"
+        android:backgroundTint="#FFFFFF"
+        android:drawableEnd="@android:drawable/ic_menu_today"
+        android:focusable="false"
+        android:hint="@string/pistaFechaTarea"
+        android:onClick="showDatePickerDialog"
+        android:textColor="#FFFFFF"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.145"
+        app:layout_constraintStart_toEndOf="@+id/starButton"
+        app:layout_constraintTop_toBottomOf="@+id/textView"
+        android:importantForAutofill="no"
+        android:inputType="datetime" />
+
+    <EditText
+        android:id="@+id/descripcion"
+        android:layout_width="316dp"
+        android:layout_height="58dp"
+        android:layout_marginTop="16dp"
+        android:backgroundTint="#FFFFFF"
+        android:ems="10"
+        android:foregroundTint="#FFFFFF"
+        android:hint="@string/pistaTituloTarea"
+        android:inputType="text"
+        android:textColor="#FEFEFE"
+        android:textColorHint="#FFFFFF"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.505"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/et_fecha"
+        android:importantForAutofill="no" />
+
+    <TextView
+        android:id="@+id/textView18"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:text="@string/textEstadoTarea"
+        android:textColor="#FEFEFE"
+        android:textSize="24sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/descripcion" />
+
+    <Spinner
+        android:id="@+id/estado"
+        android:layout_width="323dp"
+        android:layout_height="52dp"
+        android:layout_marginTop="16dp"
         android:backgroundTint="#FFFFFF"
         android:foregroundTint="#FFFFFF"
         android:visibility="visible"
-        android:textColor="@android:color/white"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView18" />
+
+    <TextView
+        android:id="@+id/textView19"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:text="@string/textContextoTarea"
+        android:textColor="#FEFEFE"
+        android:textSize="24sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/estado" />
+
+    <Spinner
+        android:id="@+id/contexto"
+        android:layout_width="317dp"
+        android:layout_height="53dp"
+        android:layout_marginTop="16dp"
+        android:backgroundTint="#FFFFFF"
+        android:foregroundTint="#FFFFFF"
+        android:textColor="#FFFFFF"
+        android:visibility="visible"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView19" />
+
+    <TextView
+        android:id="@+id/textView2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:text="@string/textProyectoTarea"
+        android:textColor="#FEFEFE"
+        android:textSize="24sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/contexto" />
 
@@ -165,34 +188,22 @@
         android:layout_marginTop="8dp"
         android:backgroundTint="#FFFFFF"
         android:ems="10"
-        android:hint="Nuevo proyecto"
+        android:hint="@string/btnNuevoProyectoTarea"
         android:inputType="text"
         android:textColorHint="#FFFFFF"
         android:visibility="gone"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/proyecto" />
+        app:layout_constraintTop_toBottomOf="@+id/proyecto"
+        android:importantForAutofill="no" />
 
     <TextView
-        android:id="@+id/textView2"
+        android:id="@+id/textView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="408dp"
-        android:text="Proyecto"
-        android:textColor="#FEFEFE"
-        android:textSize="24sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.49"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <TextView
-        android:id="@+id/textView19"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="288dp"
-        android:text="Contexto"
-        android:textColor="#FEFEFE"
-        android:textSize="24sp"
+        android:layout_marginTop="36dp"
+        android:text="@string/textCrearTarea"
+        android:textColor="@color/white"
+        android:textSize="34sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
