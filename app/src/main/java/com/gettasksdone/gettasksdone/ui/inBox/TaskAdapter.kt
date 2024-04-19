@@ -53,7 +53,7 @@ class TaskAdapter(
         }
 
         fun bind(task: Task) {
-            nombreTaskTextView.text = task.descripcion
+            nombreTaskTextView.text = task.titulo
         }
 
         override fun onClick(v: View?) {
@@ -141,6 +141,7 @@ class TaskAdapter(
 private fun buildTaskDetails(task: Task): String {
     val builder = StringBuilder()
     builder.append("ID: ${task.id}\n")
+    builder.append("Título: ${task.titulo}\n")
     builder.append("Descripción: ${task.descripcion}\n")
     builder.append("Estado: ${task.estado}\n")
     builder.append("Prioridad: ${task.prioridad}\n")

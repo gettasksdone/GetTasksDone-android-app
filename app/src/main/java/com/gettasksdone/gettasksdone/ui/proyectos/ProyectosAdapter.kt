@@ -66,7 +66,7 @@ class ProyectosAdapter(
         detailsBuilder.append("Estado: ${project.estado}\n\n")
         detailsBuilder.append("Tareas:\n")
         for (task in project.tareas) {
-            detailsBuilder.append("- ${task.descripcion}\n")
+            detailsBuilder.append("- ${task.titulo}\n")
         }
         builder.setMessage(detailsBuilder.toString())
         builder.setPositiveButton("Aceptar") { dialog, _ ->
