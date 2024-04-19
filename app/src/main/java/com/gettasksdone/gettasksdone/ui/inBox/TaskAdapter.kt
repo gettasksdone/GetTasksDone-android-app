@@ -6,7 +6,9 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Button
 import android.widget.ImageView
+import android.widget.LinearLayout
 import android.widget.TextView
 import android.widget.Toast
 import androidx.fragment.app.Fragment
@@ -57,9 +59,29 @@ class TaskAdapter(
         }
 
         override fun onClick(v: View?) {
-            val task = tasks[bindingAdapterPosition]
-            val taskDetails = buildTaskDetails(task)
-            showTaskDetailsDialog(context, taskDetails)
+            val task = tasks[adapterPosition]
+
+            // Encuentra el RecyclerView y el taskDetailsLayout
+            val recyclerView = fragment.view?.findViewById<RecyclerView>(R.id.recyclerView)
+            val taskDetailsLayout = fragment.view?.findViewById<LinearLayout>(R.id.taskDetailsLayout)
+            val taskDetailsTextView = fragment.view?.findViewById<TextView>(R.id.taskDetailsTextView)
+            val backButton = fragment.view?.findViewById<Button>(R.id.backButtonTarea)
+
+            // Oculta el RecyclerView y muestra el taskDetailsLayout
+            recyclerView?.visibility = View.GONE
+            taskDetailsLayout?.visibility = View.VISIBLE
+
+            // Actualiza los detalles de la tarea
+            taskDetailsTextView?.text = buildTaskDetails(task)
+
+            // Configura el OnClickListener para el botón "Volver"
+            backButton?.setOnClickListener {
+                taskDetailsLayout?.visibility = View.GONE
+                recyclerView?.visibility = View.VISIBLE
+
+                // No se si habbria que hacer una llamada a algo para que al volver atras nos
+                //muestre otra vez la lista d etareas pero actualizada
+            }
         }
 
         private fun onUpdateIconClicked(position: Int) {

@@ -28,6 +28,26 @@
         android:text="TextView"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+    <LinearLayout
+        android:id="@+id/taskDetailsLayout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:visibility="gone">
+
+        <!-- Aquí puedes añadir los elementos de la interfaz de usuario para mostrar los detalles de la tarea -->
+        <TextView
+            android:id="@+id/taskDetailsTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Detalles de la tarea" />
+
+        <Button
+            android:id="@+id/backButtonTarea"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Volver" />
+    </LinearLayout>
 
     <FrameLayout
         android:id="@+id/container"
