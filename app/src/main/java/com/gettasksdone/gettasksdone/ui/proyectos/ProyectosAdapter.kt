@@ -1,3 +1,4 @@
+import android.annotation.SuppressLint
 import android.app.AlertDialog
 import android.view.LayoutInflater
 import android.view.View
@@ -39,13 +40,14 @@ class ProyectosAdapter(
             itemView.setOnClickListener(this)
         }
 
+        @SuppressLint("SetTextI18n")
         fun bind(project: Project) {
             nombreProyectoTextView.text = project.nombre
             numTareasTextView.text = "Número de tareas: ${project.tareas.size}"
         }
 
         override fun onClick(v: View) {
-            val position = adapterPosition
+            val position = bindingAdapterPosition
             if (position != RecyclerView.NO_POSITION) {
                 val clickedProject = proyectos[position]
                 showProjectDetailsDialog(v.context, clickedProject)

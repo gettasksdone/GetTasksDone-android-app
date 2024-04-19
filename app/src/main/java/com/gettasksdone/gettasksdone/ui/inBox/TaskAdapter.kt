@@ -2,7 +2,6 @@ package com.gettasksdone.gettasksdone.ui.inBox
 
 import android.app.AlertDialog
 import android.content.Context
-import android.content.Intent
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -12,7 +11,6 @@ import android.widget.TextView
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.RecyclerView
-import com.gettasksdone.gettasksdone.Menu
 import com.gettasksdone.gettasksdone.R
 import com.gettasksdone.gettasksdone.data.JwtHelper
 import com.gettasksdone.gettasksdone.io.ApiService
@@ -51,7 +49,7 @@ class TaskAdapter(
 
         init {
             itemView.setOnClickListener(this)
-            iconoImageView.setOnClickListener { onUpdateIconClicked(adapterPosition) }
+            iconoImageView.setOnClickListener { onUpdateIconClicked(bindingAdapterPosition) }
         }
 
         fun bind(task: Task) {
@@ -59,7 +57,7 @@ class TaskAdapter(
         }
 
         override fun onClick(v: View?) {
-            val task = tasks[adapterPosition]
+            val task = tasks[bindingAdapterPosition]
             val taskDetails = buildTaskDetails(task)
             showTaskDetailsDialog(context, taskDetails)
         }
@@ -155,7 +153,7 @@ private fun showTaskDetailsDialog(context: Context, taskDetails: String) {
     val builder = AlertDialog.Builder(context)
     builder.setTitle("Detalles de la tarea")
     builder.setMessage(taskDetails)
-    builder.setPositiveButton("Aceptar") { dialog, which ->
+    builder.setPositiveButton("Aceptar") { dialog, _ ->
         dialog.dismiss()
     }
 
