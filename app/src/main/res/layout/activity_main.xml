@@ -36,13 +36,23 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:srcCompat="@drawable/fondo" />
 
+    <TextView
+        android:id="@+id/emptyText"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:layout_marginTop="30dp"
+        android:layout_marginBottom="30dp"
+        android:text="" />
+
+
     <ImageView
         android:id="@+id/startButton"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_centerVertical="true"
-        android:layout_marginTop="0dp"
-        android:layout_marginBottom="0dp"
+        android:layout_below="@+id/emptyText"
+        android:layout_marginTop="30dp"
+        android:layout_centerHorizontal="true"
         app:srcCompat="@drawable/boton"
         tools:ignore="MissingConstraints" />
 
@@ -53,7 +63,7 @@
         android:layout_above="@+id/go_to_login"
         android:layout_centerHorizontal="true"
         android:fontFamily="sans-serif-black"
-        android:layout_marginBottom="16dp"
+        android:layout_marginBottom="30dp"
         android:text="@string/appTitle"
         android:textColor="#F5F5F5"
         android:textSize="24sp" />
@@ -63,7 +73,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_above="@id/startButton"
-        android:layout_marginBottom="36dp"
+        android:layout_marginBottom="30dp"
         android:fontFamily="sans-serif-medium"
         android:text="@string/introductionText"
         android:textAlignment="center"
