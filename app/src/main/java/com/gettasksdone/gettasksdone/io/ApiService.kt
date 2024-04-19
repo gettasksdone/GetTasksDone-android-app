@@ -274,7 +274,7 @@ interface ApiService {
     //---END OF TOOLS---
     //---API CONNECTION SETTINGS---
     companion object Factory {
-        private const val BASE_URL = "http://192.168.1.145:8080"
+        private const val BASE_URL = "https://lopezgeraghty.com:8080"
         fun create(): ApiService {
             val retrofit = Retrofit.Builder()
                 .baseUrl(BASE_URL)
