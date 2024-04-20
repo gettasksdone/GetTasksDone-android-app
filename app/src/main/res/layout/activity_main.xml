@@ -19,7 +19,8 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:srcCompat="@drawable/fondo1" />
+        app:srcCompat="@drawable/fondo1"
+        android:importantForAccessibility="no" />
 
 
     <!-- Configuración del boton -->
@@ -34,27 +35,30 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:srcCompat="@drawable/fondo" />
+        app:srcCompat="@drawable/fondo"
+        android:importantForAccessibility="no" />
 
     <TextView
-        android:id="@+id/emptyText"
+        android:id="@+id/centerReponsive"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_centerInParent="true"
         android:layout_marginTop="30dp"
         android:layout_marginBottom="30dp"
-        android:text="" />
+        android:text=""
+        tools:ignore="VisualLintOverlap" />
 
 
     <ImageView
         android:id="@+id/startButton"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/emptyText"
+        android:layout_below="@+id/centerReponsive"
         android:layout_marginTop="30dp"
         android:layout_centerHorizontal="true"
         app:srcCompat="@drawable/boton"
-        tools:ignore="MissingConstraints" />
+        tools:ignore="MissingConstraints"
+        android:contentDescription="@string/descripcion_boton_de_acceso" />
 
     <TextView
         android:id="@+id/appTitle"
