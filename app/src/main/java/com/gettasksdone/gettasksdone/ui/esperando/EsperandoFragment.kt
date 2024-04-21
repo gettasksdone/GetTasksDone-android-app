@@ -7,36 +7,78 @@ import android.view.ViewGroup
 import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
+import com.gettasksdone.gettasksdone.R
+import com.gettasksdone.gettasksdone.data.JwtHelper
 import com.gettasksdone.gettasksdone.databinding.FragmentEsperandoBinding
+import com.gettasksdone.gettasksdone.databinding.FragmentInboxBinding
+import com.gettasksdone.gettasksdone.io.ApiService
+import com.gettasksdone.gettasksdone.ui.inBox.InboxViewModel
+import com.gettasksdone.gettasksdone.ui.inBox.InboxViewModelFactory
+import com.gettasksdone.gettasksdone.ui.inBox.TaskAdapter
+import com.gettasksdone.gettasksdone.ui.inBox.TaskCompletionListener
 
+interface TaskCompletionListener {
+    fun onTaskCompleted()
+}
+class EsperandoFragment : Fragment(), TaskCompletionListener {
 
-class EsperandoFragment : Fragment() {
+    private var _binding: FragmentInboxBinding? = null
+    // This property is only valid between onCreateView and
+    // onDestroyView.
+    private val binding get() = _binding!!
 
-private var _binding: FragmentEsperandoBinding? = null
-  // This property is only valid between onCreateView and
-  // onDestroyView.
-  private val binding get() = _binding!!
+    // Define inboxViewModel a nivel de clase
+    private lateinit var esperandoViewModel: EsperandoViewModel
 
-  override fun onCreateView(
-    inflater: LayoutInflater,
-    container: ViewGroup?,
-    savedInstanceState: Bundle?
-  ): View {
-    val esperandoViewModel =
-            ViewModelProvider(this).get(EsperandoViewModel::class.java)
-
-    _binding = FragmentEsperandoBinding.inflate(inflater, container, false)
-    val root: View = binding.root
-
-    val textView: TextView = binding.textEsperando
-    esperandoViewModel.text.observe(viewLifecycleOwner) {
-      textView.text = it
+    private val apiService: ApiService by lazy {
+        ApiService.create()
     }
-    return root
-  }
 
-override fun onDestroyView() {
+    private lateinit var jwtHelper: JwtHelper
+
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View {
+        val context = requireContext()
+        jwtHelper = JwtHelper(context)
+        val factory = InboxViewModelFactory(jwtHelper)
+        esperandoViewModel = ViewModelProvider(this, factory).get(EsperandoViewModel::class.java)
+
+        _binding = FragmentInboxBinding.inflate(inflater, container, false)
+        val root: View = binding.root
+
+        return root
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+        // Inicializa el RecyclerView
+        val recyclerView: RecyclerView = view.findViewById(R.id.recyclerView)
+        recyclerView.layoutManager = LinearLayoutManager(context)
+
+        // Observa la lista de tareas en el ViewModel y actualiza la interfaz de usuario
+        esperandoViewModel.tasks.observe(viewLifecycleOwner) { tasks ->
+            // Actualiza la interfaz de usuario con las tareas obtenidas
+            // Configura el RecyclerView con un Adapter que muestra las tareas
+            recyclerView.adapter = TaskAdapter(tasks, apiService, jwtHelper, this@EsperandoFragment, this)
+        }
+
+        // Llama al método para obtener las tareas
+        esperandoViewModel.getTasks()
+    }
+
+    override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
+    }
+
+    override fun onTaskCompleted() {
+        // Llama a getTasks() para actualizar la lista de tareas
+        esperandoViewModel.getTasks()
     }
 }

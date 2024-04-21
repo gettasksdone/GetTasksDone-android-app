@@ -65,29 +65,6 @@ class TaskAdapter(
 
         override fun onClick(v: View?) {
             val task = tasks[adapterPosition]
-            //editTask()
-
-            // Encuentra el RecyclerView y el taskDetailsLayout
-            //val recyclerView = fragment.view?.findViewById<RecyclerView>(R.id.recyclerView)
-            //val taskDetailsLayout = fragment.view?.findViewById<LinearLayout>(R.id.taskDetailsLayout)
-            //val taskDetailsTextView = fragment.view?.findViewById<TextView>(R.id.taskDetailsTextView)
-            //val backButton = fragment.view?.findViewById<Button>(R.id.backButtonTarea)
-
-            // Oculta el RecyclerView y muestra el taskDetailsLayout
-            //recyclerView?.visibility = View.GONE
-            //taskDetailsLayout?.visibility = View.VISIBLE
-
-            // Actualiza los detalles de la tarea
-            //taskDetailsTextView?.text = buildTaskDetails(task)
-
-            // Configura el OnClickListener para el botón "Volver"
-            //backButton?.setOnClickListener {
-            //    taskDetailsLayout?.visibility = View.GONE
-            //    recyclerView?.visibility = View.VISIBLE
-
-                // No se si habbria que hacer una llamada a algo para que al volver atras nos
-                //muestre otra vez la lista d etareas pero actualizada
-            //}
         }
 
         private fun onUpdateIconClicked(position: Int) {
@@ -146,11 +123,7 @@ class TaskAdapter(
 
                     }
                 })
-                // Aquí debes realizar la llamada a la API como se indica arriba.
-                // La implementación depende de cómo estés manejando las llamadas a la API en tu aplicación.
 
-                // Simulación de la actualización de la tarea localmente
-                //task.estado = "Completado"
                 notifyItemChanged(position)
 
                 //Toast.makeText(context, "Tarea completada", Toast.LENGTH_SHORT).show()
@@ -180,16 +153,4 @@ class TaskAdapter(
     }
 
 
-}
-
-private fun buildTaskDetails(task: Task): String {
-    val builder = StringBuilder()
-    builder.append("ID: ${task.id}\n")
-    builder.append("Título: ${task.titulo}\n")
-    builder.append("Descripción: ${task.descripcion}\n")
-    builder.append("Estado: ${task.estado}\n")
-    builder.append("Prioridad: ${task.prioridad}\n")
-    // Agrega más detalles según sea necesario
-
-    return builder.toString()
 }
