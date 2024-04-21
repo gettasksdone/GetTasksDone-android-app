@@ -2,6 +2,7 @@ package com.gettasksdone.gettasksdone.ui.inBox
 
 import android.app.AlertDialog
 import android.content.Context
+import android.content.Intent
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -13,6 +14,7 @@ import android.widget.TextView
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.RecyclerView
+import com.gettasksdone.gettasksdone.AnadirTask
 import com.gettasksdone.gettasksdone.R
 import com.gettasksdone.gettasksdone.data.JwtHelper
 import com.gettasksdone.gettasksdone.io.ApiService
@@ -52,6 +54,9 @@ class TaskAdapter(
         init {
             itemView.setOnClickListener(this)
             iconoImageView.setOnClickListener { onUpdateIconClicked(bindingAdapterPosition) }
+            itemView.setOnClickListener {
+                editTask(bindingAdapterPosition)
+            }
         }
 
         fun bind(task: Task) {
@@ -60,28 +65,29 @@ class TaskAdapter(
 
         override fun onClick(v: View?) {
             val task = tasks[adapterPosition]
+            //editTask()
 
             // Encuentra el RecyclerView y el taskDetailsLayout
-            val recyclerView = fragment.view?.findViewById<RecyclerView>(R.id.recyclerView)
-            val taskDetailsLayout = fragment.view?.findViewById<LinearLayout>(R.id.taskDetailsLayout)
-            val taskDetailsTextView = fragment.view?.findViewById<TextView>(R.id.taskDetailsTextView)
-            val backButton = fragment.view?.findViewById<Button>(R.id.backButtonTarea)
+            //val recyclerView = fragment.view?.findViewById<RecyclerView>(R.id.recyclerView)
+            //val taskDetailsLayout = fragment.view?.findViewById<LinearLayout>(R.id.taskDetailsLayout)
+            //val taskDetailsTextView = fragment.view?.findViewById<TextView>(R.id.taskDetailsTextView)
+            //val backButton = fragment.view?.findViewById<Button>(R.id.backButtonTarea)
 
             // Oculta el RecyclerView y muestra el taskDetailsLayout
-            recyclerView?.visibility = View.GONE
-            taskDetailsLayout?.visibility = View.VISIBLE
+            //recyclerView?.visibility = View.GONE
+            //taskDetailsLayout?.visibility = View.VISIBLE
 
             // Actualiza los detalles de la tarea
-            taskDetailsTextView?.text = buildTaskDetails(task)
+            //taskDetailsTextView?.text = buildTaskDetails(task)
 
             // Configura el OnClickListener para el botón "Volver"
-            backButton?.setOnClickListener {
-                taskDetailsLayout?.visibility = View.GONE
-                recyclerView?.visibility = View.VISIBLE
+            //backButton?.setOnClickListener {
+            //    taskDetailsLayout?.visibility = View.GONE
+            //    recyclerView?.visibility = View.VISIBLE
 
                 // No se si habbria que hacer una llamada a algo para que al volver atras nos
                 //muestre otra vez la lista d etareas pero actualizada
-            }
+            //}
         }
 
         private fun onUpdateIconClicked(position: Int) {
@@ -157,7 +163,23 @@ class TaskAdapter(
             alertDialog.show()
         }
 
+        fun editTask(position: Int) {
+            val task = tasks[position]
+            val intent = Intent(context, AnadirTask::class.java)
+            intent.putExtra("editMode", true)
+            intent.putExtra("taskId", task.id)
+            intent.putExtra("taskTitle", task.titulo)
+            intent.putExtra("taskDescription", task.descripcion)
+            intent.putExtra("taskDueDate", task.vencimiento)
+            intent.putExtra("taskContextId", task.contexto.id)
+            intent.putExtra("taskState", task.estado)
+            // Agrega más extras según sea necesario
+            context.startActivity(intent)
+        }
+
     }
+
+
 }
 
 private fun buildTaskDetails(task: Task): String {
@@ -170,16 +192,4 @@ private fun buildTaskDetails(task: Task): String {
     // Agrega más detalles según sea necesario
 
     return builder.toString()
-}
-
-private fun showTaskDetailsDialog(context: Context, taskDetails: String) {
-    val builder = AlertDialog.Builder(context)
-    builder.setTitle("Detalles de la tarea")
-    builder.setMessage(taskDetails)
-    builder.setPositiveButton("Aceptar") { dialog, _ ->
-        dialog.dismiss()
-    }
-
-    val dialog = builder.create()
-    dialog.show()
 }

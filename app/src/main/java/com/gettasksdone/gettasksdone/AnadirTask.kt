@@ -14,6 +14,7 @@ import android.widget.Button
 import android.widget.EditText
 import android.widget.ImageButton
 import android.widget.Spinner
+import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
@@ -29,7 +30,9 @@ import com.gettasksdone.gettasksdone.ui.Utils.NewContextDialogFragment
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
+import java.text.SimpleDateFormat
 import java.util.Calendar
+import java.util.Locale
 import kotlin.properties.Delegates
 
 class AnadirTask : AppCompatActivity(), NewContextDialogFragment.NewContextDialogListener {
@@ -128,8 +131,36 @@ class AnadirTask : AppCompatActivity(), NewContextDialogFragment.NewContextDialo
         }
 
         val btnCrear = findViewById<Button>(R.id.crearTarea)
-        btnCrear.setOnClickListener{
-            performCreateTask()
+
+
+        if (intent.getBooleanExtra("editMode", false)) {
+            val windowTitle = findViewById<TextView>(R.id.textCrearTarea)
+            windowTitle.text = "Editar tarea"
+            btnCrear.text = "Editar"
+
+            // Modo de edición: recuperar valores de la tarea seleccionada
+            val taskId = intent.getLongExtra("taskId", 0)
+            val taskTitle = intent.getStringExtra("taskTitle") ?: ""
+            val taskDescription = intent.getStringExtra("taskDescription") ?: ""
+            val taskDueDate = intent.getStringExtra("taskDueDate") ?: ""
+            val taskContextId = intent.getLongExtra("taskContextId", 0)
+            val taskState = intent.getStringExtra("taskState") ?: ""
+
+            // Rellenar los campos del formulario con los valores de la tarea seleccionada
+            findViewById<EditText>(R.id.titulo).setText(taskTitle)
+            findViewById<EditText>(R.id.etDescripcion).setText(taskDescription)
+            findViewById<EditText>(R.id.et_fecha).setText(taskDueDate)
+            // Configurar los valores seleccionados en los Spinners
+            // (puedes necesitar cargar las listas de contextos y proyectos nuevamente para tener la selección correcta)
+            spinner1.setSelection(adapter1.getPosition(taskContextId.toString()))
+            spinner2.setSelection(adapter2.getPosition(taskState))
+            btnCrear.setOnClickListener{
+                performUpdateTask(taskId)
+            }
+        }else{
+            btnCrear.setOnClickListener{
+                performCreateTask()
+            }
         }
     }
 
@@ -192,6 +223,74 @@ class AnadirTask : AppCompatActivity(), NewContextDialogFragment.NewContextDialo
                 } else {
                     // Añade aquí el manejo del caso en el que la respuesta HTTP no es exitosa
                     Toast.makeText(applicationContext, "Error al crear la tarea", Toast.LENGTH_SHORT).show()
+                }
+            }
+
+            override fun onFailure(call: Call<String>, t: Throwable) {
+                Log.e("API_CALL", "Error en onFailure(): ${t.message}")
+
+                Toast.makeText(applicationContext, "Se produjo un error en el servidor", Toast.LENGTH_SHORT).show()
+
+            }
+        })
+    }
+
+    private fun performUpdateTask(taskId: Long){
+
+        val etTitulo = findViewById<EditText>(R.id.titulo).text.toString()
+        val etDescripcion = findViewById<EditText>(R.id.etDescripcion).text.toString()
+        var vencimiento: String? = null
+        if(findViewById<EditText>(R.id.et_fecha).text.toString().isNotEmpty()){
+            val fechaVencimiento = findViewById<EditText>(R.id.et_fecha).text.toString()
+            val formatter = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss", Locale.getDefault())
+            val date = formatter.parse(fechaVencimiento)
+            val calendar = Calendar.getInstance().apply { time = date }
+
+            val diaVencimientoInt = calendar.get(Calendar.DAY_OF_MONTH)
+            val mesVencimientoInt = calendar.get(Calendar.MONTH) + 1 // Sumar 1 porque en Calendar.MONTH enero es 0
+            val añoVencimiento = calendar.get(Calendar.YEAR)
+
+            val diaVencimiento = if (diaVencimientoInt < 10) "0$diaVencimientoInt" else "$diaVencimientoInt"
+            val mesVencimiento = if (mesVencimientoInt < 10) "0$mesVencimientoInt" else "$mesVencimientoInt"
+
+            vencimiento = "$añoVencimiento-$mesVencimiento-$diaVencimiento 00:00:00"
+        }
+
+        val contexto = Context(
+            id = selectedContext,
+            nombre = ""
+        )
+
+        val updateTaskRequest = TaskRequest(
+            titulo = etTitulo,
+            descripcion = etDescripcion,
+            estado = selectedState,
+            prioridad = if (isStarred) 1 else 0,
+            contexto = contexto,
+            vencimiento = vencimiento,
+        )
+
+        val authHeader = "Bearer ${jwtHelper.getToken()}"
+        val call = apiService.updateTask(taskId, authHeader, updateTaskRequest)
+
+        call.enqueue(object : Callback<String> {
+            override fun onResponse(call: Call<String>, response: Response<String>) {
+                val registerResponse = response.body()
+                if(response.isSuccessful) {
+                    if (registerResponse == null) {
+                        Toast.makeText(
+                            applicationContext,
+                            "Se produjo un error en el servidor",
+                            Toast.LENGTH_SHORT
+                        ).show()
+                        return
+                    }
+                    Toast.makeText(applicationContext, "Tarea actualizada correctamente", Toast.LENGTH_SHORT).show()
+                    goToMenu()
+
+                } else {
+                    // Añade aquí el manejo del caso en el que la respuesta HTTP no es exitosa
+                    Toast.makeText(applicationContext, "Error al actualizar la tarea", Toast.LENGTH_SHORT).show()
                 }
             }
 
