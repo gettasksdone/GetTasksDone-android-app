@@ -66,6 +66,10 @@ class Menu : AppCompatActivity() {
                     startActivity(intent)
                     true
                 }
+                R.id.nav_logout -> {
+                    signOut()
+                    true
+                }
                 // maneja otros elementos del menú aquí...
                 else ->{
                     // Delega la navegación al NavController para los demás elementos del menú
