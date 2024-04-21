@@ -88,7 +88,7 @@ class TaskAdapter(
             val task = tasks[position]
             val alertDialogBuilder = AlertDialog.Builder(context)
             alertDialogBuilder.setTitle("Confirmación")
-            alertDialogBuilder.setMessage("Seguro que quieres marcar la tarea '${task.descripcion}' como completada?")
+            alertDialogBuilder.setMessage("Seguro que quieres marcar la tarea '${task.titulo}' como completada?")
             alertDialogBuilder.setPositiveButton("Aceptar") { dialog, _ ->
 
                 val createTaskRequest = TaskRequest(
