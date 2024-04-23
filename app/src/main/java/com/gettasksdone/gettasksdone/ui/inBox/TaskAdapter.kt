@@ -72,13 +72,13 @@ class TaskAdapter(
             nombreTaskTextView.text = task.titulo
 
             // Asigna el emoticono correcto en función de la prioridad
-            val emoticonoTextView: TextView = itemView.findViewById(R.id.emoticono)
-            emoticonoTextView.text = when (task.estado) {
-                "empezar" -> "\u23F3" // ⏳ Aqui se podria poner tambien un png porque tiene pinta que el emoticono no funciona bien
-                "esperando" -> "\u1F6E0" // 🛠️
-                "algun dia" -> "\u1F4C5" // 📅
-                else -> ""
-            }
+            val emoticonoImageView: ImageView = itemView.findViewById(R.id.emoticono)
+            emoticonoImageView.setImageResource(when (task.estado) {
+                "empezar" -> R.drawable.ic_menu_slideshow // Nombre del recurso de imagen para el emoticono de "empezar"
+                "esperando" -> R.drawable.mug_hot_solid // Nombre del recurso de imagen para el emoticono de "esperando"
+                "algun dia" -> R.drawable.mountain_sun_solid // Nombre del recurso de imagen para el emoticono de "algun dia"
+                else -> R.drawable.ic_menu_gallery // Nombre del recurso de imagen para un valor por defecto
+            })
 
             // Cambia el color de fondo de la CardView en función de la prioridad
             val cardView = itemView as CardView
@@ -86,7 +86,7 @@ class TaskAdapter(
                 0 -> {
                     val gradientDrawable = GradientDrawable(
                         GradientDrawable.Orientation.RIGHT_LEFT,
-                        intArrayOf(Color.parseColor("#4000FF00"), Color.parseColor("#FF00FF00")) // Verde semitransparente
+                        intArrayOf(Color.parseColor("#7f8c8d"), Color.parseColor("#95a5a6")) // Verde semitransparente
                     )
                     gradientDrawable.cornerRadius = 16.dpToPx(context)
                     cardView.background = gradientDrawable
@@ -94,7 +94,7 @@ class TaskAdapter(
                 1 -> {
                     val gradientDrawable = GradientDrawable(
                         GradientDrawable.Orientation.LEFT_RIGHT,
-                        intArrayOf(Color.parseColor("#40FF0000"), Color.parseColor("#FFFF0000")) // Rojo semitransparente
+                        intArrayOf(Color.parseColor("#95a5a6"), Color.parseColor("#7f8c8d")) // Rojo semitransparente
                     )
                     gradientDrawable.cornerRadius = 16.dpToPx(context)
                     cardView.background = gradientDrawable

@@ -9,11 +9,21 @@ import androidx.recyclerview.widget.RecyclerView
 import com.gettasksdone.gettasksdone.model.Project
 import com.gettasksdone.gettasksdone.R
 import android.content.Context
+import androidx.recyclerview.widget.LinearLayoutManager
+import com.gettasksdone.gettasksdone.data.JwtHelper
+import com.gettasksdone.gettasksdone.io.ApiService
+import com.gettasksdone.gettasksdone.ui.inBox.TaskAdapter
+import com.gettasksdone.gettasksdone.ui.inBox.TaskCompletionListener
 
 class ProyectosAdapter(
     private val proyectos: List<Project>,
-    private val fragment: Fragment
-) : RecyclerView.Adapter<ProyectosAdapter.ProyectoViewHolder>() {
+    private val fragment: Fragment,
+    private val apiService: ApiService,
+    private val jwtHelper: JwtHelper,
+    private val context: Context,
+    private val onTaskCompleted: TaskCompletionListener,
+
+    ) : RecyclerView.Adapter<ProyectosAdapter.ProyectoViewHolder>() {
 
     interface OnItemClickListener {
         fun onItemClick(project: Project)
@@ -50,7 +60,12 @@ class ProyectosAdapter(
             val position = bindingAdapterPosition
             if (position != RecyclerView.NO_POSITION) {
                 val clickedProject = proyectos[position]
-                showProjectDetailsDialog(v.context, clickedProject)
+                // Obtener las tareas asociadas al proyecto
+                val tasks = clickedProject.tareas
+                // Configurar el RecyclerView con el adaptador de tareas
+                val recyclerViewTasks = v.findViewById<RecyclerView>(R.id.recyclerView)
+                recyclerViewTasks.layoutManager = LinearLayoutManager(context)
+                recyclerViewTasks.adapter = TaskAdapter(tasks, apiService, jwtHelper, fragment, onTaskCompleted)
             }
         }
     }

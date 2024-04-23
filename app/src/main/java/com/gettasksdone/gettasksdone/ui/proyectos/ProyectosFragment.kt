@@ -13,8 +13,10 @@ import androidx.recyclerview.widget.RecyclerView
 import com.gettasksdone.gettasksdone.data.JwtHelper
 import com.gettasksdone.gettasksdone.databinding.FragmentProyectosBinding
 import com.gettasksdone.gettasksdone.R
+import com.gettasksdone.gettasksdone.io.ApiService
+import com.gettasksdone.gettasksdone.ui.inBox.TaskCompletionListener
 
-class ProyectosFragment : Fragment() {
+class ProyectosFragment : Fragment(), TaskCompletionListener {
 
     private var _binding: FragmentProyectosBinding? = null
     private val binding get() = _binding!!
@@ -22,15 +24,19 @@ class ProyectosFragment : Fragment() {
     private lateinit var proyectosViewModel: ProyectosViewModel
     private lateinit var proyectosAdapter: ProyectosAdapter
 
+    private val apiService: ApiService by lazy {
+        ApiService.create()
+    }
+    private lateinit var jwtHelper: JwtHelper
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
 
-
         val context = requireContext()
-        val jwtHelper = JwtHelper(context)
+        jwtHelper = JwtHelper(context)
         val factory = ProjectViewModelFactory(jwtHelper)
 
         // Inicializar ViewModel
@@ -49,7 +55,7 @@ class ProyectosFragment : Fragment() {
         recyclerView.layoutManager = LinearLayoutManager(context)
 
         proyectosViewModel.projects.observe(viewLifecycleOwner) { proyectos ->
-            recyclerView.adapter = ProyectosAdapter(proyectos, this)
+            recyclerView.adapter = ProyectosAdapter(proyectos, this, apiService, jwtHelper, requireContext(), this)
         }
 
         proyectosViewModel.getProjects()
@@ -59,5 +65,10 @@ class ProyectosFragment : Fragment() {
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
+    }
+
+    override fun onTaskCompleted() {
+        // Llama a getTasks() para actualizar la lista de tareas
+        //esperandoViewModel.getTasks()
     }
 }

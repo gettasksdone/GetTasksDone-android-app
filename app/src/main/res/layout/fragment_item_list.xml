@@ -14,14 +14,16 @@ android:layout_width="match_parent"
 android:layout_height="wrap_content"
 android:padding="16dp">
 
-<TextView
-    android:id="@+id/emoticono"
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
-    android:layout_alignParentStart="true"
-    android:layout_alignParentLeft="true"
-    android:layout_centerVertical="true"
-    android:textSize="24sp" />
+    <ImageView
+        android:id="@+id/emoticono"
+        android:layout_width="24dp"
+        android:layout_height="24dp"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentLeft="true"
+        android:layout_centerVertical="true"
+        android:adjustViewBounds="true"
+        android:scaleType="fitCenter"
+        android:src="@drawable/star" />
 
 <TextView
     android:id="@+id/textNombreTarea"
@@ -30,8 +32,9 @@ android:padding="16dp">
     android:layout_toRightOf="@id/emoticono"
     android:layout_toEndOf="@id/emoticono"
     android:layout_centerVertical="true"
+    android:textAlignment="center"
     android:text="@{proyecto.nombre}"
-    android:textSize="16sp"
+    android:textSize="18sp"
     android:textStyle="bold" />
 
 <ImageView
