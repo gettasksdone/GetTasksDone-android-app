@@ -2,7 +2,9 @@ package com.gettasksdone.gettasksdone
 import android.content.Intent
 import android.os.Bundle
 import android.view.Menu
+import android.widget.ImageView
 import android.widget.PopupMenu
+import android.widget.TextView
 import com.google.android.material.navigation.NavigationView
 import androidx.navigation.findNavController
 import androidx.navigation.ui.AppBarConfiguration
@@ -70,6 +72,12 @@ class Menu : AppCompatActivity() {
                     signOut()
                     true
                 }
+                R.id.nav_perfil -> {
+                    val intent = Intent(this, CompletarRegistro::class.java)
+                    startActivity(intent)
+                    true
+                }
+
                 // maneja otros elementos del menú aquí...
                 else ->{
                     // Delega la navegación al NavController para los demás elementos del menú
@@ -96,6 +104,7 @@ class Menu : AppCompatActivity() {
         menuInflater.inflate(R.menu.menu, menu)
         return true
     }
+
 
     override fun onSupportNavigateUp(): Boolean {
         val navController = findNavController(R.id.nav_host_fragment_content_menu)
