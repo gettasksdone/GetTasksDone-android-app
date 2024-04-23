@@ -1,32 +1,47 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.cardview.widget.CardView
     xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_margin="8dp"
-    android:elevation="4dp">
+    android:background="#3E4A59"
+    android:elevation="4dp"
+    app:cardCornerRadius="16dp">
 
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:padding="16dp">
+<RelativeLayout
+android:layout_width="match_parent"
+android:layout_height="wrap_content"
+android:padding="16dp">
 
-        <TextView
-            android:id="@+id/textNombreTarea"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="@{proyecto.nombre}"
-            android:textSize="16sp"
-            android:textStyle="bold" />
+<TextView
+    android:id="@+id/emoticono"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_alignParentStart="true"
+    android:layout_alignParentLeft="true"
+    android:layout_centerVertical="true"
+    android:textSize="24sp" />
 
-        <ImageView
-            android:id="@+id/icono"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentEnd="true"
-            android:layout_alignParentRight="true"
-            android:layout_centerVertical="true"
-            android:src="@drawable/ic_done"
-            android:padding="8dp" />
-    </RelativeLayout>
-</androidx.cardview.widget.CardView>
+<TextView
+    android:id="@+id/textNombreTarea"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_toRightOf="@id/emoticono"
+    android:layout_toEndOf="@id/emoticono"
+    android:layout_centerVertical="true"
+    android:text="@{proyecto.nombre}"
+    android:textSize="16sp"
+    android:textStyle="bold" />
+
+<ImageView
+    android:id="@+id/icono"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_alignParentEnd="true"
+    android:layout_alignParentRight="true"
+    android:layout_centerVertical="true"
+    android:src="@drawable/ic_done"
+    android:padding="8dp" />
+</RelativeLayout>
+    </androidx.cardview.widget.CardView>

@@ -3,6 +3,8 @@ package com.gettasksdone.gettasksdone.ui.inBox
 import android.app.AlertDialog
 import android.content.Context
 import android.content.Intent
+import android.graphics.Color
+import android.graphics.drawable.GradientDrawable
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -12,6 +14,7 @@ import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.TextView
 import android.widget.Toast
+import androidx.cardview.widget.CardView
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.RecyclerView
 import com.gettasksdone.gettasksdone.AnadirTask
@@ -23,6 +26,7 @@ import com.gettasksdone.gettasksdone.model.Task
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
+import java.util.Locale
 
 class TaskAdapter(
     private val tasks: List<Task>,
@@ -60,11 +64,49 @@ class TaskAdapter(
         }
 
         fun bind(task: Task) {
+            val capitalizedTaskTitle = task.titulo.split(" ").joinToString(" ") { it.replaceFirstChar {
+                if (it.isLowerCase()) it.titlecase(
+                    Locale.ROOT
+                ) else it.toString()
+            } }
             nombreTaskTextView.text = task.titulo
+
+            // Asigna el emoticono correcto en función de la prioridad
+            val emoticonoTextView: TextView = itemView.findViewById(R.id.emoticono)
+            emoticonoTextView.text = when (task.estado) {
+                "empezar" -> "\u23F3" // ⏳ Aqui se podria poner tambien un png porque tiene pinta que el emoticono no funciona bien
+                "esperando" -> "\u1F6E0" // 🛠️
+                "algun dia" -> "\u1F4C5" // 📅
+                else -> ""
+            }
+
+            // Cambia el color de fondo de la CardView en función de la prioridad
+            val cardView = itemView as CardView
+            when (task.prioridad) {
+                0 -> {
+                    val gradientDrawable = GradientDrawable(
+                        GradientDrawable.Orientation.RIGHT_LEFT,
+                        intArrayOf(Color.parseColor("#4000FF00"), Color.parseColor("#FF00FF00")) // Verde semitransparente
+                    )
+                    gradientDrawable.cornerRadius = 16.dpToPx(context)
+                    cardView.background = gradientDrawable
+                }
+                1 -> {
+                    val gradientDrawable = GradientDrawable(
+                        GradientDrawable.Orientation.LEFT_RIGHT,
+                        intArrayOf(Color.parseColor("#40FF0000"), Color.parseColor("#FFFF0000")) // Rojo semitransparente
+                    )
+                    gradientDrawable.cornerRadius = 16.dpToPx(context)
+                    cardView.background = gradientDrawable
+                }
+            }
         }
 
         override fun onClick(v: View?) {
             val task = tasks[adapterPosition]
+        }
+        fun Int.dpToPx(context: Context): Float {
+            return this * context.resources.displayMetrics.density
         }
 
         private fun onUpdateIconClicked(position: Int) {
