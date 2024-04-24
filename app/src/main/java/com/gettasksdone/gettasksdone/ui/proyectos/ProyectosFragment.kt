@@ -6,6 +6,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Button
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -59,6 +60,24 @@ class ProyectosFragment : Fragment(), TaskCompletionListener {
         }
 
         proyectosViewModel.getProjects()
+
+        val buttonBack = view.findViewById<Button>(R.id.buttonBack)
+        buttonBack.setOnClickListener {
+            // Cambiar la visibilidad del RecyclerView de las tareas
+            val recyclerViewTasks = view.findViewById<RecyclerView>(R.id.recyclerViewTasks)
+            recyclerViewTasks.visibility = View.GONE
+
+            // Cambiar la visibilidad del RecyclerView de los proyectos
+            val recyclerViewProjects = view.findViewById<RecyclerView>(R.id.recyclerViewProyectos)
+            recyclerViewProjects.visibility = View.VISIBLE
+
+            // Ocultar el botón de "Atrás"
+            buttonBack.visibility = View.GONE
+
+            // Aquí puedes agregar más lógica si es necesario
+            // Por ejemplo, podrías querer actualizar la lista de proyectos
+            proyectosViewModel.getProjects()
+        }
 
     }
 

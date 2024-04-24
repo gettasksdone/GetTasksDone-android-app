@@ -13,6 +13,7 @@ import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.view.GravityCompat
 import androidx.navigation.ui.NavigationUI
 import com.gettasksdone.gettasksdone.databinding.ActivityMenuBinding
 import com.gettasksdone.gettasksdone.util.PreferenceHelper
@@ -56,8 +57,17 @@ class Menu : AppCompatActivity() {
         val navView: NavigationView = binding.navView
         val navController = findNavController(R.id.nav_host_fragment_content_menu)
 
-        appBarConfiguration = AppBarConfiguration(setOf(
-            R.id.nav_inbox, R.id.nav_proyectos,R.id.nav_esperando,R.id.nav_agendado,R.id.nav_ad, R.id.nav_gallery, R.id.nav_home), drawerLayout)
+        appBarConfiguration = AppBarConfiguration(
+            setOf(
+                R.id.nav_inbox,
+                R.id.nav_proyectos,
+                R.id.nav_esperando,
+                R.id.nav_agendado,
+                R.id.nav_ad,
+                R.id.nav_gallery,
+                R.id.nav_home
+            ), drawerLayout
+        )
         setupActionBarWithNavController(navController, appBarConfiguration)
         navView.setupWithNavController(navController)
 
@@ -68,27 +78,32 @@ class Menu : AppCompatActivity() {
                     startActivity(intent)
                     true
                 }
+
                 R.id.nav_logout -> {
                     signOut()
                     true
                 }
+
                 R.id.nav_perfil -> {
                     val intent = Intent(this, CompletarRegistro::class.java)
                     startActivity(intent)
                     true
                 }
 
-                // maneja otros elementos del menú aquí...
-                else ->{
+                else -> {
                     // Delega la navegación al NavController para los demás elementos del menú
-                    NavigationUI.onNavDestinationSelected(menuItem, navController)
+                    val handled = NavigationUI.onNavDestinationSelected(menuItem, navController)
+
+                    // Cierra el Navigation Drawer si se manejó el elemento del menú
+                    if (handled) {
+                        binding.drawerLayout.closeDrawer(GravityCompat.START)
+                    }
+
+                    handled
                 }
             }
         }
-
-        NavHeaderUtils.updateNavHeader(this)
     }
-
     private fun signOut() {
         val preferences = PreferenceHelper.defaultPrefs(this)
         val editor = preferences.edit()
