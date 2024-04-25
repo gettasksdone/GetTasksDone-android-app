@@ -29,7 +29,7 @@ import retrofit2.Response
 import java.util.Locale
 
 class TaskAdapter(
-    private val tasks: List<Task>,
+    val tasks: List<Task>,
     private val apiService: ApiService,
     private val jwtHelper: JwtHelper,
     private val fragment: Fragment,
