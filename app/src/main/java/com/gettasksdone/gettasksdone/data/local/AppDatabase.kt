@@ -28,7 +28,9 @@ import com.gettasksdone.gettasksdone.data.local.entities.UserInfoEntity
     TaskEntity::class,
     UserEntity::class,
     UserInfoEntity::class
-                     ], version = 1)
+                     ],
+    version = 1,
+    exportSchema = false)
 abstract class AppDatabase: RoomDatabase() {
     abstract fun checkItemDao(): CheckItemDao
     abstract fun contextDao(): ContextDao
