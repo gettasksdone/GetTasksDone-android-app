@@ -1,7 +1,5 @@
 package com.gettasksdone.gettasksdone.model
 
-import java.time.LocalDateTime
-
 /*
     {
         "id": 4,
@@ -12,5 +10,5 @@ import java.time.LocalDateTime
 data class Note (
     val id: Long,
     val contenido: String,
-    val creacion: LocalDateTime
+    val creacion: String
 )

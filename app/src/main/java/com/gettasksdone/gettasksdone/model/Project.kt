@@ -1,7 +1,5 @@
 package com.gettasksdone.gettasksdone.model
 
-import java.time.LocalDateTime
-
 data class Project (
     val id: Long,
     val nombre: String,
