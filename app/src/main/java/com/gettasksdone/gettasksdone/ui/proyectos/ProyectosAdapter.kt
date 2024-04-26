@@ -9,8 +9,11 @@ import androidx.recyclerview.widget.RecyclerView
 import com.gettasksdone.gettasksdone.model.Project
 import com.gettasksdone.gettasksdone.R
 import android.content.Context
+import android.content.Intent
 import android.widget.Button
+import android.widget.ImageView
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.gettasksdone.gettasksdone.CreateProject
 import com.gettasksdone.gettasksdone.data.JwtHelper
 import com.gettasksdone.gettasksdone.io.ApiService
 import com.gettasksdone.gettasksdone.ui.inBox.TaskAdapter
@@ -48,9 +51,11 @@ class ProyectosAdapter(
         private val nombreProyectoTextView: TextView =
             itemView.findViewById(R.id.textNombreProyecto)
         private val numTareasTextView: TextView = itemView.findViewById(R.id.textNumeroTareas)
+        private val emoticonImageView: ImageView = itemView.findViewById(R.id.editarProyecto)  // Assuming your emoticon has id "emoticono"
 
         init {
             itemView.setOnClickListener(this)
+            emoticonImageView.setOnClickListener(this)
         }
 
         @SuppressLint("SetTextI18n")
@@ -63,6 +68,11 @@ class ProyectosAdapter(
             val position = bindingAdapterPosition
             if (position != RecyclerView.NO_POSITION) {
                 val clickedProject = proyectos[position]
+
+                if (v.id == R.id.editarProyecto) {  // Check if clicked view is the emoticon
+                    // Handle emoticon click here
+                    editProject(position)  // Example action (replace with your desired action)
+                }
                 // Obtener las tareas asociadas al proyecto
                 val tasks = clickedProject.tareas
 
@@ -82,6 +92,19 @@ class ProyectosAdapter(
                 val buttonBack = fragment.view?.findViewById<Button>(R.id.buttonBack)
                 buttonBack?.visibility = View.VISIBLE
             }
+        }
+
+        private fun editProject(position: Int){
+            val project = proyectos[position]
+            val intent = Intent(context, CreateProject::class.java)
+            intent.putExtra("editMode", true)
+            intent.putExtra("projectId", project.id)
+            intent.putExtra("nombre", project.nombre)
+            intent.putExtra("inicio", project.inicio)
+            intent.putExtra("fin", project.fin)
+            intent.putExtra("descripcion", project.descripcion)
+            intent.putExtra("estado", project.estado)
+            context.startActivity(intent)
         }
 
         private fun showProjectDetailsDialog(context: Context, project: Project) {

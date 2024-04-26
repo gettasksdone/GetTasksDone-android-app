@@ -1,4 +1,3 @@
-<?xml version="1.0" encoding="utf-8"?>
 <androidx.cardview.widget.CardView
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
@@ -6,25 +5,43 @@
     android:layout_margin="8dp"
     android:elevation="4dp">
 
-    <LinearLayout
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
         android:padding="16dp">
 
-        <TextView
-            android:id="@+id/textNombreProyecto"
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@{proyecto.nombre}"
-            android:textSize="16sp"
-            android:textStyle="bold" />
+            android:orientation="vertical">
+            <TextView
+                android:id="@+id/textNombreProyecto"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@{proyecto.nombre}"
+                android:textSize="16sp"
+                android:textStyle="bold" />
 
-        <TextView
-            android:id="@+id/textNumeroTareas"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="@{String.valueOf(proyecto.tareas.size)}"
-            android:textSize="14sp" />
-    </LinearLayout>
+            <TextView
+                android:id="@+id/textNumeroTareas"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@{String.valueOf(proyecto.tareas.size)}"
+                android:textSize="14sp" />
+
+        </LinearLayout>
+
+
+        <ImageView
+            android:id="@+id/editarProyecto"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:layout_alignParentEnd="true"
+            android:layout_marginEnd="16dp"
+            android:adjustViewBounds="true"
+            android:scaleType="fitCenter"
+            android:src="@drawable/pen_to_square_solid"
+            android:contentDescription="TODO" />
+
+    </RelativeLayout>
 </androidx.cardview.widget.CardView>
