@@ -3,6 +3,7 @@ package com.gettasksdone.gettasksdone.ui.inBox
 import android.app.AlertDialog
 import android.graphics.Color
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -10,6 +11,7 @@ import android.widget.Button
 import android.widget.ImageButton
 import android.widget.LinearLayout
 import android.widget.TextView
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -21,6 +23,9 @@ import com.gettasksdone.gettasksdone.model.Task
 import androidx.cardview.widget.CardView
 import androidx.recyclerview.widget.ItemTouchHelper
 import com.gettasksdone.gettasksdone.io.ApiService
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
 
 interface TaskCompletionListener {
     fun onTaskCompleted()
@@ -95,12 +100,40 @@ class InBoxFragment : Fragment(), TaskCompletionListener {
                         setTitle("Confirmación")
                         setMessage("¿Seguro que quieres eliminar la tarea '${task.titulo}'?")
                         setPositiveButton("Sí") { dialog, _ ->
-                            // Aquí llamas a la API para eliminar la tarea
-                            // Recuerda manejar correctamente la respuesta de la API
-                            // Si la tarea se elimina correctamente, puedes removerla de tu lista local y notificar al adaptador
-                            //taskAdapter.tasks.removeAt(position)
-                            //taskAdapter.notifyItemRemoved(position)
-                            //dialog.dismiss()
+
+                            val authHeader = "Bearer ${jwtHelper.getToken()}"
+                            val call = apiService.deleteTask(task.id, authHeader)
+
+                            call.enqueue(object : Callback<String> {
+                                override fun onResponse(call: Call<String>, response: Response<String>) {
+                                    val registerResponse = response.body()
+                                    if(response.isSuccessful) {
+                                        if (registerResponse == null) {
+                                            Toast.makeText(
+                                                context,
+                                                "Se produjo un error en el servidor",
+                                                Toast.LENGTH_SHORT
+                                            ).show()
+                                            return
+                                        }
+                                        Toast.makeText(context, "Tarea borrada correctamente", Toast.LENGTH_SHORT).show()
+                                        inboxViewModel.getTasks()
+                                    } else {
+                                        // Añade aquí el manejo del caso en el que la respuesta HTTP no es exitosa
+                                        Toast.makeText(context, "Error al borrar la tarea", Toast.LENGTH_SHORT).show()
+                                    }
+                                }
+
+                                override fun onFailure(call: Call<String>, t: Throwable) {
+                                    Log.e("API_CALL", "Error en onFailure(): ${t.message}")
+
+                                    Toast.makeText(context, "Se produjo un error en el servidor", Toast.LENGTH_SHORT).show()
+
+                                }
+                            })
+
+                            dialog.dismiss()
+
                         }
                         setNegativeButton("No") { dialog, _ ->
                             // Si el usuario elige "No", simplemente vuelves a mostrar la tarea en la lista

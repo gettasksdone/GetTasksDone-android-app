@@ -84,8 +84,6 @@ class ProyectosAdapter(
             }
         }
 
-
-
         private fun showProjectDetailsDialog(context: Context, project: Project) {
             val builder = AlertDialog.Builder(context)
             builder.setTitle("Detalles del proyecto")
