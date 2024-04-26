@@ -15,8 +15,14 @@ import androidx.drawerlayout.widget.DrawerLayout
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.GravityCompat
 import androidx.navigation.ui.NavigationUI
+import com.gettasksdone.gettasksdone.data.JwtHelper
 import com.gettasksdone.gettasksdone.databinding.ActivityMenuBinding
+import com.gettasksdone.gettasksdone.io.ApiService
+import com.gettasksdone.gettasksdone.model.UserInfo
 import com.gettasksdone.gettasksdone.util.PreferenceHelper
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
 
 class Menu : AppCompatActivity() {
 
@@ -72,6 +78,13 @@ class Menu : AppCompatActivity() {
         navView.setupWithNavController(navController)
 
         binding.navView.setNavigationItemSelectedListener { menuItem ->
+            val jwtHelper: JwtHelper by lazy {
+                JwtHelper(this)
+            }
+
+            val apiService : ApiService by lazy {
+                ApiService.create()
+            }
             when (menuItem.itemId) {
                 R.id.action_settings -> {
                     val intent = Intent(this, SettingsActivity::class.java)
@@ -85,8 +98,28 @@ class Menu : AppCompatActivity() {
                 }
 
                 R.id.nav_perfil -> {
-                    val intent = Intent(this, CompletarRegistro::class.java)
-                    startActivity(intent)
+                    val authHeader = "Bearer ${jwtHelper.getToken()}"
+                    apiService.getUserData(authHeader).enqueue(object : Callback<UserInfo> {
+                        override fun onResponse(call: Call<UserInfo>, response: Response<UserInfo>) {
+                            if (response.isSuccessful) {
+                                val userInfo = response.body()
+                                if (userInfo != null) {
+                                    val intent = Intent(this@Menu, CompletarRegistro::class.java)
+                                    intent.putExtra("nombre", userInfo.nombre)
+                                    intent.putExtra("telefono", userInfo.telefono)
+                                    intent.putExtra("departamento", userInfo.departamento)
+                                    intent.putExtra("puesto", userInfo.puesto)
+                                    startActivity(intent)
+                                }
+                            } else {
+                                // Maneja el caso en que la respuesta HTTP no es exitosa
+                            }
+                        }
+
+                        override fun onFailure(call: Call<UserInfo>, t: Throwable) {
+                            // Maneja el caso en que la llamada a la API falla
+                        }
+                    })
                     true
                 }
 
@@ -111,6 +144,7 @@ class Menu : AppCompatActivity() {
         editor.apply()
 
         val intent = Intent(this, MainActivity::class.java)
+        intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
         startActivity(intent)
         finish()
     }

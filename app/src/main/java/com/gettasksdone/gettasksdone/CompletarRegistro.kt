@@ -28,6 +28,16 @@ class CompletarRegistro : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_completar_registro2)
 
+        val nombre = intent.getStringExtra("nombre")
+        val telefono = intent.getStringExtra("telefono")
+        val departamento = intent.getStringExtra("departamento")
+        val puesto = intent.getStringExtra("puesto")
+
+        findViewById<EditText>(R.id.etNombre).setText(nombre)
+        findViewById<EditText>(R.id.etTelefono).setText(telefono)
+        findViewById<EditText>(R.id.etDepartamento).setText(departamento)
+        findViewById<EditText>(R.id.etPuesto).setText(puesto)
+
         val btnGoMenu = findViewById<Button>(R.id.btnCompletar)
         btnGoMenu.setOnClickListener{
             performCompleteRegister()

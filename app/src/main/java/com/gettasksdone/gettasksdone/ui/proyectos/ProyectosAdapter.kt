@@ -20,7 +20,7 @@ import com.gettasksdone.gettasksdone.ui.inBox.TaskAdapter
 import com.gettasksdone.gettasksdone.ui.inBox.TaskCompletionListener
 
 class ProyectosAdapter(
-    private val proyectos: List<Project>,
+    val proyectos: List<Project>,
     private val fragment: Fragment,
     private val apiService: ApiService,
     private val jwtHelper: JwtHelper,
