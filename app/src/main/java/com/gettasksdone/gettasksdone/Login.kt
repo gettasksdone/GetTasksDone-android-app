@@ -158,6 +158,17 @@ class Login : AppCompatActivity(), AgregarUrlDialogFragment.NewUrlDialogListener
     private fun performLogin(){
         val etUsername = findViewById<EditText>(R.id.et_username).text.toString()
         val etPassword = findViewById<EditText>(R.id.et_password).text.toString()
+        val selectSpinner = findViewById<Spinner>(R.id.selector_servidor)
+        val textSpinner = selectSpinner.selectedItem.toString()
+        Toast.makeText(applicationContext, "Debug server $textSpinner", Toast.LENGTH_SHORT).show()
+        Log.w("Debug server", textSpinner)
+
+
+        if (textSpinner == ""){
+            Toast.makeText(applicationContext, "El campo Servidor es obligatorio", Toast.LENGTH_SHORT).show()
+            return;
+        }
+
         if(etUsername == ""){
             Toast.makeText(applicationContext, "El campo nombre de usuario es obligatorio", Toast.LENGTH_SHORT).show()
             return;
@@ -166,6 +177,27 @@ class Login : AppCompatActivity(), AgregarUrlDialogFragment.NewUrlDialogListener
             Toast.makeText(applicationContext, "El campo contraseña es obligatorio", Toast.LENGTH_SHORT).show()
             return;
         }
+
+        //Añadiendo la clave urlBase al PreferenceHelper
+
+        val preferencesTest = PreferenceHelper.defaultPrefs(applicationContext)
+        with(preferencesTest.edit()){
+            putString("urlBase", textSpinner)
+            apply()
+        }
+
+        try {
+            ApiService.Factory.setBaseUrl(textSpinner)
+        } catch (e: IllegalArgumentException) {
+            throw  IllegalArgumentException("El formato de la URL no es válido")
+        } catch (e: IllegalStateException) {
+            throw  IllegalStateException("No se ha establecido la URL")
+        }finally {
+            Toast.makeText(applicationContext, "DEBUG: url_base $textSpinner", Toast.LENGTH_SHORT).show()
+        }
+
+
+
         val loginRequest = LoginRequest(username = etUsername, password = etPassword)
         //Log.d("username:", "$etEmail")
         //Log.d("password:", "$etPassword")
@@ -205,18 +237,48 @@ class Login : AppCompatActivity(), AgregarUrlDialogFragment.NewUrlDialogListener
     }
 
     override fun onDialogPositiveClick(newUrl: String) {
-        val preferencesTest = PreferenceHelper.defaultPrefs(applicationContext)
-        val urlList = preferencesTest.getStringSet("urlList", emptySet())
-        val newUrlList = mutableSetOf<String>()
-        if(urlList != null){
-            newUrlList.addAll(urlList)
-            with(preferencesTest.edit()){
-                newUrlList.add(newUrl)
-                putStringSet("urlList", newUrlList)
-                apply()
+
+        if(newUrl.isEmpty()) {
+            Toast.makeText(
+                applicationContext,
+                "La URL del servidor no puede estar vacía",
+                Toast.LENGTH_SHORT
+            ).show()
+        }
+        else if (!newUrl.startsWith("http://") &&!newUrl.startsWith("https://")) {
+            Toast.makeText(
+                applicationContext,
+                "La URL del servidor debe empezar con http:// o https://",
+                Toast.LENGTH_SHORT
+            ).show()
+
+            /*
+             else if(!isValidDomain(newUrl) && !isValidDomain(newUrl)){
+
+           Toast.makeText(applicationContext, "La URL del servidor no es válida", Toast.LENGTH_SHORT).show()
+        }
+
+             */
+
+        }else {
+
+            val preferencesTest = PreferenceHelper.defaultPrefs(applicationContext)
+            val urlList = preferencesTest.getStringSet("urlList", emptySet())
+            val newUrlList = mutableSetOf<String>()
+            if (urlList != null) {
+                newUrlList.addAll(urlList)
+                with(preferencesTest.edit()) {
+                    newUrlList.add(newUrl)
+                    putStringSet("urlList", newUrlList)
+                    apply()
+                }
+                Toast.makeText(
+                    applicationContext,
+                    "La URL del servidor ha sido agregada correctamente",
+                    Toast.LENGTH_SHORT
+                ).show()
+                loadUrls()
             }
-            Toast.makeText(applicationContext, "La URL del servidor ha sido agregada correctamente", Toast.LENGTH_SHORT).show()
-            loadUrls()
         }
     }
 

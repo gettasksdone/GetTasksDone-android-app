@@ -1,6 +1,7 @@
 package com.gettasksdone.gettasksdone.io
 
 
+import android.content.SharedPreferences
 import com.gettasksdone.gettasksdone.io.requests.CheckItemRequest
 import com.gettasksdone.gettasksdone.io.requests.ContextRequest
 import com.gettasksdone.gettasksdone.io.requests.LoginRequest
@@ -19,6 +20,7 @@ import com.gettasksdone.gettasksdone.model.Tag
 import com.gettasksdone.gettasksdone.model.Task
 import com.gettasksdone.gettasksdone.model.User
 import com.gettasksdone.gettasksdone.model.UserInfo
+import com.gettasksdone.gettasksdone.util.PreferenceHelper
 import com.google.gson.Gson
 import com.google.gson.GsonBuilder
 import retrofit2.Call
@@ -274,8 +276,26 @@ interface ApiService {
     //---END OF TOOLS---
     //---API CONNECTION SETTINGS---
     companion object Factory {
-        private const val BASE_URL = "https://lopezgeraghty.com:8080"
+
+
+        private var BASE_URL : String = "https://lopezgeraghty.com:8080"
+
+        fun setBaseUrl(url: String) {
+
+            //URLUtil.isValidUrl(url)
+            if (url.isNotEmpty()) {
+                BASE_URL = url
+            } else {
+                throw IllegalArgumentException("Invalid URL")
+            }
+        }
+
         fun create(): ApiService {
+
+            if (BASE_URL.isEmpty()) {
+                throw IllegalStateException("Base URL is not set. Call setBaseUrl() first.")
+            }
+
             val retrofit = Retrofit.Builder()
                 .baseUrl(BASE_URL)
                 .addConverterFactory(ScalarsConverterFactory.create())
