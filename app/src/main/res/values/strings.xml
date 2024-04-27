@@ -139,4 +139,6 @@
     <string name="textCrearTarea">Crear Tarea</string>
     <string name="pistaDescTarea">Descripción</string>
     <string name="descripcion_boton_de_acceso">Boton de acceso a la aplicación</string>
+    <string name="pistaNuevaURL">https://miURL.com</string>
+    <string name="textoServidor">Servidor</string>
 </resources>

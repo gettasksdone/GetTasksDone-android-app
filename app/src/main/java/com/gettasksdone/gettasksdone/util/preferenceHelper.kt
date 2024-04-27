@@ -28,6 +28,7 @@ object PreferenceHelper {
         is Boolean -> edit { it.putBoolean(key, value) }
         is Float -> edit { it.putFloat(key, value) }
         is Long -> edit { it.putLong(key, value) }
+        is Set<*> -> edit {it.putStringSet(key, value as MutableSet<String>?)}
         else -> throw UnsupportedOperationException("Not yet implemented")
     }
 
@@ -43,6 +44,7 @@ object PreferenceHelper {
         Boolean::class -> getBoolean(key, defaultValue as? Boolean ?: false) as T
         Float::class -> getFloat(key, defaultValue as? Float ?: -1f) as T
         Long::class -> getLong(key, defaultValue as? Long ?: -1) as T
+        Set::class -> getStringSet(key, defaultValue as? Set<String> ?: emptySet()) as T
         else -> throw UnsupportedOperationException("Not yet implemented")
     }
 }

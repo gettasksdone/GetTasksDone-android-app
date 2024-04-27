@@ -5,12 +5,17 @@ import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
+import android.view.View
+import android.widget.AdapterView
+import android.widget.ArrayAdapter
 import android.widget.Button
 import android.widget.EditText
+import android.widget.Spinner
 import android.widget.TextView
 import android.widget.Toast
 import com.gettasksdone.gettasksdone.io.ApiService
 import com.gettasksdone.gettasksdone.io.requests.LoginRequest
+import com.gettasksdone.gettasksdone.ui.Utils.AgregarUrlDialogFragment
 import com.gettasksdone.gettasksdone.util.PreferenceHelper
 import com.gettasksdone.gettasksdone.util.PreferenceHelper.get
 import com.gettasksdone.gettasksdone.util.PreferenceHelper.set
@@ -21,8 +26,9 @@ import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 import com.google.android.gms.common.api.ApiException
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount
+import kotlin.properties.Delegates
 
-class Login : AppCompatActivity() {
+class Login : AppCompatActivity(), AgregarUrlDialogFragment.NewUrlDialogListener {
 
     companion object {
         private const val RC_SIGN_IN = 9001
@@ -33,10 +39,39 @@ class Login : AppCompatActivity() {
         ApiService.create()
     }
 
+    private lateinit var serverSpinner: Spinner
+    private lateinit var serverAdapter: ArrayAdapter<String>
+    private var selectedUrl by Delegates.notNull<String>()
+    private var urlList: MutableSet<String> = mutableSetOf()
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_login2)
+        serverSpinner = findViewById(R.id.selector_servidor)
+        serverAdapter = ArrayAdapter(this, R.layout.spinner_list, mutableListOf())
+        serverAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+        serverSpinner.adapter = serverAdapter
+        serverSpinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener{
+            override fun onItemSelected(
+                parent: AdapterView<*>,
+                view: View,
+                position: Int,
+                id: Long
+            ) {
+                val selectedItem = parent.getItemAtPosition(position).toString()
+                if(selectedItem == "Añadir un nuevo servidor"){
+                    openNewUrlActivity()
+                }else{
+                    selectedUrl = urlList.elementAt(position)
+                }
+            }
 
+            override fun onNothingSelected(parent: AdapterView<*>?) {
+                Toast.makeText(applicationContext, "Se debe seleccionar un servidor", Toast.LENGTH_SHORT).show()
+            }
+        }
+
+        loadUrls()
         // Configura las opciones de inicio de sesión de Google
         val gso = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
             .requestEmail()
@@ -65,6 +100,21 @@ class Login : AppCompatActivity() {
             startActivityForResult(signInIntent, RC_SIGN_IN)
         }
 
+    }
+
+    private fun loadUrls() {
+        val preferencesTest = PreferenceHelper.defaultPrefs(applicationContext)
+        val urlList = preferencesTest.getStringSet("urlList", emptySet())
+        if(urlList != null){
+            if(urlList.isNotEmpty()){
+                Log.w("URLs", urlList.toString())
+                this.urlList.clear()
+                this.urlList = urlList
+                this.urlList.add("Añadir un nuevo servidor")
+                serverAdapter.clear()
+                serverAdapter.addAll(this.urlList)
+            }
+        }
     }
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
@@ -108,11 +158,17 @@ class Login : AppCompatActivity() {
     private fun performLogin(){
         val etUsername = findViewById<EditText>(R.id.et_username).text.toString()
         val etPassword = findViewById<EditText>(R.id.et_password).text.toString()
-
+        if(etUsername == ""){
+            Toast.makeText(applicationContext, "El campo nombre de usuario es obligatorio", Toast.LENGTH_SHORT).show()
+            return;
+        }
+        if(etPassword == ""){
+            Toast.makeText(applicationContext, "El campo contraseña es obligatorio", Toast.LENGTH_SHORT).show()
+            return;
+        }
         val loginRequest = LoginRequest(username = etUsername, password = etPassword)
         //Log.d("username:", "$etEmail")
         //Log.d("password:", "$etPassword")
-
         val call = apiService.postLogin(loginRequest)
         call.enqueue(object : Callback<String> {
 
@@ -146,5 +202,30 @@ class Login : AppCompatActivity() {
 
         })
 
+    }
+
+    override fun onDialogPositiveClick(newUrl: String) {
+        val preferencesTest = PreferenceHelper.defaultPrefs(applicationContext)
+        val urlList = preferencesTest.getStringSet("urlList", emptySet())
+        val newUrlList = mutableSetOf<String>()
+        if(urlList != null){
+            newUrlList.addAll(urlList)
+            with(preferencesTest.edit()){
+                newUrlList.add(newUrl)
+                putStringSet("urlList", newUrlList)
+                apply()
+            }
+            Toast.makeText(applicationContext, "La URL del servidor ha sido agregada correctamente", Toast.LENGTH_SHORT).show()
+            loadUrls()
+        }
+    }
+
+    private fun openNewUrlDialog() {
+        val dialog = AgregarUrlDialogFragment()
+        dialog.show(supportFragmentManager, "AgregarUrlDialog")
+    }
+
+    private fun openNewUrlActivity() {
+        openNewUrlDialog()
     }
 }
