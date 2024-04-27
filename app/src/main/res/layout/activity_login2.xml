@@ -148,7 +148,6 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_above="@+id/centerReponsive"
-        android:layout_centerHorizontal="true"
         android:layout_marginHorizontal="10dp"
         android:layout_marginBottom="95dp"
         android:autofillHints="username"
