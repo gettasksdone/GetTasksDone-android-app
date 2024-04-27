@@ -17,7 +17,7 @@ import androidx.room.PrimaryKey
 enum class Rol {
     USUARIO, ADMINISTRADOR
 }
-@Entity
+@Entity(tableName = "user")
 data class UserEntity(
     @PrimaryKey val id: Long,
     @ColumnInfo(name = "username") val username: String,

@@ -5,7 +5,7 @@ import androidx.room.Entity
 import androidx.room.Ignore
 import androidx.room.PrimaryKey
 
-@Entity
+@Entity(tableName = "project")
 data class ProjectEntity (
     @PrimaryKey val id: Long,
     @ColumnInfo(name = "nombre") val nombre: String,

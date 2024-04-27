@@ -5,7 +5,7 @@ import androidx.room.Entity
 import androidx.room.Ignore
 import androidx.room.PrimaryKey
 
-@Entity
+@Entity(tableName = "task")
 data class TaskEntity (
     @PrimaryKey val id: Long,
     @ColumnInfo(name = "titulo") val titulo: String,

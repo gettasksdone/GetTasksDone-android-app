@@ -11,7 +11,7 @@ import androidx.room.PrimaryKey
         "esta_marcado": false
     }
 */
-@Entity
+@Entity(tableName = "checkItem")
 data class CheckItemEntity (
     @PrimaryKey val id: Long,
     @ColumnInfo(name = "contenido") val contenido: String,

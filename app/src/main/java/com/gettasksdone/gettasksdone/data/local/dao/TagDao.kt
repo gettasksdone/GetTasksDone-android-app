@@ -4,16 +4,20 @@ import androidx.room.Dao
 import androidx.room.Delete
 import androidx.room.Insert
 import androidx.room.Query
+import androidx.room.Upsert
 import com.gettasksdone.gettasksdone.data.local.entities.TagEntity
+import kotlinx.coroutines.flow.Flow
 
 @Dao
 interface TagDao {
-    @Query("SELECT * FROM TagEntity")
-    fun getAll(): List<TagEntity>
-    @Query("SELECT * FROM TagEntity WHERE id IN (:tagIds)")
-    fun loadAllByIds(tagIds: LongArray): List<TagEntity>
+    @Query("SELECT * FROM tag")
+    fun getAll(): Flow<List<TagEntity>>
+    @Query("SELECT * FROM tag WHERE id IN (:tagId)")
+    fun loadById(tagId: Long): Flow<List<TagEntity>>
     @Insert
-    fun insertAll(vararg tags: TagEntity)
+    suspend fun insertAll(vararg tags: TagEntity)
+    @Upsert
+    suspend fun upsert(tag: TagEntity)
     @Delete
-    fun delete(tag: TagEntity)
+    suspend fun delete(tag: TagEntity)
 }

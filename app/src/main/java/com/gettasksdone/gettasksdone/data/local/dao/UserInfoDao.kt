@@ -4,16 +4,20 @@ import androidx.room.Dao
 import androidx.room.Delete
 import androidx.room.Insert
 import androidx.room.Query
+import androidx.room.Upsert
 import com.gettasksdone.gettasksdone.data.local.entities.UserInfoEntity
+import kotlinx.coroutines.flow.Flow
 
 @Dao
 interface UserInfoDao {
-    @Query("SELECT * FROM UserInfoEntity")
-    fun getAll(): List<UserInfoEntity>
-    @Query("SELECT * FROM UserInfoEntity WHERE id IN (:userDataIds)")
-    fun loadAllByIds(userDataIds: LongArray): List<UserInfoEntity>
+    @Query("SELECT * FROM userInfo")
+    fun getAll(): Flow<List<UserInfoEntity>>
+    @Query("SELECT * FROM userInfo WHERE id=(:userDataId)")
+    fun loadById(userDataId: Long): Flow<List<UserInfoEntity>>
     @Insert
-    fun insertAll(vararg userDataIds: UserInfoEntity)
+    suspend fun insertAll(vararg userDataIds: UserInfoEntity)
+    @Upsert
+    suspend fun upsert(userData: UserInfoEntity)
     @Delete
-    fun delete(userData: UserInfoEntity)
+    suspend fun delete(userData: UserInfoEntity)
 }

@@ -11,7 +11,7 @@ import androidx.room.PrimaryKey
         "creacion": "2023-11-20T15:01:00"
     }
 */
-@Entity
+@Entity(tableName = "note")
 data class NoteEntity (
     @PrimaryKey val id: Long,
     @ColumnInfo(name = "contenido") val contenido: String,

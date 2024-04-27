@@ -13,7 +13,7 @@ import androidx.room.PrimaryKey
         "departamento": "Ciberseguridad"
     }
 */
-@Entity
+@Entity(tableName = "userInfo")
 data class UserInfoEntity(
     @PrimaryKey val id: Long,
     @ColumnInfo(name = "nombre") val nombre: String,

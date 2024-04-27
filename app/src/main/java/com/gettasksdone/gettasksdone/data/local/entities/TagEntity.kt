@@ -10,7 +10,7 @@ import androidx.room.PrimaryKey
         "nombre": "Mejora"
     }
 */
-@Entity
+@Entity(tableName = "tag")
 data class TagEntity(
     @PrimaryKey val id: Long,
     @ColumnInfo(name = "nombre") val nombre: String

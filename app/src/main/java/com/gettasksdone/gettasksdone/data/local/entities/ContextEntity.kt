@@ -10,7 +10,7 @@ import androidx.room.PrimaryKey
         "nombre": "Base de Datos"
     }
 */
-@Entity
+@Entity(tableName = "context")
 data class ContextEntity(
     @PrimaryKey val id: Long,
     @ColumnInfo(name = "nombre") val nombre: String

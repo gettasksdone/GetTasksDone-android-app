@@ -4,16 +4,20 @@ import androidx.room.Dao
 import androidx.room.Delete
 import androidx.room.Insert
 import androidx.room.Query
+import androidx.room.Upsert
 import com.gettasksdone.gettasksdone.data.local.entities.NoteEntity
+import kotlinx.coroutines.flow.Flow
 
 @Dao
 interface NoteDao {
-    @Query("SELECT * FROM NoteEntity")
-    fun getAll(): List<NoteEntity>
-    @Query("SELECT * FROM NoteEntity WHERE id IN (:noteIds)")
-    fun loadAllByIds(noteIds: LongArray): List<NoteEntity>
+    @Query("SELECT * FROM note")
+    fun getAll(): Flow<List<NoteEntity>>
+    @Query("SELECT * FROM note WHERE id=(:noteId)")
+    fun loadById(noteId: Long): Flow<List<NoteEntity>>
     @Insert
-    fun insertAll(vararg notes: NoteEntity)
+    suspend fun insertAll(vararg notes: NoteEntity)
+    @Upsert
+    suspend fun upsert(note: NoteEntity)
     @Delete
-    fun delete(note: NoteEntity)
+    suspend fun delete(note: NoteEntity)
 }
