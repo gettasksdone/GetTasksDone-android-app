@@ -154,7 +154,7 @@
         android:backgroundTint="#FFFFFF"
         android:ems="10"
         android:inputType="text"
-        android:minHeight="48dp"
+        android:minHeight="30dp"
         android:textColor="#FFFFFF"
         app:layout_constraintBottom_toTopOf="@+id/textUsername"
         app:layout_constraintEnd_toEndOf="parent"

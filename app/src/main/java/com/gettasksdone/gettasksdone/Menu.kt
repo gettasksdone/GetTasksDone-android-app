@@ -140,8 +140,23 @@ class Menu : AppCompatActivity() {
     private fun signOut() {
         val preferences = PreferenceHelper.defaultPrefs(this)
         val editor = preferences.edit()
+
+
+        val urlList = preferences.getStringSet("urlList", emptySet())
+
+
+
+        // Limpia todas las preferencias
         editor.clear()
-        editor.apply()
+        editor.apply()  // Aplicar el clear antes de continuar
+
+        // Si urlBase no es null, lo guarda de nuevo en las preferencias limpias
+        if (urlList != null) {
+            with(preferences.edit()){
+                putStringSet("urlList", urlList)
+                apply()
+            }
+        }
 
         val intent = Intent(this, MainActivity::class.java)
         intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
