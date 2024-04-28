@@ -19,5 +19,6 @@ data class UserInfoEntity(
     @ColumnInfo(name = "nombre") val nombre: String,
     @ColumnInfo(name = "telefono") val telefono: Long?,
     @ColumnInfo(name = "puesto") val puesto: String,
-    @ColumnInfo(name = "departamento") val departamento: String
+    @ColumnInfo(name = "departamento") val departamento: String,
+    @ColumnInfo(name = "userId") val userId: Long
 )

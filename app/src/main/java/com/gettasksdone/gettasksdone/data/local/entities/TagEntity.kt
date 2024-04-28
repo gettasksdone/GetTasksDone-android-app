@@ -14,5 +14,4 @@ import androidx.room.PrimaryKey
 data class TagEntity(
     @PrimaryKey val id: Long,
     @ColumnInfo(name = "nombre") val nombre: String
-    //TODO - Investigar la definicion de relaciones entre objetos
 )

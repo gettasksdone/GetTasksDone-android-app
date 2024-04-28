@@ -3,11 +3,11 @@ package com.gettasksdone.gettasksdone.data.local.entities
 import androidx.room.Embedded
 import androidx.room.Relation
 
-data class ProjectWithTasks(
-    @Embedded val project: ProjectEntity,
+data class UserAndUserInfo(
+    @Embedded val user: UserEntity,
     @Relation(
         parentColumn = "id",
-        entityColumn = "projectId"
+        entityColumn = "userId"
     )
-    val tasks: List<TaskEntity>
+    val userInfo: UserInfoEntity
 )

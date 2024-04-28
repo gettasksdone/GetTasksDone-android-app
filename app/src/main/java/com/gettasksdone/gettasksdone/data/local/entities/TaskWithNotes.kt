@@ -7,7 +7,7 @@ data class TaskWithNotes(
     @Embedded val task: TaskEntity,
     @Relation(
         parentColumn = "id",
-        entityColumn = "notas"
+        entityColumn = "taskId"
     )
-    val notes: List<NoteEntity>
+    val notes: List<NoteEntity>?
 )

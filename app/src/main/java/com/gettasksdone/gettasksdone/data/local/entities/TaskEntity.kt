@@ -12,10 +12,8 @@ data class TaskEntity (
     @ColumnInfo(name = "descripcion") val descripcion: String,
     @ColumnInfo(name = "estado") val estado: String,
     @ColumnInfo(name = "prioridad") val prioridad: Int,
-    //@Ignore val contexto: ContextEntity,//TODO - Investigar la definicion de relaciones entre objetos
+    @ColumnInfo(name = "contexto") val contexto: Long,
     @ColumnInfo(name = "creacion") val creacion: String,
     @ColumnInfo(name = "vencimiento") val vencimiento: String,
-    //@Ignore val checkItemEntities: List<CheckItemEntity> = emptyList(),//TODO - Investigar la definicion de relaciones entre objetos
-    //@Ignore val notas: List<NoteEntity> = emptyList(),//TODO - Investigar la definicion de relaciones entre objetos
-    //@Ignore val etiquetas: List<TagEntity> = emptyList()//TODO - Investigar la definicion de relaciones entre objetos
+    @ColumnInfo(name = "projectId") val proyecto: Long
 )

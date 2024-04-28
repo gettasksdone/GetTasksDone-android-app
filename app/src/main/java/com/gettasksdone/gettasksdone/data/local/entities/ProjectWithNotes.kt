@@ -7,7 +7,7 @@ data class ProjectWithNotes(
     @Embedded val project: ProjectEntity,
     @Relation(
         parentColumn = "id",
-        entityColumn = "notas"
+        entityColumn = "projectId"
     )
-    val notes: List<NoteEntity>
+    val notes: List<NoteEntity>?
 )

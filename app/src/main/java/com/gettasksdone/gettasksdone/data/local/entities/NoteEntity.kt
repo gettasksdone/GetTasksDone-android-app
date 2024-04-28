@@ -15,6 +15,7 @@ import androidx.room.PrimaryKey
 data class NoteEntity (
     @PrimaryKey val id: Long,
     @ColumnInfo(name = "contenido") val contenido: String,
-    @ColumnInfo(name = "creacion") val creacion: String
-    //TODO - Investigar la definicion de relaciones entre objetos
+    @ColumnInfo(name = "creacion") val creacion: String,
+    @ColumnInfo(name = "taskId") val taskId: Long? = null,
+    @ColumnInfo(name = "projectId") val projectId: Long? = null
 )

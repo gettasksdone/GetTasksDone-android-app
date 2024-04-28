@@ -12,8 +12,5 @@ data class ProjectEntity (
     @ColumnInfo(name = "descripcion") val descripcion: String,
     @ColumnInfo(name = "estado") val estado: String,
     @ColumnInfo(name = "inicio") val inicio: String,
-    @ColumnInfo(name = "fin") val fin: String,
-    //@Ignore val tareas: List<TaskEntity> = emptyList(), //TODO - Investigar la definicion de relaciones entre objetos
-    //@Ignore val notas: List<NoteEntity> = emptyList(), //TODO - Investigar la definicion de relaciones entre objetos
-    //@Ignore val etiquetas: List<TagEntity> = emptyList() //TODO - Investigar la definicion de relaciones entre objetos
+    @ColumnInfo(name = "fin") val fin: String
 )

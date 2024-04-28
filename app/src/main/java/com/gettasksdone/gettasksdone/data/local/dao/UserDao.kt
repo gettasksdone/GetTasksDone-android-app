@@ -4,7 +4,9 @@ import androidx.room.Dao
 import androidx.room.Delete
 import androidx.room.Insert
 import androidx.room.Query
+import androidx.room.Transaction
 import androidx.room.Upsert
+import com.gettasksdone.gettasksdone.data.local.entities.UserAndUserInfo
 import com.gettasksdone.gettasksdone.data.local.entities.UserEntity
 import kotlinx.coroutines.flow.Flow
 
@@ -12,6 +14,12 @@ import kotlinx.coroutines.flow.Flow
 interface UserDao {
     @Query("SELECT * FROM user")
     fun getAll(): Flow<List<UserEntity>>
+    @Transaction
+    @Query("SELECT * FROM user")
+    fun getAllWithData(): Flow<List<UserAndUserInfo>>
+    @Transaction
+    @Query("SELECT * FROM user WHERE id=(:userId)")
+    fun loadByIdWithData(userId: Long): Flow<List<UserAndUserInfo>>
     @Query("SELECT * FROM user WHERE id=(:userId)")
     fun loadById(userId: Long): Flow<List<UserEntity>>
     @Insert

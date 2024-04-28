@@ -15,6 +15,6 @@ import androidx.room.PrimaryKey
 data class CheckItemEntity (
     @PrimaryKey val id: Long,
     @ColumnInfo(name = "contenido") val contenido: String,
-    @ColumnInfo(name = "esta_marcado") val esta_marcado: Boolean
-    //TODO - Investigar la definicion de relaciones entre objetos
+    @ColumnInfo(name = "esta_marcado") val estaMarcado: Boolean,
+    @ColumnInfo(name = "taskId") val taskId: Long
 )
