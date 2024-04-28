@@ -109,12 +109,10 @@ class Registro : AppCompatActivity() , AgregarUrlDialogFragment.NewUrlDialogList
         Toast.makeText(applicationContext, "Debug server $textSpinner", Toast.LENGTH_SHORT).show()
         Log.w("Debug server", textSpinner)
 
-
-        if (textSpinner == ""){
+        if(textSpinner == ""){
             Toast.makeText(applicationContext, "El campo Servidor es obligatorio", Toast.LENGTH_SHORT).show()
             return;
         }
-
         if(etNombre == ""){
             Toast.makeText(applicationContext, "El campo nombre de usuario es obligatorio", Toast.LENGTH_SHORT).show()
             return;
@@ -125,10 +123,9 @@ class Registro : AppCompatActivity() , AgregarUrlDialogFragment.NewUrlDialogList
         }
 
         if(etEmail == ""){
-            Toast.makeText(applicationContext, "El campo Email es obligatorio", Toast.LENGTH_SHORT).show()
+            Toast.makeText(applicationContext, "El campo email es obligatorio", Toast.LENGTH_SHORT).show()
             return;
         }
-
 
         try {
             ApiService.Factory.setBaseUrl(textSpinner)
@@ -162,7 +159,6 @@ class Registro : AppCompatActivity() , AgregarUrlDialogFragment.NewUrlDialogList
                     Toast.makeText(applicationContext, "Usuario creado correctamente", Toast.LENGTH_SHORT).show()
                     createSessionPreference(registerResponse)
                     goToCompleteRegister()
-
                 } else {
                     // Añade aquí el manejo del caso en el que la respuesta HTTP no es exitosa
                     Toast.makeText(applicationContext, "Error creando el usuario", Toast.LENGTH_SHORT).show()
@@ -180,9 +176,7 @@ class Registro : AppCompatActivity() , AgregarUrlDialogFragment.NewUrlDialogList
 
     }
 
-
     override fun onDialogPositiveClick(newUrl: String) {
-
         if(newUrl.isEmpty()) {
             Toast.makeText(
                 applicationContext,
@@ -196,17 +190,11 @@ class Registro : AppCompatActivity() , AgregarUrlDialogFragment.NewUrlDialogList
                 "La URL del servidor debe empezar con http:// o https://",
                 Toast.LENGTH_SHORT
             ).show()
-
             /*
-             else if(!isValidDomain(newUrl) && !isValidDomain(newUrl)){
-
-           Toast.makeText(applicationContext, "La URL del servidor no es válida", Toast.LENGTH_SHORT).show()
-        }
-
-             */
-
+        }else if(!isValidDomain(newUrl) && !isValidDomain(newUrl)){
+            Toast.makeText(applicationContext, "La URL del servidor no es válida", Toast.LENGTH_SHORT).show()
+        */
         }else {
-
             val preferencesTest = PreferenceHelper.defaultPrefs(applicationContext)
             val urlList = preferencesTest.getStringSet("urlList", emptySet())
             val newUrlList = mutableSetOf<String>()

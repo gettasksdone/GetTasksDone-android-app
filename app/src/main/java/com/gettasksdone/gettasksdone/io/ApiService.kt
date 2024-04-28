@@ -276,12 +276,8 @@ interface ApiService {
     //---END OF TOOLS---
     //---API CONNECTION SETTINGS---
     companion object Factory {
-
-
-        private var BASE_URL : String = "https://lopezgeraghty.com:8080"
-
+        private lateinit var BASE_URL : String
         fun setBaseUrl(url: String) {
-
             //URLUtil.isValidUrl(url)
             if (url.isNotEmpty()) {
                 BASE_URL = url
@@ -289,13 +285,10 @@ interface ApiService {
                 throw IllegalArgumentException("Invalid URL")
             }
         }
-
         fun create(): ApiService {
-
             if (BASE_URL.isEmpty()) {
                 throw IllegalStateException("Base URL is not set. Call setBaseUrl() first.")
             }
-
             val retrofit = Retrofit.Builder()
                 .baseUrl(BASE_URL)
                 .addConverterFactory(ScalarsConverterFactory.create())

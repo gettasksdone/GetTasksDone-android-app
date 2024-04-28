@@ -251,17 +251,11 @@ class Login : AppCompatActivity(), AgregarUrlDialogFragment.NewUrlDialogListener
                 "La URL del servidor debe empezar con http:// o https://",
                 Toast.LENGTH_SHORT
             ).show()
-
             /*
-             else if(!isValidDomain(newUrl) && !isValidDomain(newUrl)){
-
-           Toast.makeText(applicationContext, "La URL del servidor no es válida", Toast.LENGTH_SHORT).show()
-        }
-
+        }else if(!isValidDomain(newUrl) && !isValidDomain(newUrl)){
+            Toast.makeText(applicationContext, "La URL del servidor no es válida", Toast.LENGTH_SHORT).show()
              */
-
         }else {
-
             val preferencesTest = PreferenceHelper.defaultPrefs(applicationContext)
             val urlList = preferencesTest.getStringSet("urlList", emptySet())
             val newUrlList = mutableSetOf<String>()
