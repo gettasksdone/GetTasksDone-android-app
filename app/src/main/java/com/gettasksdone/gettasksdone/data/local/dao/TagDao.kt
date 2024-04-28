@@ -21,13 +21,13 @@ interface TagDao {
     @Transaction
     @Query("SELECT * FROM tag")
     fun getAllWithProjects(): Flow<List<TagWithProjects>>
-    @Query("SELECT * FROM tag WHERE id IN (:tagId)")
+    @Query("SELECT * FROM tag WHERE tagId IN (:tagId)")
     fun loadById(tagId: Long): Flow<List<TagEntity>>
     @Transaction
-    @Query("SELECT * FROM tag WHERE id=(:tagId)")
+    @Query("SELECT * FROM tag WHERE tagId=(:tagId)")
     fun loadByIdWithTasks(tagId: Long): Flow<List<TagWithTasks>>
     @Transaction
-    @Query("SELECT * FROM tag WHERE id=(:tagId)")
+    @Query("SELECT * FROM tag WHERE tagId=(:tagId)")
     fun loadByIdWithProjects(tagId: Long): Flow<List<TagWithProjects>>
     @Insert
     suspend fun insertAll(vararg tags: TagEntity)

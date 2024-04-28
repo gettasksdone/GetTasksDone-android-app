@@ -1,6 +1,6 @@
 package com.gettasksdone.gettasksdone.data.layout
 
-data class UserInfo(
+data class UserInfoEM(
     val id: Long,
     val nombre: String,
     val puesto: String,

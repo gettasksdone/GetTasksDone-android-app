@@ -1,7 +1,6 @@
 package com.gettasksdone.gettasksdone.data.layout
 
-data class Note(
+data class ContextEM(
     val id: Long,
-    val contenido: String,
-    val creacion: String
+    val nombre: String
 )

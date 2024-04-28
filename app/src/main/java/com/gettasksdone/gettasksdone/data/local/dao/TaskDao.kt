@@ -25,16 +25,16 @@ interface TaskDao {
     @Transaction
     @Query("SELECT * FROM task")
     fun getAllWithNotes(): Flow<List<TaskWithNotes>>
-    @Query("SELECT * FROM task WHERE id=(:taskId)")
+    @Query("SELECT * FROM task WHERE taskId=(:taskId)")
     fun loadById(taskId: Long): Flow<List<TaskEntity>>
     @Transaction
-    @Query("SELECT * FROM task WHERE id=(:taskId)")
+    @Query("SELECT * FROM task WHERE taskId=(:taskId)")
     fun loadByIdWithChecks(taskId: Long): Flow<List<TaskWithCheckItems>>
     @Transaction
-    @Query("SELECT * FROM task WHERE id=(:taskId)")
+    @Query("SELECT * FROM task WHERE taskId=(:taskId)")
     fun loadByIdWithTags(taskId: Long): Flow<List<TaskWithTags>>
     @Transaction
-    @Query("SELECT * FROM task WHERE id=(:taskId)")
+    @Query("SELECT * FROM task WHERE taskId=(:taskId)")
     fun loadByIdWithNotes(taskId: Long): Flow<List<TaskWithNotes>>
     @Insert
     suspend fun insertAll(vararg tasks: TaskEntity)

@@ -28,16 +28,16 @@ interface ProjectDao {
     @Transaction
     @Query("SELECT * FROM project")
     fun getAllWithNotes(): Flow<List<ProjectWithNotes>>
-    @Query("SELECT * FROM project WHERE id=(:projectId)")
+    @Query("SELECT * FROM project WHERE projectId=(:projectId)")
     fun loadById(projectId: Long): Flow<List<ProjectEntity>>
     @Transaction
-    @Query("SELECT * FROM project WHERE id=(:projectId)")
+    @Query("SELECT * FROM project WHERE projectId=(:projectId)")
     fun loadByIdWithTasks(projectId: Long): Flow<List<ProjectWithTasks>>
     @Transaction
-    @Query("SELECT * FROM project WHERE id=(:projectId)")
+    @Query("SELECT * FROM project WHERE projectId=(:projectId)")
     fun loadByIdWithTags(projectId: Long): Flow<List<ProjectWithTags>>
     @Transaction
-    @Query("SELECT * FROM project WHERE id=(:projectId)")
+    @Query("SELECT * FROM project WHERE projectId=(:projectId)")
     fun loadByIdWithNotes(projectId: Long): Flow<List<ProjectWithNotes>>
     @Insert
     suspend fun insertAll(vararg projects: ProjectEntity)

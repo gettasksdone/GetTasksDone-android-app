@@ -1,6 +1,7 @@
 package com.gettasksdone.gettasksdone.data.repository
 
 import androidx.annotation.WorkerThread
+import com.gettasksdone.gettasksdone.data.layout.ContextEM
 import com.gettasksdone.gettasksdone.data.local.dao.ContextDao
 import com.gettasksdone.gettasksdone.data.local.entities.ContextEntity
 import com.gettasksdone.gettasksdone.data.local.entities.ContextWithTasks
@@ -28,6 +29,11 @@ class ContextRepository(private val contextDao: ContextDao) {
     }
     @WorkerThread
     fun Context.asEntity() = ContextEntity(
+        id = id,
+        nombre = nombre
+    )
+    @WorkerThread
+    fun ContextEntity.asExternalModel() = ContextEM(
         id = id,
         nombre = nombre
     )

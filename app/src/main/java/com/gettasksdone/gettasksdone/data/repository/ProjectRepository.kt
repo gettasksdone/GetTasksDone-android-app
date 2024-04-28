@@ -1,6 +1,7 @@
 package com.gettasksdone.gettasksdone.data.repository
 
 import androidx.annotation.WorkerThread
+import com.gettasksdone.gettasksdone.data.layout.ProjectEM
 import com.gettasksdone.gettasksdone.data.local.dao.ProjectDao
 import com.gettasksdone.gettasksdone.data.local.entities.ProjectEntity
 import com.gettasksdone.gettasksdone.model.Project
@@ -23,7 +24,16 @@ class ProjectRepository(private val projectDao: ProjectDao) {
     }
     @WorkerThread
     fun Project.asEntity() = ProjectEntity(
-        id = id,
+        projectId = id,
+        nombre = nombre,
+        descripcion = descripcion,
+        estado = estado,
+        inicio = inicio,
+        fin = fin
+    )
+    @WorkerThread
+    fun ProjectEntity.asExternalModel() = ProjectEM(
+        id = projectId,
         nombre = nombre,
         descripcion = descripcion,
         estado = estado,

@@ -1,6 +1,6 @@
 package com.gettasksdone.gettasksdone.data.layout
 
-data class Project(
+data class ProjectEM(
     val id: Long,
     val nombre: String,
     val descripcion: String? = null,

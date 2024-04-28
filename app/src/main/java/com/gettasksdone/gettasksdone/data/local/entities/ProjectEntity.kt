@@ -7,7 +7,7 @@ import androidx.room.PrimaryKey
 
 @Entity(tableName = "project")
 data class ProjectEntity (
-    @PrimaryKey val id: Long,
+    @PrimaryKey val projectId: Long,
     @ColumnInfo(name = "nombre") val nombre: String,
     @ColumnInfo(name = "descripcion") val descripcion: String? = null,
     @ColumnInfo(name = "estado") val estado: String,

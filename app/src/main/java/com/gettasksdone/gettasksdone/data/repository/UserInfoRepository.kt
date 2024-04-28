@@ -1,6 +1,7 @@
 package com.gettasksdone.gettasksdone.data.repository
 
 import androidx.annotation.WorkerThread
+import com.gettasksdone.gettasksdone.data.layout.UserInfoEM
 import com.gettasksdone.gettasksdone.data.local.dao.UserInfoDao
 import com.gettasksdone.gettasksdone.data.local.entities.UserInfoEntity
 import com.gettasksdone.gettasksdone.model.UserInfo
@@ -29,5 +30,13 @@ class UserInfoRepository(private val userInfoDao: UserInfoDao) {
         puesto = puesto,
         telefono = telefono,
         userId = usuarioId
+    )
+    @WorkerThread
+    fun UserInfoEntity.asExternalModel() = UserInfoEM(
+        id = id,
+        nombre = nombre,
+        puesto = puesto,
+        departamento = departamento,
+        telefono = telefono
     )
 }

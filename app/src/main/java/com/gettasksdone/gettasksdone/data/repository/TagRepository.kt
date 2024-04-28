@@ -1,6 +1,7 @@
 package com.gettasksdone.gettasksdone.data.repository
 
 import androidx.annotation.WorkerThread
+import com.gettasksdone.gettasksdone.data.layout.TagEM
 import com.gettasksdone.gettasksdone.data.local.dao.TagDao
 import com.gettasksdone.gettasksdone.data.local.entities.TagEntity
 import com.gettasksdone.gettasksdone.model.Tag
@@ -23,7 +24,12 @@ class TagRepository(private val tagDao: TagDao) {
     }
     @WorkerThread
     fun Tag.asEntity() = TagEntity(
-        id = id,
+        tagId = id,
+        nombre = nombre
+    )
+    @WorkerThread
+    fun TagEntity.asExternalModel() = TagEM(
+        id = tagId,
         nombre = nombre
     )
 }

@@ -1,6 +1,6 @@
 package com.gettasksdone.gettasksdone.data.layout
 
-data class CheckItem(
+data class CheckItemEM(
     val id: Long,
     val contenido: String,
     val estaMarcado: Boolean

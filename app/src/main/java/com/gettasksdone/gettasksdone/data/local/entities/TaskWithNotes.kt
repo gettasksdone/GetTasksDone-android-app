@@ -6,7 +6,7 @@ import androidx.room.Relation
 data class TaskWithNotes(
     @Embedded val task: TaskEntity,
     @Relation(
-        parentColumn = "id",
+        parentColumn = "taskId",
         entityColumn = "taskId"
     )
     val notes: List<NoteEntity>?

@@ -17,6 +17,8 @@ import com.gettasksdone.gettasksdone.data.local.entities.ContextEntity
 import com.gettasksdone.gettasksdone.data.local.entities.NoteEntity
 import com.gettasksdone.gettasksdone.data.local.entities.ProjectEntity
 import com.gettasksdone.gettasksdone.data.local.entities.TagEntity
+import com.gettasksdone.gettasksdone.data.local.entities.TagProjectCrossRef
+import com.gettasksdone.gettasksdone.data.local.entities.TagTaskCrossRef
 import com.gettasksdone.gettasksdone.data.local.entities.TaskEntity
 import com.gettasksdone.gettasksdone.data.local.entities.UserEntity
 import com.gettasksdone.gettasksdone.data.local.entities.UserInfoEntity
@@ -29,7 +31,9 @@ import com.gettasksdone.gettasksdone.data.local.entities.UserInfoEntity
     TagEntity::class,
     TaskEntity::class,
     UserEntity::class,
-    UserInfoEntity::class
+    UserInfoEntity::class,
+    TagProjectCrossRef::class,
+    TagTaskCrossRef::class
                      ],
     version = 1,
     exportSchema = false)

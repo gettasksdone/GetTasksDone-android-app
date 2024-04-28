@@ -1,6 +1,7 @@
 package com.gettasksdone.gettasksdone.data.repository
 
 import androidx.annotation.WorkerThread
+import com.gettasksdone.gettasksdone.data.layout.TaskEM
 import com.gettasksdone.gettasksdone.data.local.dao.CheckItemDao
 import com.gettasksdone.gettasksdone.data.local.dao.TaskDao
 import com.gettasksdone.gettasksdone.data.local.entities.CheckItemEntity
@@ -25,7 +26,7 @@ class TaskRepository(private val taskDao: TaskDao) {
     }
     @WorkerThread
     fun Task.asEntity() = TaskEntity(
-        id = id,
+        taskId = id,
         titulo = titulo,
         descripcion = descripcion,
         estado = estado,
@@ -34,5 +35,15 @@ class TaskRepository(private val taskDao: TaskDao) {
         prioridad = prioridad,
         contexto = contextoId,
         proyecto = proyectoId
+    )
+    @WorkerThread
+    fun TaskEntity.asExternalModel() = TaskEM(
+        id = taskId,
+        titulo = titulo,
+        descripcion = descripcion,
+        estado = estado,
+        prioridad = prioridad,
+        creacion = creacion,
+        vencimiento = vencimiento
     )
 }

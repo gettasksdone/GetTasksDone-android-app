@@ -7,9 +7,9 @@ import androidx.room.Relation
 data class ProjectWithTags(
     @Embedded val project: ProjectEntity,
     @Relation(
+        associateBy = Junction(TagProjectCrossRef::class),
         parentColumn = "projectId",
-        entityColumn = "tagId",
-        associateBy = Junction(TagProjectCrossRef::class)
+        entityColumn = "tagId"
     )
     val tags: List<TagEntity>
 )

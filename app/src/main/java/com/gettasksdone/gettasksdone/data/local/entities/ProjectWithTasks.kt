@@ -6,7 +6,7 @@ import androidx.room.Relation
 data class ProjectWithTasks(
     @Embedded val project: ProjectEntity,
     @Relation(
-        parentColumn = "id",
+        parentColumn = "projectId",
         entityColumn = "projectId"
     )
     val tasks: List<TaskEntity>
