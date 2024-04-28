@@ -17,8 +17,8 @@ import androidx.room.PrimaryKey
 data class UserInfoEntity(
     @PrimaryKey val id: Long,
     @ColumnInfo(name = "nombre") val nombre: String,
-    @ColumnInfo(name = "telefono") val telefono: Long?,
     @ColumnInfo(name = "puesto") val puesto: String,
     @ColumnInfo(name = "departamento") val departamento: String,
-    @ColumnInfo(name = "userId") val userId: Long
+    @ColumnInfo(name = "userId") val userId: Long,
+    @ColumnInfo(name = "telefono") val telefono: Long? = null
 )

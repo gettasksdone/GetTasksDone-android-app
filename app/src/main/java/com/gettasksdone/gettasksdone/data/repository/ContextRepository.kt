@@ -4,6 +4,7 @@ import androidx.annotation.WorkerThread
 import com.gettasksdone.gettasksdone.data.local.dao.ContextDao
 import com.gettasksdone.gettasksdone.data.local.entities.ContextEntity
 import com.gettasksdone.gettasksdone.data.local.entities.ContextWithTasks
+import com.gettasksdone.gettasksdone.model.Context
 import kotlinx.coroutines.flow.Flow
 
 class ContextRepository(private val contextDao: ContextDao) {
@@ -25,4 +26,9 @@ class ContextRepository(private val contextDao: ContextDao) {
     suspend fun delete(context: ContextEntity){
         contextDao.delete(context)
     }
+    @WorkerThread
+    fun Context.asEntity() = ContextEntity(
+        id = id,
+        nombre = nombre
+    )
 }

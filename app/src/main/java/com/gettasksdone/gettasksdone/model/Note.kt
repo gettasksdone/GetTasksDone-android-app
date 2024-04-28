@@ -10,5 +10,7 @@ package com.gettasksdone.gettasksdone.model
 data class Note (
     val id: Long,
     val contenido: String,
-    val creacion: String
+    val creacion: String,
+    val tareaId: Long? = null,
+    val proyectoId: Long? = null
 )

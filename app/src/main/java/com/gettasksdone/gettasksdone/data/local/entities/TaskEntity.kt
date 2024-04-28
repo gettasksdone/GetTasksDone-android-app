@@ -9,11 +9,11 @@ import androidx.room.PrimaryKey
 data class TaskEntity (
     @PrimaryKey val id: Long,
     @ColumnInfo(name = "titulo") val titulo: String,
-    @ColumnInfo(name = "descripcion") val descripcion: String,
+    @ColumnInfo(name = "descripcion") val descripcion: String? = null,
     @ColumnInfo(name = "estado") val estado: String,
     @ColumnInfo(name = "prioridad") val prioridad: Int,
     @ColumnInfo(name = "contexto") val contexto: Long,
-    @ColumnInfo(name = "creacion") val creacion: String,
-    @ColumnInfo(name = "vencimiento") val vencimiento: String,
+    @ColumnInfo(name = "creacion") val creacion: String? = null,
+    @ColumnInfo(name = "vencimiento") val vencimiento: String? = null,
     @ColumnInfo(name = "projectId") val proyecto: Long
 )

@@ -3,6 +3,7 @@ package com.gettasksdone.gettasksdone.data.repository
 import androidx.annotation.WorkerThread
 import com.gettasksdone.gettasksdone.data.local.dao.CheckItemDao
 import com.gettasksdone.gettasksdone.data.local.entities.CheckItemEntity
+import com.gettasksdone.gettasksdone.model.CheckItem
 import kotlinx.coroutines.flow.Flow
 
 class CheckItemRepository(private val checkItemDao: CheckItemDao) {
@@ -19,4 +20,11 @@ class CheckItemRepository(private val checkItemDao: CheckItemDao) {
     suspend fun delete(checkItem: CheckItemEntity){
         checkItemDao.delete(checkItem)
     }
+    @WorkerThread
+    fun CheckItem.asEntity() = CheckItemEntity(
+        id = id,
+        contenido = contenido,
+        estaMarcado = esta_marcado,
+        taskId = tareaId
+    )
 }

@@ -5,6 +5,7 @@ import com.gettasksdone.gettasksdone.data.local.dao.CheckItemDao
 import com.gettasksdone.gettasksdone.data.local.dao.TaskDao
 import com.gettasksdone.gettasksdone.data.local.entities.CheckItemEntity
 import com.gettasksdone.gettasksdone.data.local.entities.TaskEntity
+import com.gettasksdone.gettasksdone.model.Task
 import kotlinx.coroutines.flow.Flow
 
 class TaskRepository(private val taskDao: TaskDao) {
@@ -22,4 +23,16 @@ class TaskRepository(private val taskDao: TaskDao) {
     suspend fun delete(task: TaskEntity){
         taskDao.delete(task)
     }
+    @WorkerThread
+    fun Task.asEntity() = TaskEntity(
+        id = id,
+        titulo = titulo,
+        descripcion = descripcion,
+        estado = estado,
+        creacion = creacion,
+        vencimiento = vencimiento,
+        prioridad = prioridad,
+        contexto = contextoId,
+        proyecto = proyectoId
+    )
 }

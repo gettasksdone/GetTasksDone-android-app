@@ -3,6 +3,7 @@ package com.gettasksdone.gettasksdone.data.repository
 import androidx.annotation.WorkerThread
 import com.gettasksdone.gettasksdone.data.local.dao.UserInfoDao
 import com.gettasksdone.gettasksdone.data.local.entities.UserInfoEntity
+import com.gettasksdone.gettasksdone.model.UserInfo
 import kotlinx.coroutines.flow.Flow
 
 class UserInfoRepository(private val userInfoDao: UserInfoDao) {
@@ -20,4 +21,13 @@ class UserInfoRepository(private val userInfoDao: UserInfoDao) {
     suspend fun delete(userData: UserInfoEntity){
         userInfoDao.delete(userData)
     }
+    @WorkerThread
+    fun UserInfo.asEntity() = UserInfoEntity(
+        id = id,
+        departamento = departamento,
+        nombre = nombre,
+        puesto = puesto,
+        telefono = telefono,
+        userId = usuarioId
+    )
 }

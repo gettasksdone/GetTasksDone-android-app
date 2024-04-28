@@ -4,6 +4,7 @@ import androidx.annotation.WorkerThread
 import com.gettasksdone.gettasksdone.data.local.dao.UserDao
 import com.gettasksdone.gettasksdone.data.local.entities.UserAndUserInfo
 import com.gettasksdone.gettasksdone.data.local.entities.UserEntity
+import com.gettasksdone.gettasksdone.model.User
 import kotlinx.coroutines.flow.Flow
 
 class UserRepository(private val userDao: UserDao) {
@@ -25,4 +26,11 @@ class UserRepository(private val userDao: UserDao) {
     suspend fun delete(user: UserEntity){
         userDao.delete(user)
     }
+    @WorkerThread
+    fun User.asEntity() = UserEntity(
+        id = id,
+        username = username,
+        email = email,
+        rol = rol
+    )
 }

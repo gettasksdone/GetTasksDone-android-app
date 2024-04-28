@@ -3,6 +3,7 @@ package com.gettasksdone.gettasksdone.data.repository
 import androidx.annotation.WorkerThread
 import com.gettasksdone.gettasksdone.data.local.dao.NoteDao
 import com.gettasksdone.gettasksdone.data.local.entities.NoteEntity
+import com.gettasksdone.gettasksdone.model.Note
 import kotlinx.coroutines.flow.Flow
 
 class NoteRepository(private val noteDao: NoteDao) {
@@ -20,4 +21,12 @@ class NoteRepository(private val noteDao: NoteDao) {
     suspend fun delete(note: NoteEntity){
         noteDao.delete(note)
     }
+    @WorkerThread
+    fun Note.asEntity() = NoteEntity(
+        id = id,
+        contenido = contenido,
+        creacion = creacion,
+        projectId = proyectoId,
+        taskId = tareaId
+    )
 }

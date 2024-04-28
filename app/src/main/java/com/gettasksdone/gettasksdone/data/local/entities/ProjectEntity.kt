@@ -9,8 +9,8 @@ import androidx.room.PrimaryKey
 data class ProjectEntity (
     @PrimaryKey val id: Long,
     @ColumnInfo(name = "nombre") val nombre: String,
-    @ColumnInfo(name = "descripcion") val descripcion: String,
+    @ColumnInfo(name = "descripcion") val descripcion: String? = null,
     @ColumnInfo(name = "estado") val estado: String,
-    @ColumnInfo(name = "inicio") val inicio: String,
-    @ColumnInfo(name = "fin") val fin: String
+    @ColumnInfo(name = "inicio") val inicio: String? = null,
+    @ColumnInfo(name = "fin") val fin: String? = null
 )
