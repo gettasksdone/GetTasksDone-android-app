@@ -8,9 +8,9 @@ import java.util.Date
 
 data class TaskRequest(
     val titulo: String,
-    val descripcion: String,
+    val descripcion: String? = null,
     val creacion: String = getCurrentDate(),
-    val vencimiento: String?,
+    val vencimiento: String? = null,
     val estado: String,
     val prioridad: Int,
     val contexto: Context
