@@ -70,6 +70,7 @@ class Menu : AppCompatActivity() {
                 R.id.nav_esperando,
                 R.id.nav_agendado,
                 R.id.nav_ad,
+                R.id.nav_contextos,
                 R.id.nav_gallery,
                 R.id.nav_home
             ), drawerLayout

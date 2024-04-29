@@ -36,6 +36,10 @@
             android:icon="@android:color/transparent"
             android:title=""/>
         <item
+            android:id="@+id/nav_contextos"
+            android:icon="@android:drawable/ic_menu_mylocation"
+            android:title="Contextos" />
+        <item
             android:id="@+id/nav_perfil"
             android:icon="@android:drawable/ic_menu_myplaces"
             android:title="Acceder a mi perfil" />

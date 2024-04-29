@@ -31,6 +31,11 @@
         android:label="Algún Dia"
         tools:layout="@layout/fragment_ad" />
     <fragment
+        android:id="@+id/nav_contextos"
+        android:name="com.gettasksdone.gettasksdone.ui.contextos.ContextosFragment"
+        android:label="Contextos"
+        tools:layout="@layout/fragment_contextos" />
+    <fragment
         android:id="@+id/nav_home"
         android:name="com.gettasksdone.gettasksdone.ui.home.HomeFragment"
         android:label="@string/menu_home"
