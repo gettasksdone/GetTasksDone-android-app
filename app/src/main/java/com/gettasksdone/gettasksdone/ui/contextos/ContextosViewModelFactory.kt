@@ -8,10 +8,10 @@ import com.gettasksdone.gettasksdone.ui.ad.AdViewModel
 import com.gettasksdone.gettasksdone.ui.agendado.AgendadoViewModel
 import com.gettasksdone.gettasksdone.ui.esperando.EsperandoViewModel
 
-class ContextosViewModelFactory(private val apiService: ApiService, private val jwtHelper: JwtHelper) : ViewModelProvider.Factory {
+class ContextosViewModelFactory(private val jwtHelper: JwtHelper) : ViewModelProvider.Factory {
     override fun <T : ViewModel> create(modelClass: Class<T>): T {
         if (modelClass.isAssignableFrom(ContextosViewModel::class.java)) {
-            return ContextosViewModel(apiService, jwtHelper) as T
+            return ContextosViewModel(jwtHelper) as T
         }
         throw IllegalArgumentException("Unknown ViewModel class")
     }

@@ -160,7 +160,7 @@ class Login : AppCompatActivity(), AgregarUrlDialogFragment.NewUrlDialogListener
         val etPassword = findViewById<EditText>(R.id.et_password).text.toString()
         val selectSpinner = findViewById<Spinner>(R.id.selector_servidor)
         val textSpinner = selectSpinner.selectedItem.toString()
-        Toast.makeText(applicationContext, "Debug server $textSpinner", Toast.LENGTH_SHORT).show()
+        //Toast.makeText(applicationContext, "Debug server $textSpinner", Toast.LENGTH_SHORT).show()
         Log.w("Debug server", textSpinner)
 
 
@@ -193,7 +193,7 @@ class Login : AppCompatActivity(), AgregarUrlDialogFragment.NewUrlDialogListener
         } catch (e: IllegalStateException) {
             throw  IllegalStateException("No se ha establecido la URL")
         }finally {
-            Toast.makeText(applicationContext, "DEBUG: url_base $textSpinner", Toast.LENGTH_SHORT).show()
+            //Toast.makeText(applicationContext, "DEBUG: url_base $textSpinner", Toast.LENGTH_SHORT).show()
         }
 
 

@@ -13,10 +13,14 @@ import retrofit2.Callback
 import retrofit2.Response
 import java.io.IOException
 
-class ContextosViewModel(private val apiService: ApiService, private val jwtHelper: JwtHelper) : ViewModel() {
+class ContextosViewModel(private val jwtHelper: JwtHelper) : ViewModel() {
 
-    private val _contextList = MutableLiveData<List<Context>?>()
-    val contextList: MutableLiveData<List<Context>?> = _contextList
+    private val apiService: ApiService by lazy{
+        ApiService.create()
+    }
+
+    private val _contextList = MutableLiveData<List<Context>>()
+    val contextList: MutableLiveData<List<Context>> = _contextList
 
     init {
         loadContexts()
@@ -30,12 +34,8 @@ class ContextosViewModel(private val apiService: ApiService, private val jwtHelp
                 call.enqueue(object : Callback<List<Context>> {
                     override fun onResponse(call: Call<List<Context>>, response: Response<List<Context>>) {
                         if (response.isSuccessful) {
-                            val contextResponse = response.body()
-                            if (contextResponse != null) {
-                                _contextList.value = contextResponse
-                            } else {
-                                _contextList.value = emptyList()
-                            }
+                            val contextsFromApi = response.body()
+                            _contextList.value = contextsFromApi ?: emptyList()
                         } else {
                             // Maneja el caso en que la respuesta HTTP no es exitosa
                         }
