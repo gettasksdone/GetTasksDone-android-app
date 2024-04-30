@@ -3,6 +3,7 @@ package com.gettasksdone.gettasksdone.data.local.entities
 import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
+import com.gettasksdone.gettasksdone.data.layout.CheckItemEM
 
 /*
     {
@@ -17,4 +18,10 @@ data class CheckItemEntity (
     @ColumnInfo(name = "contenido") val contenido: String,
     @ColumnInfo(name = "esta_marcado") val estaMarcado: Boolean,
     @ColumnInfo(name = "taskId") val taskId: Long
-)
+){
+    fun asExternalModel(): CheckItemEM = CheckItemEM(
+        id = id,
+        contenido = contenido,
+        estaMarcado = estaMarcado
+    )
+}

@@ -9,11 +9,14 @@ import com.gettasksdone.gettasksdone.data.local.entities.TaskEntity
 import com.gettasksdone.gettasksdone.model.Task
 import kotlinx.coroutines.flow.Flow
 
-class TaskRepository(private val taskDao: TaskDao) {
-    val allCheckItems: Flow<List<TaskEntity>> = taskDao.getAll()
+open class TaskRepository(private val taskDao: TaskDao) {
     @WorkerThread
-    fun get(task: Long){
-        taskDao.loadById(task)
+    fun getAll(): Flow<List<TaskEntity>>{
+        return taskDao.getAll()
+    }
+    @WorkerThread
+    fun get(task: Long): Flow<List<TaskEntity>> {
+        return taskDao.loadById(task)
     }
 
     @WorkerThread
@@ -24,26 +27,4 @@ class TaskRepository(private val taskDao: TaskDao) {
     suspend fun delete(task: TaskEntity){
         taskDao.delete(task)
     }
-    @WorkerThread
-    fun Task.asEntity() = TaskEntity(
-        taskId = id,
-        titulo = titulo,
-        descripcion = descripcion,
-        estado = estado,
-        creacion = creacion,
-        vencimiento = vencimiento,
-        prioridad = prioridad,
-        contexto = contextoId,
-        proyecto = proyectoId
-    )
-    @WorkerThread
-    fun TaskEntity.asExternalModel() = TaskEM(
-        id = taskId,
-        titulo = titulo,
-        descripcion = descripcion,
-        estado = estado,
-        prioridad = prioridad,
-        creacion = creacion,
-        vencimiento = vencimiento
-    )
 }

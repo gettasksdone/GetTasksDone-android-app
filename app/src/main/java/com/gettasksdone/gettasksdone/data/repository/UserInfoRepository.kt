@@ -7,11 +7,14 @@ import com.gettasksdone.gettasksdone.data.local.entities.UserInfoEntity
 import com.gettasksdone.gettasksdone.model.UserInfo
 import kotlinx.coroutines.flow.Flow
 
-class UserInfoRepository(private val userInfoDao: UserInfoDao) {
-    val allCheckItems: Flow<List<UserInfoEntity>> = userInfoDao.getAll()
+open class UserInfoRepository(private val userInfoDao: UserInfoDao) {
     @WorkerThread
-    fun get(userData: Long){
-        userInfoDao.loadById(userData)
+    fun getAll(): Flow<List<UserInfoEntity>>{
+        return userInfoDao.getAll()
+    }
+    @WorkerThread
+    fun get(userData: Long): Flow<List<UserInfoEntity>> {
+        return userInfoDao.loadById(userData)
     }
 
     @WorkerThread
@@ -22,21 +25,4 @@ class UserInfoRepository(private val userInfoDao: UserInfoDao) {
     suspend fun delete(userData: UserInfoEntity){
         userInfoDao.delete(userData)
     }
-    @WorkerThread
-    fun UserInfo.asEntity() = UserInfoEntity(
-        id = id,
-        departamento = departamento,
-        nombre = nombre,
-        puesto = puesto,
-        telefono = telefono,
-        userId = usuarioId
-    )
-    @WorkerThread
-    fun UserInfoEntity.asExternalModel() = UserInfoEM(
-        id = id,
-        nombre = nombre,
-        puesto = puesto,
-        departamento = departamento,
-        telefono = telefono
-    )
 }

@@ -7,11 +7,14 @@ import com.gettasksdone.gettasksdone.data.local.entities.NoteEntity
 import com.gettasksdone.gettasksdone.model.Note
 import kotlinx.coroutines.flow.Flow
 
-class NoteRepository(private val noteDao: NoteDao) {
-    val allCheckItems: Flow<List<NoteEntity>> = noteDao.getAll()
+open class NoteRepository(private val noteDao: NoteDao) {
     @WorkerThread
-    fun get(note: Long){
-        noteDao.loadById(note)
+    fun getAll(): Flow<List<NoteEntity>>{
+        return noteDao.getAll()
+    }
+    @WorkerThread
+    fun get(note: Long): Flow<List<NoteEntity>> {
+        return noteDao.loadById(note)
     }
 
     @WorkerThread
@@ -22,18 +25,4 @@ class NoteRepository(private val noteDao: NoteDao) {
     suspend fun delete(note: NoteEntity){
         noteDao.delete(note)
     }
-    @WorkerThread
-    fun Note.asEntity() = NoteEntity(
-        id = id,
-        contenido = contenido,
-        creacion = creacion,
-        projectId = proyectoId,
-        taskId = tareaId
-    )
-    @WorkerThread
-    fun NoteEntity.asExternalModel() = NoteEM(
-        id = id,
-        contenido = contenido,
-        creacion = creacion
-    )
 }

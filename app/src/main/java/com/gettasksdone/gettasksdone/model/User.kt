@@ -1,5 +1,8 @@
 package com.gettasksdone.gettasksdone.model
 
+import androidx.annotation.WorkerThread
+import com.gettasksdone.gettasksdone.data.local.entities.UserEntity
+
 
 /*
     {
@@ -18,4 +21,11 @@ data class User(
     val username: String,
     val email: String,
     val rol: Rol
-)
+){
+    fun asEntity(): UserEntity = UserEntity(
+        id = id,
+        username = username,
+        email = email,
+        rol = rol
+    )
+}

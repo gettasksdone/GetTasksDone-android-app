@@ -7,11 +7,14 @@ import com.gettasksdone.gettasksdone.data.local.entities.TagEntity
 import com.gettasksdone.gettasksdone.model.Tag
 import kotlinx.coroutines.flow.Flow
 
-class TagRepository(private val tagDao: TagDao) {
-    val allCheckItems: Flow<List<TagEntity>> = tagDao.getAll()
+open class TagRepository(private val tagDao: TagDao) {
     @WorkerThread
-    fun get(tag: Long){
-        tagDao.loadById(tag)
+    fun getAll(): Flow<List<TagEntity>>{
+        return tagDao.getAll()
+    }
+    @WorkerThread
+    fun get(tag: Long): Flow<List<TagEntity>> {
+        return tagDao.loadById(tag)
     }
 
     @WorkerThread
@@ -22,14 +25,4 @@ class TagRepository(private val tagDao: TagDao) {
     suspend fun delete(tag: TagEntity){
         tagDao.delete(tag)
     }
-    @WorkerThread
-    fun Tag.asEntity() = TagEntity(
-        tagId = id,
-        nombre = nombre
-    )
-    @WorkerThread
-    fun TagEntity.asExternalModel() = TagEM(
-        id = tagId,
-        nombre = nombre
-    )
 }

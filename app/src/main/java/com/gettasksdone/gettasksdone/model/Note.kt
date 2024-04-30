@@ -1,5 +1,8 @@
 package com.gettasksdone.gettasksdone.model
 
+import androidx.annotation.WorkerThread
+import com.gettasksdone.gettasksdone.data.local.entities.NoteEntity
+
 /*
     {
         "id": 4,
@@ -13,4 +16,12 @@ data class Note (
     val creacion: String,
     val tareaId: Long? = null,
     val proyectoId: Long? = null
-)
+){
+    fun asEntity(): NoteEntity = NoteEntity(
+        id = id,
+        contenido = contenido,
+        creacion = creacion,
+        projectId = proyectoId,
+        taskId = tareaId
+    )
+}

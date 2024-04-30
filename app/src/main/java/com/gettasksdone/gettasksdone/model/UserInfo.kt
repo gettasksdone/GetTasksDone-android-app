@@ -1,5 +1,8 @@
 package com.gettasksdone.gettasksdone.model
 
+import androidx.annotation.WorkerThread
+import com.gettasksdone.gettasksdone.data.local.entities.UserInfoEntity
+
 /*
     {
         "id": 1,
@@ -16,4 +19,13 @@ data class UserInfo(
     val puesto: String,
     val departamento: String,
     val usuarioId: Long
-)
+){
+    fun asEntity(): UserInfoEntity = UserInfoEntity(
+        id = id,
+        departamento = departamento,
+        nombre = nombre,
+        puesto = puesto,
+        telefono = telefono,
+        userId = usuarioId
+    )
+}

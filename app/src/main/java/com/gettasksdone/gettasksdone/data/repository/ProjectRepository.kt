@@ -7,11 +7,14 @@ import com.gettasksdone.gettasksdone.data.local.entities.ProjectEntity
 import com.gettasksdone.gettasksdone.model.Project
 import kotlinx.coroutines.flow.Flow
 
-class ProjectRepository(private val projectDao: ProjectDao) {
-    val allCheckItems: Flow<List<ProjectEntity>> = projectDao.getAll()
+open class ProjectRepository(private val projectDao: ProjectDao) {
     @WorkerThread
-    fun get(project: Long){
-        projectDao.loadById(project)
+    fun getAll(): Flow<List<ProjectEntity>>{
+        return projectDao.getAll()
+    }
+    @WorkerThread
+    fun get(project: Long): Flow<List<ProjectEntity>> {
+        return projectDao.loadById(project)
     }
 
     @WorkerThread
@@ -22,22 +25,4 @@ class ProjectRepository(private val projectDao: ProjectDao) {
     suspend fun delete(project: ProjectEntity){
         projectDao.delete(project)
     }
-    @WorkerThread
-    fun Project.asEntity() = ProjectEntity(
-        projectId = id,
-        nombre = nombre,
-        descripcion = descripcion,
-        estado = estado,
-        inicio = inicio,
-        fin = fin
-    )
-    @WorkerThread
-    fun ProjectEntity.asExternalModel() = ProjectEM(
-        id = projectId,
-        nombre = nombre,
-        descripcion = descripcion,
-        estado = estado,
-        inicio = inicio,
-        fin = fin
-    )
 }
