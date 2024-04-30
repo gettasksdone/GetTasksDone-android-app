@@ -66,7 +66,7 @@
     <string name="menu_gallery">Gallery</string>
     <string name="menu_slideshow">Slideshow</string>
     <string name="title_activity_settings">SettingsActivity</string>
-
+    <string name="descripcion_boton_engranaje">Botón de engranaje</string>
     <!-- Preference Titles -->
     <string name="messages_header">Messages</string>
     <string name="sync_header">Sync</string>
