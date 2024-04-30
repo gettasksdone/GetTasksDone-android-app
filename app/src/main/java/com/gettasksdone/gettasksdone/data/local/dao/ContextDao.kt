@@ -28,4 +28,6 @@ interface ContextDao {
     suspend fun upsert(context: ContextEntity)
     @Delete
     suspend fun delete(context: ContextEntity)
+    @Query("DELETE FROM context")
+    suspend fun deleteAll()
 }
