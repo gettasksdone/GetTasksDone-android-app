@@ -3,6 +3,7 @@ package com.gettasksdone.gettasksdone.data.local.dao
 import androidx.room.Dao
 import androidx.room.Delete
 import androidx.room.Insert
+import androidx.room.OnConflictStrategy
 import androidx.room.Query
 import androidx.room.Transaction
 import androidx.room.Upsert
@@ -15,7 +16,7 @@ import kotlinx.coroutines.flow.Flow
 @Dao
 interface TaskDao {
     @Query("SELECT * FROM task")
-    fun getAll(): Flow<List<TaskEntity>>
+    fun getAll(): List<TaskEntity>
     @Transaction
     @Query("SELECT * FROM task")
     fun getAllWithChecks(): Flow<List<TaskWithCheckItems>>
@@ -36,7 +37,7 @@ interface TaskDao {
     @Transaction
     @Query("SELECT * FROM task WHERE taskId=(:taskId)")
     fun loadByIdWithNotes(taskId: Long): Flow<List<TaskWithNotes>>
-    @Insert
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertAll(vararg tasks: TaskEntity)
     @Upsert
     suspend fun upsert(task: TaskEntity)

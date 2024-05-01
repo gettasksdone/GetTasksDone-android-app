@@ -34,7 +34,6 @@ class Login : AppCompatActivity(), AgregarUrlDialogFragment.NewUrlDialogListener
         private const val RC_SIGN_IN = 9001
     }
 
-
     private val apiService: ApiService by lazy{
         ApiService.create()
     }
