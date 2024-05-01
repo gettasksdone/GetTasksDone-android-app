@@ -1,6 +1,7 @@
 package com.gettasksdone.gettasksdone
 
 import android.app.Application
+import com.gettasksdone.gettasksdone.data.JwtHelper
 import com.gettasksdone.gettasksdone.data.local.AppDatabase
 import com.gettasksdone.gettasksdone.data.repository.CheckItemRepository
 import com.gettasksdone.gettasksdone.data.repository.ContextRepository
@@ -25,13 +26,14 @@ import kotlinx.coroutines.SupervisorJob
 class MainApplication: Application() {
     private val applicationScope = CoroutineScope(SupervisorJob())
     private val apiService: ApiService by lazy{ ApiService.create() }
+    private val jwtService = JwtHelper(this)
     val database by lazy { AppDatabase.getDatabase(this, applicationScope) }
     val checkItemRepo by lazy { OFCheckItemRepository(database.checkItemDao(), apiService) }
     val contextRepo by lazy { OFContextRepository(database.contextDao(), apiService) }
     val noteRepo by lazy { OFNoteRepository(database.noteDao(), apiService) }
     val projectRepo by lazy { OFProjectRepository(database.projectDao(), apiService) }
     val tagRepo by lazy { OFTagRepository(database.tagDao(), apiService) }
-    val taskRepo by lazy { OFTaskRepository(database.taskDao(), apiService) }
+    val taskRepo by lazy { OFTaskRepository(database.taskDao(), apiService, jwtService) }
     val userInfoRepo by lazy { OFUserInfoRepository(database.userInfoDao(), apiService) }
     val userRepo by lazy { OFUserRepository(database.userDao(), apiService) }
 }
