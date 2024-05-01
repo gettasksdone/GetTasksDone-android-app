@@ -1,6 +1,5 @@
 package com.gettasksdone.gettasksdone.ui.inBox
 
-import androidx.compose.runtime.currentCompositionLocalContext
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import com.gettasksdone.gettasksdone.data.JwtHelper
@@ -15,7 +14,7 @@ import kotlinx.coroutines.currentCoroutineContext
 
 class InboxViewModelFactory(private val jwtHelper: JwtHelper) : ViewModelProvider.Factory {
         private val apiService: ApiService by lazy{ ApiService.create() }
-        private val database = AppDatabase.getDatabase(this, )
+        //private val database = AppDatabase.getDatabase()
         //TODO(Habría que recuperar la BD para obtener el taskDao y crear el taskRepo, o mejor instanciar el TaskRepo en la AppDatabase y recuperar el repo desde ahi?)
         private val taskRepo by lazy { TaskRepository(apiService, jwtHelper, database.taskDao()) }
         override fun <T : ViewModel> create(modelClass: Class<T>): T {
