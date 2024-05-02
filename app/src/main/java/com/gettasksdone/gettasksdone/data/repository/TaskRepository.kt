@@ -39,33 +39,20 @@ open class TaskRepository(
         }
     }
 
-    private fun getTasksRemote(): List<Task> {
-        try {
-            val authHeader = "Bearer ${jwtHelper.getToken()}"
-            val call = api.getTasks(authHeader)
-            var tasks = emptyList<Task>()
-            call.enqueue(object : Callback<List<Task>> {
-                override fun onResponse(call: Call<List<Task>>, response: Response<List<Task>>) {
-                    if (response.isSuccessful) {
-                        val tasksFromApi = response.body()
-                        // Filtrar las tareas para excluir aquellas con el estado "completado"
-                        if (tasksFromApi != null) {
-                            tasks = tasksFromApi
-                        }
-                    } else {
-
-                    }
+    private suspend fun getTasksRemote(): List<Task> {
+        return withContext(Dispatchers.IO) {
+            try {
+                val authHeader = "Bearer ${jwtHelper.getToken()}"
+                val call = api.getTasks(authHeader)
+                val response = call.execute() // Realizar la llamada de manera síncrona
+                if (response.isSuccessful) {
+                    response.body() ?: emptyList() // Devolver la lista de tareas si la respuesta no es nula
+                } else {
+                    emptyList() // Devolver una lista vacía si la respuesta no es exitosa
                 }
-
-                override fun onFailure(call: Call<List<Task>>, t: Throwable) {
-                    // Manejar errores de llamada a la API
-                    // Puedes mostrar un mensaje de error en la interfaz de usuario o manejarlo de otra manera
-                    t.printStackTrace()
-                }
-            })
-            return tasks
-        }catch (e: Exception){
-            return emptyList()
+            } catch (e: Exception) {
+                emptyList() // Manejar cualquier excepción y devolver una lista vacía
+            }
         }
     }
 

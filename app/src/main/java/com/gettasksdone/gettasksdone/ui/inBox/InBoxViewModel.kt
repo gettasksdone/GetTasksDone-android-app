@@ -33,7 +33,7 @@ class InboxViewModel(
     }
     fun getTasks() {
         viewModelScope.launch {
-            val tasks = repository.getAll()
+            _tasks.value = repository.getAll()
             Log.d("[DEBUG]TASKS:",tasks.toString())
         }
     }
