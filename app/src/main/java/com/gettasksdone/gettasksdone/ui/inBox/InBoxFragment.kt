@@ -21,6 +21,7 @@ import com.gettasksdone.gettasksdone.data.JwtHelper
 import com.gettasksdone.gettasksdone.databinding.FragmentInboxBinding
 import com.gettasksdone.gettasksdone.model.Task
 import androidx.cardview.widget.CardView
+import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.ItemTouchHelper
 import com.gettasksdone.gettasksdone.io.ApiService
 import retrofit2.Call
@@ -53,7 +54,8 @@ class InBoxFragment : Fragment(), TaskCompletionListener {
     ): View {
         val context = requireContext()
         jwtHelper = JwtHelper(context)
-        val factory = InboxViewModelFactory(jwtHelper)
+        val viewModelScope = viewLifecycleOwner.lifecycleScope
+        val factory = InboxViewModelFactory(jwtHelper, context, viewModelScope)
         inboxViewModel = ViewModelProvider(this, factory).get(InboxViewModel::class.java)
 
         _binding = FragmentInboxBinding.inflate(inflater, container, false)

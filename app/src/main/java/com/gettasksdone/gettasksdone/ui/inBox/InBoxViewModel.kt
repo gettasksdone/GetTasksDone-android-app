@@ -1,6 +1,7 @@
 package com.gettasksdone.gettasksdone.ui.inBox
 
 import android.content.Context
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -33,6 +34,7 @@ class InboxViewModel(
     fun getTasks() {
         viewModelScope.launch {
             val tasks = repository.getAll()
+            Log.d("[DEBUG]TASKS:",tasks.toString())
         }
     }
 
