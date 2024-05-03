@@ -3,6 +3,7 @@ package com.gettasksdone.gettasksdone.data.local.dao
 import androidx.room.Dao
 import androidx.room.Delete
 import androidx.room.Insert
+import androidx.room.OnConflictStrategy
 import androidx.room.Query
 import androidx.room.Transaction
 import androidx.room.Upsert
@@ -18,7 +19,7 @@ import kotlinx.coroutines.flow.Flow
 @Dao
 interface ProjectDao {
     @Query("SELECT * FROM project")
-    fun getAll(): Flow<List<ProjectEntity>>
+    fun getAll(): List<ProjectEntity>
     @Transaction
     @Query("SELECT * FROM project")
     fun getAllWithTasks(): Flow<List<ProjectWithTasks>>
@@ -39,7 +40,7 @@ interface ProjectDao {
     @Transaction
     @Query("SELECT * FROM project WHERE projectId=(:projectId)")
     fun loadByIdWithNotes(projectId: Long): Flow<List<ProjectWithNotes>>
-    @Insert
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertAll(vararg projects: ProjectEntity)
     @Upsert
     suspend fun upsert(project: ProjectEntity)

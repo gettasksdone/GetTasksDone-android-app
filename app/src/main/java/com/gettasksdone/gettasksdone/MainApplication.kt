@@ -28,12 +28,12 @@ class MainApplication: Application() {
     private val apiService: ApiService by lazy{ ApiService.create() }
     private val jwtService = JwtHelper(this)
     val database by lazy { AppDatabase.getDatabase(this, applicationScope) }
-    val checkItemRepo by lazy { OFCheckItemRepository(database.checkItemDao(), apiService) }
-    val contextRepo by lazy { OFContextRepository(database.contextDao(), apiService) }
-    val noteRepo by lazy { OFNoteRepository(database.noteDao(), apiService) }
-    val projectRepo by lazy { OFProjectRepository(database.projectDao(), apiService) }
-    val tagRepo by lazy { OFTagRepository(database.tagDao(), apiService) }
+    val checkItemRepo by lazy { OFCheckItemRepository(database.checkItemDao(), apiService, jwtService) }
+    val contextRepo by lazy { OFContextRepository(database.contextDao(), apiService, jwtService) }
+    val noteRepo by lazy { OFNoteRepository(database.noteDao(), apiService, jwtService) }
+    val projectRepo by lazy { OFProjectRepository(database.projectDao(), apiService, jwtService) }
+    val tagRepo by lazy { OFTagRepository(database.tagDao(), apiService, jwtService) }
     val taskRepo by lazy { OFTaskRepository(database.taskDao(), apiService, jwtService) }
-    val userInfoRepo by lazy { OFUserInfoRepository(database.userInfoDao(), apiService) }
-    val userRepo by lazy { OFUserRepository(database.userDao(), apiService) }
+    val userInfoRepo by lazy { OFUserInfoRepository(database.userInfoDao(), apiService, jwtService) }
+    val userRepo by lazy { OFUserRepository(database.userDao(), apiService, jwtService) }
 }
