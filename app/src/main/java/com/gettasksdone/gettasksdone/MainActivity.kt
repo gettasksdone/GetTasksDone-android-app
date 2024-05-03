@@ -32,10 +32,10 @@ class MainActivity : AppCompatActivity(), AgregarUrlDialogFragment.NewUrlDialogL
 
         if (urlList != null) {
             if(urlList.isEmpty()){
-                Toast.makeText(applicationContext, "DEBUG: urlList empty ${urlList.toString()}", Toast.LENGTH_SHORT).show()
+                //Toast.makeText(applicationContext, "DEBUG: urlList empty ${urlList.toString()}", Toast.LENGTH_SHORT).show()
                 openNewUrlActivity()
             }else{
-                Toast.makeText(applicationContext, "DEBUG: urlList NOT empty ${urlList.toString()}" , Toast.LENGTH_SHORT).show()
+                //Toast.makeText(applicationContext, "DEBUG: urlList NOT empty ${urlList.toString()}" , Toast.LENGTH_SHORT).show()
 
                 val i = Intent(this, Login::class.java)
                 startActivity(i)
