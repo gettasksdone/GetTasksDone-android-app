@@ -8,6 +8,7 @@ import android.view.ViewGroup
 import android.widget.EditText
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.gettasksdone.gettasksdone.R
@@ -34,7 +35,8 @@ class ContextosFragment : Fragment() {
 
         val context = requireContext()
         jwtHelper = JwtHelper(context)
-        val factory = ContextosViewModelFactory(jwtHelper)
+        val viewModelScope = viewLifecycleOwner.lifecycleScope
+        val factory = ContextosViewModelFactory(jwtHelper, context, viewModelScope)
         contextosViewModel = ViewModelProvider(this, factory).get(ContextosViewModel::class.java)
 
         _binding = FragmentContextosBinding.inflate(inflater, container, false)

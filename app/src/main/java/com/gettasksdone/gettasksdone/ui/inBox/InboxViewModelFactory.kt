@@ -21,18 +21,16 @@ class InboxViewModelFactory(
 ) : ViewModelProvider.Factory {
         private val apiService: ApiService by lazy{ ApiService.create() }
         private val database: AppDatabase by lazy { AppDatabase.getDatabase(context, viewModelScope) }
-        //private val database = AppDatabase.getDatabase()
-        //TODO(Habría que recuperar la BD para obtener el taskDao y crear el taskRepo, o mejor instanciar el TaskRepo en la AppDatabase y recuperar el repo desde ahi?)
         private val taskRepo by lazy { TaskRepository(apiService, jwtHelper, database.taskDao()) }
         override fun <T : ViewModel> create(modelClass: Class<T>): T {
             if (modelClass.isAssignableFrom(InboxViewModel::class.java)) {
                 return InboxViewModel(jwtHelper, taskRepo) as T
             } else if (modelClass.isAssignableFrom(EsperandoViewModel::class.java)){
-                return EsperandoViewModel(jwtHelper) as T
+                return EsperandoViewModel(jwtHelper, taskRepo) as T
             } else if (modelClass.isAssignableFrom(AdViewModel::class.java)){
-                return AdViewModel(jwtHelper) as T
+                return AdViewModel(jwtHelper, taskRepo) as T
             }   else if (modelClass.isAssignableFrom(AgendadoViewModel::class.java)) {
-                return AgendadoViewModel(jwtHelper) as T
+                return AgendadoViewModel(jwtHelper, taskRepo) as T
             }
             throw IllegalArgumentException("Unknown ViewModel class")
         }

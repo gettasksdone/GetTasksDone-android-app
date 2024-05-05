@@ -12,6 +12,7 @@ import android.widget.Button
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -46,7 +47,8 @@ class ProyectosFragment : Fragment(), TaskCompletionListener {
 
         val context = requireContext()
         jwtHelper = JwtHelper(context)
-        val factory = ProjectViewModelFactory(jwtHelper)
+        val viewModelScope = viewLifecycleOwner.lifecycleScope
+        val factory = ProjectViewModelFactory(jwtHelper, context, viewModelScope)
 
         // Inicializar ViewModel
         proyectosViewModel = ViewModelProvider(this, factory).get(ProyectosViewModel::class.java)
