@@ -2,6 +2,8 @@ package com.gettasksdone.gettasksdone.io
 
 
 import android.content.SharedPreferences
+import android.util.Log
+import android.widget.Toast
 import com.gettasksdone.gettasksdone.io.requests.CheckItemRequest
 import com.gettasksdone.gettasksdone.io.requests.ContextRequest
 import com.gettasksdone.gettasksdone.io.requests.LoginRequest
@@ -239,6 +241,8 @@ interface ApiService {
         @Path("id") id: Long,
         @Header("Authorization") authHeader: String?
     ): Call<Project>
+
+
     @POST(value = "/project/create")
     fun createProject(
         @Header("Authorization") authHeader: String?,
@@ -276,6 +280,7 @@ interface ApiService {
     //---END OF TOOLS---
     //---API CONNECTION SETTINGS---
     companion object Factory {
+
         private lateinit var BASE_URL : String
         fun setBaseUrl(url: String) {
             //URLUtil.isValidUrl(url)
@@ -289,6 +294,8 @@ interface ApiService {
             if (BASE_URL.isEmpty()) {
                 throw IllegalStateException("Base URL is not set. Call setBaseUrl() first.")
             }
+
+            Log.d("ApiServiceFactory", "Base URL set to: $BASE_URL")
             val retrofit = Retrofit.Builder()
                 .baseUrl(BASE_URL)
                 .addConverterFactory(ScalarsConverterFactory.create())

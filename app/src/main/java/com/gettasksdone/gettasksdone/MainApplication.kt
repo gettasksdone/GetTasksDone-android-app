@@ -1,6 +1,7 @@
 package com.gettasksdone.gettasksdone
 
 import android.app.Application
+import android.widget.Toast
 import com.gettasksdone.gettasksdone.data.JwtHelper
 import com.gettasksdone.gettasksdone.data.local.AppDatabase
 import com.gettasksdone.gettasksdone.data.repository.CheckItemRepository
@@ -20,14 +21,32 @@ import com.gettasksdone.gettasksdone.data.repository.TaskRepository
 import com.gettasksdone.gettasksdone.data.repository.UserInfoRepository
 import com.gettasksdone.gettasksdone.data.repository.UserRepository
 import com.gettasksdone.gettasksdone.io.ApiService
+import com.gettasksdone.gettasksdone.util.PreferenceHelper
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.SupervisorJob
 
 class MainApplication: Application() {
     private val applicationScope = CoroutineScope(SupervisorJob())
-    private val apiService: ApiService by lazy{ ApiService.create() }
+
+    private val apiService: ApiService by lazy {
+        val url = baseUrl()
+        ApiService.setBaseUrl(url.toString())
+        ApiService.create()
+    }
+
+    private fun baseUrl(): String? {
+        val  preferencesTest = PreferenceHelper.defaultPrefs(applicationContext)
+        val urlBase = preferencesTest.getString("urlBase", "")
+        Toast.makeText(applicationContext, "Debug server $urlBase", Toast.LENGTH_SHORT).show()
+
+        return urlBase
+
+    }
+
     private val jwtService = JwtHelper(this)
     val database by lazy { AppDatabase.getDatabase(this, applicationScope) }
+
+
     val checkItemRepo by lazy { OFCheckItemRepository(database.checkItemDao(), apiService, jwtService) }
     val contextRepo by lazy { OFContextRepository(database.contextDao(), apiService, jwtService) }
     val noteRepo by lazy { OFNoteRepository(database.noteDao(), apiService, jwtService) }

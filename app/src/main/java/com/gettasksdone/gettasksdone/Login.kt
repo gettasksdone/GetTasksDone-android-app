@@ -185,6 +185,14 @@ class Login : AppCompatActivity(), AgregarUrlDialogFragment.NewUrlDialogListener
             apply()
         }
 
+
+
+        ApiService.Factory.setBaseUrl(textSpinner)
+
+
+        Toast.makeText(applicationContext, "Debug server bien $textSpinner", Toast.LENGTH_SHORT).show()
+
+
         try {
             ApiService.Factory.setBaseUrl(textSpinner)
         } catch (e: IllegalArgumentException) {

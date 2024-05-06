@@ -27,6 +27,7 @@ import com.gettasksdone.gettasksdone.io.requests.TaskRequest
 import com.gettasksdone.gettasksdone.model.Context
 import com.gettasksdone.gettasksdone.model.Project
 import com.gettasksdone.gettasksdone.ui.Utils.NewContextDialogFragment
+import com.gettasksdone.gettasksdone.util.PreferenceHelper
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -38,7 +39,19 @@ import kotlin.properties.Delegates
 class AnadirTask : AppCompatActivity(), NewContextDialogFragment.NewContextDialogListener {
 
     private val apiService: ApiService by lazy {
+        val url = baseUrl()
+        ApiService.setBaseUrl(url.toString())
         ApiService.create()
+    }
+
+    private fun baseUrl(): String? {
+        val  preferencesTest = PreferenceHelper.defaultPrefs(applicationContext)
+        val urlBase = preferencesTest.getString("urlBase", "")
+        Toast.makeText(applicationContext, "Debug server $urlBase", Toast.LENGTH_SHORT).show()
+
+
+        return urlBase
+
     }
 
     private val jwtHelper: JwtHelper by lazy {
@@ -88,6 +101,8 @@ class AnadirTask : AppCompatActivity(), NewContextDialogFragment.NewContextDialo
         }
 
         loadContexts()
+
+
 
         val estados = mutableListOf("empezar", "esperando", "algún día")
         spinner2 = findViewById(R.id.estado)
@@ -171,7 +186,18 @@ class AnadirTask : AppCompatActivity(), NewContextDialogFragment.NewContextDialo
     }
     private fun performCreateTask(){
 
+        val  preferencesTest = PreferenceHelper.defaultPrefs(applicationContext)
+        val urlBase = preferencesTest.getString("urlBase", "")
+        Toast.makeText(applicationContext, "Debug server $urlBase", Toast.LENGTH_SHORT).show()
+
         val etTitulo = findViewById<EditText>(R.id.titulo).text.toString()
+
+        if(etTitulo == ""){
+
+            Toast.makeText(applicationContext, "El campo Titulo de la tarea es obligatorio", Toast.LENGTH_SHORT).show()
+            return
+        }
+
         val etDescripcion = findViewById<EditText>(R.id.etDescripcion).text.toString()
         var vencimiento: String? = null
         if(findViewById<EditText>(R.id.et_fecha).text.toString().isNotEmpty()){
