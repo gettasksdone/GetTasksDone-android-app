@@ -4,7 +4,6 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#001928"
     tools:context=".Login">
 
 
@@ -18,29 +17,9 @@
         tools:ignore="VisualLintOverlap" />
 
     <!-- Posicionar las imagen de los margenes -->
-    <ImageView
-        android:id="@+id/topImage"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
-        android:scaleType="fitXY"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:srcCompat="@drawable/fondo"
-        android:importantForAccessibility="no" />
 
-    <ImageView
-        android:id="@+id/bottomImage"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:scaleType="fitXY"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:srcCompat="@drawable/fondo1"
-        android:importantForAccessibility="no" />
+
+
 
     <!-- Posicionar las imagen de los margenes -->
     <TextView
@@ -56,8 +35,7 @@
         android:textStyle="bold"
         android:layout_centerVertical="true"
         android:layout_centerHorizontal="true"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/topImage" />
+        app:layout_constraintStart_toStartOf="parent" />
 
 
     <LinearLayout

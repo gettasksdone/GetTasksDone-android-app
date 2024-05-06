@@ -3,6 +3,10 @@
     <style name="Base.Theme.MyApplication" parent="Theme.Material3.DayNight.NoActionBar">
         <!-- Customize your light theme here. -->
         <!-- <item name="colorPrimary">@color/my_light_primary</item> -->
+
+        <!-- Añade aquí tu color de fondo. -->
+        <item name="android:windowBackground">#001928</item>
+
     </style>
 
     <style name="Theme.MyApplication" parent="Base.Theme.MyApplication" />
@@ -12,5 +16,5 @@
     </style>
     <style name="Theme.MyApplication.AppBarOverlay"
         parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
-    <style name="Theme.MyApplication.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
+    <style name="Theme.MyApplication.PopupOverlay" parent="ThemeOverlay.AppCompat.Light"/>
 </resources>

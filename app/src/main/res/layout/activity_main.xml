@@ -4,39 +4,16 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#001827"
     tools:context=".MainActivity">
 
 
     <!-- Configuración fondo abajo -->
 
-    <ImageView
-        android:id="@+id/bottomImageMain"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:scaleType="fitXY"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:srcCompat="@drawable/fondo1"
-        android:importantForAccessibility="no" />
 
 
     <!-- Configuración del boton -->
 
 
-    <ImageView
-        android:id="@+id/topImageMain"
-        android:layout_alignParentTop="true"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:scaleType="fitXY"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:srcCompat="@drawable/fondo"
-        android:importantForAccessibility="no" />
 
     <TextView
         android:id="@+id/centerReponsive"
