@@ -242,6 +242,7 @@ class Registro : AppCompatActivity() , AgregarUrlDialogFragment.NewUrlDialogList
                 this.urlList.clear()
                 this.urlList = urlList
                 this.urlList.add("Añadir un nuevo servidor")
+                this.urlList = this.urlList.sortedDescending().toMutableSet()
                 serverAdapter.clear()
                 serverAdapter.addAll(this.urlList)
             }
