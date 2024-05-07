@@ -25,9 +25,11 @@ class ContextAdapter(
     private val fragment: Fragment,
     private val jwtHelper: JwtHelper,
     private val onContextDeleted: (Long) -> Unit  // Añade esto
-) :
-    RecyclerView.Adapter<ContextAdapter.ContextViewHolder>() {
+) : RecyclerView.Adapter<ContextAdapter.ContextViewHolder>() {
 
+    private val apiService: ApiService? by lazy{
+        ApiService.create()
+    }
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ContextViewHolder {
         val itemView = LayoutInflater.from(parent.context)
             .inflate(R.layout.fragment_context_item, parent, false)
@@ -53,7 +55,9 @@ class ContextAdapter(
                 // Aquí puedes manejar el evento de clic en el botón de engranaje
                 val contextId = contexts[adapterPosition].id
                 val contextName = nombreContextTextView.text.toString()
-                (fragment as ContextosFragment).showEditDialog(contextId, contextName)
+                if(apiService != null){
+                    (fragment as ContextosFragment).showEditDialog(contextId, contextName)
+                }
             }
         }
 
@@ -70,23 +74,25 @@ class ContextAdapter(
     }
 
     fun attachSwipeToDelete(recyclerView: RecyclerView) {
-        val itemTouchHelperCallback = object : ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.LEFT) {
-            override fun onMove(
-                recyclerView: RecyclerView,
-                viewHolder: RecyclerView.ViewHolder,
-                target: RecyclerView.ViewHolder
-            ): Boolean {
-                return false // no soportamos mover elementos en este ejemplo
+        if(apiService != null){
+            val itemTouchHelperCallback = object : ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.LEFT) {
+                override fun onMove(
+                    recyclerView: RecyclerView,
+                    viewHolder: RecyclerView.ViewHolder,
+                    target: RecyclerView.ViewHolder
+                ): Boolean {
+                    return false // no soportamos mover elementos en este ejemplo
+                }
+
+                override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
+                    // Aquí puedes manejar el evento de deslizar para eliminar
+                    val contextId = contexts[viewHolder.adapterPosition].id
+                    onContextDeleted(contextId)  // Llama a la función pasada como parámetro cuando se confirme la eliminación
+                }
             }
 
-            override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
-                // Aquí puedes manejar el evento de deslizar para eliminar
-                val contextId = contexts[viewHolder.adapterPosition].id
-                onContextDeleted(contextId)  // Llama a la función pasada como parámetro cuando se confirme la eliminación
-            }
+            val itemTouchHelper = ItemTouchHelper(itemTouchHelperCallback)
+            itemTouchHelper.attachToRecyclerView(recyclerView)
         }
-
-        val itemTouchHelper = ItemTouchHelper(itemTouchHelperCallback)
-        itemTouchHelper.attachToRecyclerView(recyclerView)
     }
 }

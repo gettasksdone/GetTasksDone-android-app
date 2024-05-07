@@ -47,10 +47,17 @@ class Menu : AppCompatActivity() {
 
         super.onCreate(savedInstanceState)
 
+        val apiService : ApiService? by lazy {
+            ApiService.create()
+        }
+
         binding = ActivityMenuBinding.inflate(layoutInflater)
         setContentView(binding.root)
         setSupportActionBar(binding.appBarMenu.toolbar)
-
+        //Si se arranca en modo solo lectura se esconde el botón de crear tareas y proyectos
+        if(apiService == null){
+            binding.appBarMenu.fab.hide()
+        }
         binding.appBarMenu.fab.setOnClickListener { view ->
             val popupMenu = PopupMenu(this, view)
             popupMenu.menuInflater.inflate(R.menu.fab_menu, popupMenu.menu)
@@ -98,10 +105,6 @@ class Menu : AppCompatActivity() {
             val jwtHelper: JwtHelper by lazy {
                 JwtHelper(this)
             }
-
-            val apiService : ApiService? by lazy {
-                ApiService.create()
-            }
             when (menuItem.itemId) {
                 R.id.action_settings -> {
                     val intent = Intent(this, SettingsActivity::class.java)
@@ -116,27 +119,29 @@ class Menu : AppCompatActivity() {
 
                 R.id.nav_perfil -> {
                     val authHeader = "Bearer ${jwtHelper.getToken()}"
-                    apiService?.getUserData(authHeader)?.enqueue(object : Callback<UserInfo> {
-                        override fun onResponse(call: Call<UserInfo>, response: Response<UserInfo>) {
-                            if (response.isSuccessful) {
-                                val userInfo = response.body()
-                                if (userInfo != null) {
-                                    val intent = Intent(this@Menu, CompletarRegistro::class.java)
-                                    intent.putExtra("nombre", userInfo.nombre)
-                                    intent.putExtra("telefono", userInfo.telefono)
-                                    intent.putExtra("departamento", userInfo.departamento)
-                                    intent.putExtra("puesto", userInfo.puesto)
-                                    startActivity(intent)
+                    if(apiService != null){
+                        apiService?.getUserData(authHeader)?.enqueue(object : Callback<UserInfo> {
+                            override fun onResponse(call: Call<UserInfo>, response: Response<UserInfo>) {
+                                if (response.isSuccessful) {
+                                    val userInfo = response.body()
+                                    if (userInfo != null) {
+                                        val intent = Intent(this@Menu, CompletarRegistro::class.java)
+                                        intent.putExtra("nombre", userInfo.nombre)
+                                        intent.putExtra("telefono", userInfo.telefono)
+                                        intent.putExtra("departamento", userInfo.departamento)
+                                        intent.putExtra("puesto", userInfo.puesto)
+                                        startActivity(intent)
+                                    }
+                                } else {
+                                    // Maneja el caso en que la respuesta HTTP no es exitosa
                                 }
-                            } else {
-                                // Maneja el caso en que la respuesta HTTP no es exitosa
                             }
-                        }
 
-                        override fun onFailure(call: Call<UserInfo>, t: Throwable) {
-                            // Maneja el caso en que la llamada a la API falla
-                        }
-                    })
+                            override fun onFailure(call: Call<UserInfo>, t: Throwable) {
+                                // Maneja el caso en que la llamada a la API falla
+                            }
+                        })
+                    }
                     true
                 }
                 R.id.nav_theme -> {

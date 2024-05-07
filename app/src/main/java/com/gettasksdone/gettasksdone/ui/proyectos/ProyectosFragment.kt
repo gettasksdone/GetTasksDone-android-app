@@ -88,73 +88,76 @@ class ProyectosFragment : Fragment(), TaskCompletionListener {
             // Por ejemplo, podrías querer actualizar la lista de proyectos
             proyectosViewModel.getProjects()
         }
-        // Añade el ItemTouchHelper al RecyclerView
-        val itemTouchHelperCallback =
-            object : ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.LEFT) {
-                override fun onMove(
-                    recyclerView: RecyclerView,
-                    viewHolder: RecyclerView.ViewHolder,
-                    target: RecyclerView.ViewHolder
-                ): Boolean {
-                    return false
-                }
+        // Añade el ItemTouchHelper al RecyclerView si está en modo online
+        if(apiService != null){
+            val itemTouchHelperCallback =
+                object : ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.LEFT) {
+                    override fun onMove(
+                        recyclerView: RecyclerView,
+                        viewHolder: RecyclerView.ViewHolder,
+                        target: RecyclerView.ViewHolder
+                    ): Boolean {
+                        return false
+                    }
 
-                override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
-                    val position = viewHolder.adapterPosition
-                    val proyectosAdapter = recyclerView.adapter as ProyectosAdapter
-                    val proyecto = proyectosAdapter.proyectos[position]
+                    override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
+                        val position = viewHolder.adapterPosition
+                        val proyectosAdapter = recyclerView.adapter as ProyectosAdapter
+                        val proyecto = proyectosAdapter.proyectos[position]
+                        if(apiService != null){
+                            AlertDialog.Builder(context).apply {
+                                setTitle("Confirmación")
+                                setMessage("¿Seguro que quieres eliminar el proyecto?${proyecto.id}'?")
+                                setPositiveButton("Sí") { dialog, _ ->
 
-                    AlertDialog.Builder(context).apply {
-                        setTitle("Confirmación")
-                        setMessage("¿Seguro que quieres eliminar el proyecto?${proyecto.id}'?")
-                        setPositiveButton("Sí") { dialog, _ ->
-
-                            val authHeader = "Bearer ${jwtHelper.getToken()}"
-                            val call = apiService?.deleteProject(proyecto.id, authHeader)
-                            if (call != null) {
-                                call.enqueue(object : Callback<String> {
-                                    override fun onResponse(call: Call<String>, response: Response<String>) {
-                                        val registerResponse = response.body()
-                                        if(response.isSuccessful) {
-                                            if (registerResponse == null) {
-                                                Toast.makeText(
-                                                    context,
-                                                    "Se produjo un error en el servidor",
-                                                    Toast.LENGTH_SHORT
-                                                ).show()
-                                                return
+                                    val authHeader = "Bearer ${jwtHelper.getToken()}"
+                                    val call = apiService?.deleteProject(proyecto.id, authHeader)
+                                    if (call != null) {
+                                        call.enqueue(object : Callback<String> {
+                                            override fun onResponse(call: Call<String>, response: Response<String>) {
+                                                val registerResponse = response.body()
+                                                if(response.isSuccessful) {
+                                                    if (registerResponse == null) {
+                                                        Toast.makeText(
+                                                            context,
+                                                            "Se produjo un error en el servidor",
+                                                            Toast.LENGTH_SHORT
+                                                        ).show()
+                                                        return
+                                                    }
+                                                    Toast.makeText(context, "Proyecto borrado correctamente", Toast.LENGTH_SHORT).show()
+                                                    proyectosViewModel.getProjects()
+                                                } else {
+                                                    // Añade aquí el manejo del caso en el que la respuesta HTTP no es exitosa
+                                                    Toast.makeText(context, "Error al borrar el proyecto", Toast.LENGTH_SHORT).show()
+                                                }
                                             }
-                                            Toast.makeText(context, "Proyecto borrado correctamente", Toast.LENGTH_SHORT).show()
-                                            proyectosViewModel.getProjects()
-                                        } else {
-                                            // Añade aquí el manejo del caso en el que la respuesta HTTP no es exitosa
-                                            Toast.makeText(context, "Error al borrar el proyecto", Toast.LENGTH_SHORT).show()
-                                        }
+
+                                            override fun onFailure(call: Call<String>, t: Throwable) {
+                                                Log.e("API_CALL", "Error en onFailure(): ${t.message}")
+
+                                                Toast.makeText(context, "Se produjo un error en el servidor", Toast.LENGTH_SHORT).show()
+
+                                            }
+                                        })
                                     }
 
-                                    override fun onFailure(call: Call<String>, t: Throwable) {
-                                        Log.e("API_CALL", "Error en onFailure(): ${t.message}")
+                                    dialog.dismiss()
 
-                                        Toast.makeText(context, "Se produjo un error en el servidor", Toast.LENGTH_SHORT).show()
-
-                                    }
-                                })
-                            }
-
-                            dialog.dismiss()
-
+                                }
+                                setNegativeButton("No") { dialog, _ ->
+                                    // Si el usuario elige "No", simplemente vuelves a mostrar la tarea en la lista
+                                    proyectosAdapter.notifyItemChanged(position)
+                                    dialog.dismiss()
+                                }
+                            }.show()
                         }
-                        setNegativeButton("No") { dialog, _ ->
-                            // Si el usuario elige "No", simplemente vuelves a mostrar la tarea en la lista
-                            proyectosAdapter.notifyItemChanged(position)
-                            dialog.dismiss()
-                        }
-                    }.show()
+                    }
                 }
-            }
 
-        val itemTouchHelper = ItemTouchHelper(itemTouchHelperCallback)
-        itemTouchHelper.attachToRecyclerView(recyclerView)
+            val itemTouchHelper = ItemTouchHelper(itemTouchHelperCallback)
+            itemTouchHelper.attachToRecyclerView(recyclerView)
+        }
     }
 
 

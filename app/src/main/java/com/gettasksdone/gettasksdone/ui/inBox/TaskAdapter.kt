@@ -112,23 +112,23 @@ class TaskAdapter(
         private fun onUpdateIconClicked(position: Int) {
             val task = tasks[position]
             val alertDialogBuilder = AlertDialog.Builder(context)
-            alertDialogBuilder.setTitle("Confirmación")
-            alertDialogBuilder.setMessage("Seguro que quieres marcar la tarea '${task.titulo}' como completada?")
-            alertDialogBuilder.setPositiveButton("Aceptar") { dialog, _ ->
+            if(apiService != null){
+                alertDialogBuilder.setTitle("Confirmación")
+                alertDialogBuilder.setMessage("Seguro que quieres marcar la tarea '${task.titulo}' como completada?")
+                alertDialogBuilder.setPositiveButton("Aceptar") { dialog, _ ->
 
-                val createTaskRequest = TaskRequest(
-                    titulo = task.titulo,
-                    descripcion = task.descripcion,
-                    estado = "completado",
-                    prioridad = task.prioridad,
-                    contexto = task.contexto,
-                    vencimiento = task.vencimiento,
-                )
+                    val createTaskRequest = TaskRequest(
+                        titulo = task.titulo,
+                        descripcion = task.descripcion,
+                        estado = "completado",
+                        prioridad = task.prioridad,
+                        contexto = task.contexto,
+                        vencimiento = task.vencimiento,
+                    )
 
-                val authHeader = "Bearer ${jwtHelper.getToken()}"
-                val call = apiService?.updateTask(task.id, authHeader, createTaskRequest)
+                    val authHeader = "Bearer ${jwtHelper.getToken()}"
+                    val call = apiService.updateTask(task.id, authHeader, createTaskRequest)
 
-                if (call != null) {
                     call.enqueue(object : Callback<String> {
                         override fun onResponse(call: Call<String>, response: Response<String>) {
                             val registerResponse = response.body()
@@ -166,32 +166,34 @@ class TaskAdapter(
 
                         }
                     })
+
+                    notifyItemChanged(position)
+
+                    //Toast.makeText(context, "Tarea completada", Toast.LENGTH_SHORT).show()
+                    dialog.dismiss()
                 }
-
-                notifyItemChanged(position)
-
-                //Toast.makeText(context, "Tarea completada", Toast.LENGTH_SHORT).show()
-                dialog.dismiss()
+                alertDialogBuilder.setNegativeButton("Cancelar") { dialog, _ ->
+                    dialog.dismiss()
+                }
+                val alertDialog = alertDialogBuilder.create()
+                alertDialog.show()
             }
-            alertDialogBuilder.setNegativeButton("Cancelar") { dialog, _ ->
-                dialog.dismiss()
-            }
-            val alertDialog = alertDialogBuilder.create()
-            alertDialog.show()
         }
 
         fun editTask(position: Int) {
             val task = tasks[position]
             val intent = Intent(context, AnadirTask::class.java)
-            intent.putExtra("editMode", true)
-            intent.putExtra("taskId", task.id)
-            intent.putExtra("taskTitle", task.titulo)
-            intent.putExtra("taskDescription", task.descripcion)
-            intent.putExtra("taskDueDate", task.vencimiento)
-            intent.putExtra("taskContextId", task.contexto.id)
-            intent.putExtra("taskState", task.estado)
-            // Agrega más extras según sea necesario
-            context.startActivity(intent)
+            if(apiService != null){
+                intent.putExtra("editMode", true)
+                intent.putExtra("taskId", task.id)
+                intent.putExtra("taskTitle", task.titulo)
+                intent.putExtra("taskDescription", task.descripcion)
+                intent.putExtra("taskDueDate", task.vencimiento)
+                intent.putExtra("taskContextId", task.contexto.id)
+                intent.putExtra("taskState", task.estado)
+                // Agrega más extras según sea necesario
+                context.startActivity(intent)
+            }
         }
 
     }

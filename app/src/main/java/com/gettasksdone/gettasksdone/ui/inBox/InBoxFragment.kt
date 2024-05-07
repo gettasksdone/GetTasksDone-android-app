@@ -82,74 +82,78 @@ class InBoxFragment : Fragment(), TaskCompletionListener {
         // Llama al método para obtener las tareas
         inboxViewModel.getTasks()
 
-        // Añade el ItemTouchHelper al RecyclerView
-        val itemTouchHelperCallback =
-            object : ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.LEFT) {
-                override fun onMove(
-                    recyclerView: RecyclerView,
-                    viewHolder: RecyclerView.ViewHolder,
-                    target: RecyclerView.ViewHolder
-                ): Boolean {
-                    return false
-                }
+        // Añade el ItemTouchHelper al RecyclerView si está en modo online
+        if(apiService != null){
+            val itemTouchHelperCallback =
+                object : ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.LEFT) {
+                    override fun onMove(
+                        recyclerView: RecyclerView,
+                        viewHolder: RecyclerView.ViewHolder,
+                        target: RecyclerView.ViewHolder
+                    ): Boolean {
+                        return false
+                    }
 
-                override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
-                    val position = viewHolder.adapterPosition
-                    val taskAdapter = recyclerView.adapter as TaskAdapter
-                    val task = taskAdapter.tasks[position]
+                    override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
+                        val position = viewHolder.adapterPosition
+                        val taskAdapter = recyclerView.adapter as TaskAdapter
+                        val task = taskAdapter.tasks[position]
 
-                    AlertDialog.Builder(context).apply {
-                        setTitle("Confirmación")
-                        setMessage("¿Seguro que quieres eliminar la tarea '${task.titulo}'?")
-                        setPositiveButton("Sí") { dialog, _ ->
+                        if(apiService != null){
+                            AlertDialog.Builder(context).apply {
+                                setTitle("Confirmación")
+                                setMessage("¿Seguro que quieres eliminar la tarea '${task.titulo}'?")
+                                setPositiveButton("Sí") { dialog, _ ->
 
-                            val authHeader = "Bearer ${jwtHelper.getToken()}"
-                            val call = apiService?.deleteTask(task.id, authHeader)
+                                    val authHeader = "Bearer ${jwtHelper.getToken()}"
+                                    val call = apiService?.deleteTask(task.id, authHeader)
 
-                            if (call != null) {
-                                call.enqueue(object : Callback<String> {
-                                    override fun onResponse(call: Call<String>, response: Response<String>) {
-                                        val registerResponse = response.body()
-                                        if(response.isSuccessful) {
-                                            if (registerResponse == null) {
-                                                Toast.makeText(
-                                                    context,
-                                                    "Se produjo un error en el servidor",
-                                                    Toast.LENGTH_SHORT
-                                                ).show()
-                                                return
+                                    if (call != null) {
+                                        call.enqueue(object : Callback<String> {
+                                            override fun onResponse(call: Call<String>, response: Response<String>) {
+                                                val registerResponse = response.body()
+                                                if(response.isSuccessful) {
+                                                    if (registerResponse == null) {
+                                                        Toast.makeText(
+                                                            context,
+                                                            "Se produjo un error en el servidor",
+                                                            Toast.LENGTH_SHORT
+                                                        ).show()
+                                                        return
+                                                    }
+                                                    Toast.makeText(context, "Tarea borrada correctamente", Toast.LENGTH_SHORT).show()
+                                                    inboxViewModel.getTasks()
+                                                } else {
+                                                    // Añade aquí el manejo del caso en el que la respuesta HTTP no es exitosa
+                                                    Toast.makeText(context, "Error al borrar la tarea", Toast.LENGTH_SHORT).show()
+                                                }
                                             }
-                                            Toast.makeText(context, "Tarea borrada correctamente", Toast.LENGTH_SHORT).show()
-                                            inboxViewModel.getTasks()
-                                        } else {
-                                            // Añade aquí el manejo del caso en el que la respuesta HTTP no es exitosa
-                                            Toast.makeText(context, "Error al borrar la tarea", Toast.LENGTH_SHORT).show()
-                                        }
+
+                                            override fun onFailure(call: Call<String>, t: Throwable) {
+                                                Log.e("API_CALL", "Error en onFailure(): ${t.message}")
+
+                                                Toast.makeText(context, "Se produjo un error en el servidor", Toast.LENGTH_SHORT).show()
+
+                                            }
+                                        })
                                     }
 
-                                    override fun onFailure(call: Call<String>, t: Throwable) {
-                                        Log.e("API_CALL", "Error en onFailure(): ${t.message}")
+                                    dialog.dismiss()
 
-                                        Toast.makeText(context, "Se produjo un error en el servidor", Toast.LENGTH_SHORT).show()
-
-                                    }
-                                })
-                            }
-
-                            dialog.dismiss()
-
+                                }
+                                setNegativeButton("No") { dialog, _ ->
+                                    // Si el usuario elige "No", simplemente vuelves a mostrar la tarea en la lista
+                                    taskAdapter.notifyItemChanged(position)
+                                    dialog.dismiss()
+                                }
+                            }.show()
                         }
-                        setNegativeButton("No") { dialog, _ ->
-                            // Si el usuario elige "No", simplemente vuelves a mostrar la tarea en la lista
-                            taskAdapter.notifyItemChanged(position)
-                            dialog.dismiss()
-                        }
-                    }.show()
+                    }
                 }
-            }
 
-        val itemTouchHelper = ItemTouchHelper(itemTouchHelperCallback)
-        itemTouchHelper.attachToRecyclerView(recyclerView)
+            val itemTouchHelper = ItemTouchHelper(itemTouchHelperCallback)
+            itemTouchHelper.attachToRecyclerView(recyclerView)
+        }
     }
 
     override fun onDestroyView() {

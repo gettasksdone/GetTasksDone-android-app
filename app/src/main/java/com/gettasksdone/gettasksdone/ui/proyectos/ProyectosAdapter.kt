@@ -97,14 +97,16 @@ class ProyectosAdapter(
         private fun editProject(position: Int){
             val project = proyectos[position]
             val intent = Intent(context, CreateProject::class.java)
-            intent.putExtra("editMode", true)
-            intent.putExtra("projectId", project.id)
-            intent.putExtra("nombre", project.nombre)
-            intent.putExtra("inicio", project.inicio)
-            intent.putExtra("fin", project.fin)
-            intent.putExtra("descripcion", project.descripcion)
-            intent.putExtra("estado", project.estado)
-            context.startActivity(intent)
+            if(apiService != null){
+                intent.putExtra("editMode", true)
+                intent.putExtra("projectId", project.id)
+                intent.putExtra("nombre", project.nombre)
+                intent.putExtra("inicio", project.inicio)
+                intent.putExtra("fin", project.fin)
+                intent.putExtra("descripcion", project.descripcion)
+                intent.putExtra("estado", project.estado)
+                context.startActivity(intent)
+            }
         }
 
         private fun showProjectDetailsDialog(context: Context, project: Project) {
