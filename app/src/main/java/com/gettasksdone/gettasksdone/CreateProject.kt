@@ -1,6 +1,7 @@
 package com.gettasksdone.gettasksdone
 
 import android.app.DatePickerDialog
+import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
@@ -52,6 +53,15 @@ class CreateProject : AppCompatActivity() {
     private lateinit var selectedState: String
 
     override fun onCreate(savedInstanceState: Bundle?) {
+        val preferences = getSharedPreferences("MyPreferences", Context.MODE_PRIVATE)
+        val whiteBackground = preferences.getBoolean("whiteBackground", false)
+
+        // Establece el tema correspondiente
+        if (whiteBackground) {
+            setTheme(R.style.Theme_MyApplication_WhiteBackground)
+        } else {
+            setTheme(R.style.Theme_MyApplication)
+        }
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         setContentView(R.layout.activity_create_project)

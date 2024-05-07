@@ -70,6 +70,15 @@ class AnadirTask : AppCompatActivity(), NewContextDialogFragment.NewContextDialo
     private var isStarred = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
+        val preferences = getSharedPreferences("MyPreferences", android.content.Context.MODE_PRIVATE)
+        val whiteBackground = preferences.getBoolean("whiteBackground", false)
+
+        // Establece el tema correspondiente
+        if (whiteBackground) {
+            setTheme(R.style.Theme_MyApplication_WhiteBackground)
+        } else {
+            setTheme(R.style.Theme_MyApplication)
+        }
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_anadir_task)
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main)) { v, insets ->

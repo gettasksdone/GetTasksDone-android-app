@@ -44,6 +44,15 @@ class Login : AppCompatActivity(), AgregarUrlDialogFragment.NewUrlDialogListener
     private var urlList: MutableSet<String> = mutableSetOf()
 
     override fun onCreate(savedInstanceState: Bundle?) {
+        val themePreferences = getSharedPreferences("MyPreferences", android.content.Context.MODE_PRIVATE)
+        val whiteBackground = themePreferences.getBoolean("whiteBackground", false)
+
+// Establece el tema correspondiente
+        if (whiteBackground) {
+            setTheme(R.style.Theme_MyApplication_WhiteBackground)
+        } else {
+            setTheme(R.style.Theme_MyApplication)
+        }
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_login2)
         serverSpinner = findViewById(R.id.selector_servidor)

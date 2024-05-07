@@ -1,10 +1,13 @@
 package com.gettasksdone.gettasksdone
+import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.view.Menu
+import android.view.MenuItem
 import android.widget.ImageView
 import android.widget.PopupMenu
 import android.widget.TextView
+import android.widget.Toast
 import com.google.android.material.navigation.NavigationView
 import androidx.navigation.findNavController
 import androidx.navigation.ui.AppBarConfiguration
@@ -15,6 +18,7 @@ import androidx.drawerlayout.widget.DrawerLayout
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.GravityCompat
 import androidx.navigation.ui.NavigationUI
+import androidx.preference.PreferenceManager
 import com.gettasksdone.gettasksdone.data.JwtHelper
 import com.gettasksdone.gettasksdone.databinding.ActivityMenuBinding
 import com.gettasksdone.gettasksdone.io.ApiService
@@ -30,6 +34,17 @@ class Menu : AppCompatActivity() {
     private lateinit var binding: ActivityMenuBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
+        // Comprueba las preferencias compartidas para ver si el fondo debe ser blanco
+        val preferences = getSharedPreferences("MyPreferences", Context.MODE_PRIVATE)
+        val whiteBackground = preferences.getBoolean("whiteBackground", false)
+
+        // Establece el tema correspondiente
+        if (whiteBackground) {
+            setTheme(R.style.Theme_MyApplication_WhiteBackground)
+        } else {
+            setTheme(R.style.Theme_MyApplication)
+        }
+
         super.onCreate(savedInstanceState)
 
         binding = ActivityMenuBinding.inflate(layoutInflater)
@@ -62,6 +77,7 @@ class Menu : AppCompatActivity() {
         val drawerLayout: DrawerLayout = binding.drawerLayout
         val navView: NavigationView = binding.navView
         val navController = findNavController(R.id.nav_host_fragment_content_menu)
+
 
         appBarConfiguration = AppBarConfiguration(
             setOf(
@@ -123,6 +139,16 @@ class Menu : AppCompatActivity() {
                     })
                     true
                 }
+                R.id.nav_theme -> {
+                    // Cambia el estado del fondo en las preferencias compartidas
+                    val editor = preferences.edit()
+                    editor.putBoolean("whiteBackground", !whiteBackground)
+                    editor.apply()
+
+                    // Recrea la actividad para aplicar el nuevo tema
+                    recreate()
+                    true
+                }
 
                 else -> {
                     // Delega la navegación al NavController para los demás elementos del menú
@@ -138,6 +164,8 @@ class Menu : AppCompatActivity() {
             }
         }
     }
+
+
     private fun signOut() {
         val preferences = PreferenceHelper.defaultPrefs(this)
         val editor = preferences.edit()

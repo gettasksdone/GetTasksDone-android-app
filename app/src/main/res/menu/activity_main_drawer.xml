@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     tools:showIn="navigation_view">
 
@@ -43,6 +44,11 @@
             android:id="@+id/nav_perfil"
             android:icon="@android:drawable/ic_menu_myplaces"
             android:title="Acceder a mi perfil" />
+        <item
+            android:id="@+id/nav_theme"
+            android:title="Cambiar tema"
+            app:actionLayout="@layout/switch_layout"
+            app:showAsAction="always"/>
         <item
             android:id="@+id/nav_logout"
             android:title="@string/navCierre"

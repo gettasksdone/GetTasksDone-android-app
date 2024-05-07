@@ -6,9 +6,15 @@
 
         <!-- Añade aquí tu color de fondo. -->
         <item name="android:windowBackground">#001928</item>
+        <!-- Añade aquí el color de la letra. -->
+        <item name="android:textColor">@android:color/white</item>
 
     </style>
-
+    <style name="Theme.MyApplication.WhiteBackground" parent="Base.Theme.MyApplication">
+        <item name="android:windowBackground">@android:color/white</item>
+        <!-- Añade aquí el color de la letra. -->
+        <item name="android:textColor">#001928</item>
+    </style>
     <style name="Theme.MyApplication" parent="Base.Theme.MyApplication" />
     <style name="Theme.MyApplication.NoActionBar">
         <item name="windowActionBar">false</item>

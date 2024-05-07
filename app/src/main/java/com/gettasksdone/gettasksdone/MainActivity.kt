@@ -1,10 +1,12 @@
 package com.gettasksdone.gettasksdone
 
+import android.content.Context
 import android.content.Intent
 import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Patterns
+import android.widget.Button
 import android.widget.ImageView
 import android.widget.Toast
 import com.gettasksdone.gettasksdone.io.ApiService
@@ -16,13 +18,33 @@ import com.gettasksdone.gettasksdone.util.PreferenceHelper.get
 
 class MainActivity : AppCompatActivity(), AgregarUrlDialogFragment.NewUrlDialogListener {
     override fun onCreate(savedInstanceState: Bundle?) {
+        // Comprueba las preferencias compartidas para ver si el fondo debe ser blanco
+        val preferences = getSharedPreferences("MyPreferences", Context.MODE_PRIVATE)
+        val whiteBackground = preferences.getBoolean("whiteBackground", false)
+
+        // Establece el tema correspondiente
+        if (whiteBackground) {
+            setTheme(R.style.Theme_MyApplication_WhiteBackground)
+        } else {
+            setTheme(R.style.Theme_MyApplication)
+        }
+
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-
 
         val tvGoLogin = findViewById<ImageView>(R.id.startButton)
         tvGoLogin.setOnClickListener{
             goToLogin()
+        }
+        val myButton = findViewById<Button>(R.id.myButton)
+        myButton.setOnClickListener {
+            // Cambia el estado del fondo en las preferencias compartidas
+            val editor = preferences.edit()
+            editor.putBoolean("whiteBackground", !whiteBackground)
+            editor.apply()
+
+            // Recrea la actividad para aplicar el nuevo tema
+            recreate()
         }
     }
     private fun goToLogin(){

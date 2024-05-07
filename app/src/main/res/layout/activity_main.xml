@@ -6,12 +6,8 @@
     android:layout_height="match_parent"
     tools:context=".MainActivity">
 
-
-    <!-- Configuración fondo abajo -->
-
-
-
     <!-- Configuración del boton -->
+
 
 
 
@@ -37,6 +33,20 @@
         tools:ignore="MissingConstraints"
         android:contentDescription="@string/descripcion_boton_de_acceso" />
 
+    <Button
+        android:id="@+id/myButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignTop="@+id/startButton"
+        android:layout_alignBottom="@+id/startButton"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentEnd="true"
+        android:layout_marginStart="132dp"
+        android:layout_marginTop="105dp"
+        android:layout_marginEnd="136dp"
+        android:layout_marginBottom="-91dp"
+        android:text="Cambiar fondo" />
+
     <TextView
         android:id="@+id/appTitle"
         android:layout_width="wrap_content"
@@ -46,7 +56,6 @@
         android:fontFamily="sans-serif-black"
         android:layout_marginBottom="30dp"
         android:text="@string/appTitle"
-        android:textColor="#F5F5F5"
         android:textSize="24sp" />
 
     <TextView
@@ -58,7 +67,6 @@
         android:fontFamily="sans-serif-medium"
         android:text="@string/introductionText"
         android:textAlignment="center"
-        android:textColor="#F5F5F5"
         android:textSize="24sp" />
 
 </RelativeLayout>
