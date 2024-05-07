@@ -19,7 +19,6 @@ import androidx.core.view.WindowInsetsCompat
 import com.gettasksdone.gettasksdone.data.JwtHelper
 import com.gettasksdone.gettasksdone.io.ApiService
 import com.gettasksdone.gettasksdone.io.requests.ProjectRequest
-import com.gettasksdone.gettasksdone.model.Context
 import com.gettasksdone.gettasksdone.util.PreferenceHelper
 import retrofit2.Call
 import retrofit2.Callback
@@ -127,72 +126,56 @@ class CreateProject : AppCompatActivity() {
     }
 
     private fun performCreateProject(){
-
-
-
-
-        val  preferencesTest = PreferenceHelper.defaultPrefs(applicationContext)
+        val preferencesTest = PreferenceHelper.defaultPrefs(applicationContext)
+        var fechaInicioFinal = ""
+        var fechaFinFinal = ""
         val urlBase = preferencesTest.getString("urlBase", "").toString()
-        Toast.makeText(applicationContext, "Debug server ${urlBase.toString()}", Toast.LENGTH_SHORT).show()
-
-
-        val nombre_proyecto = findViewById<EditText>(R.id.nombreProyecto).text.toString()
-
-        if(nombre_proyecto == ""){
-
+        //Toast.makeText(applicationContext, "Debug server ${urlBase.toString()}", Toast.LENGTH_SHORT).show()
+        val nombreProyecto = findViewById<EditText>(R.id.nombreProyecto).text.toString()
+        if(nombreProyecto == ""){
             Toast.makeText(applicationContext, "El campo Nombre del proyecto es obligatorio", Toast.LENGTH_SHORT).show()
             return
         }
-
         //Convierte la fecha a formato AÑO-MES-DIA 00:00:00
-        var fechaInicio = findViewById<EditText>(R.id.inicioProyecto).text.toString().split("/")
-
-        Toast.makeText(applicationContext, "Debug fechaInicio ${fechaInicio.size}" , Toast.LENGTH_SHORT).show()
-        if(fechaInicio.size < 2){
-
-
-                Toast.makeText(applicationContext, "El campo Fecha de inicio es obligatorio", Toast.LENGTH_SHORT).show()
-                return;
-
-        }
-
-        val diaInicioInt = fechaInicio[0].toInt()
-        val mesInicioInt = fechaInicio[1].toInt()
-
-
-
-
-        var diaInicio = "$diaInicioInt"
-        var mesInicio = "$mesInicioInt"
-        if(diaInicioInt < 10){
-            diaInicio = "0$diaInicioInt"
-        }
-        if(mesInicioInt < 10){
-            mesInicio = "0$mesInicioInt"
+        val fechaInicio = findViewById<EditText>(R.id.inicioProyecto).text.toString().split("/")
+        //Toast.makeText(applicationContext, "Debug fechaInicio ${fechaInicio.size}" , Toast.LENGTH_SHORT).show()
+        if(fechaInicio.size < 3){
+                Toast.makeText(applicationContext, "DEBUG: FechaInicio empty", Toast.LENGTH_SHORT).show()
+        }else{
+            val diaInicioInt = fechaInicio[0].toInt()
+            val mesInicioInt = fechaInicio[1].toInt()
+            var diaInicio = "$diaInicioInt"
+            var mesInicio = "$mesInicioInt"
+            if(diaInicioInt < 10){
+                diaInicio = "0$diaInicioInt"
+            }
+            if(mesInicioInt < 10){
+                mesInicio = "0$mesInicioInt"
+            }
+            fechaInicioFinal = "${fechaInicio[2]}-$mesInicio-$diaInicio 00:00:00"
         }
         val fechaFin = findViewById<EditText>(R.id.finProyecto).text.toString().split("/")
-        Toast.makeText(applicationContext, "Debug fechaInicio ${fechaFin.size}" , Toast.LENGTH_SHORT).show()
-
-        if(fechaFin.size < 2){
-            Toast.makeText(applicationContext, "El campo Fecha de fin es obligatorio", Toast.LENGTH_SHORT).show()
-            return;
+        //Toast.makeText(applicationContext, "Debug fechaInicio ${fechaFin.size}" , Toast.LENGTH_SHORT).show()
+        if(fechaFin.size < 3){
+            Toast.makeText(applicationContext, "DEBUG: FechaFin empty", Toast.LENGTH_SHORT).show()
+        }else{
+            val diaFinInt = fechaFin[0].toInt()
+            val mesFinInt = fechaFin[1].toInt()
+            var diaFin = "$diaFinInt"
+            var mesFin = "$mesFinInt"
+            if(diaFinInt < 10){
+                diaFin = "0$diaFinInt"
+            }
+            if(mesFinInt < 10){
+                mesFin = "0$mesFinInt"
+            }
+            fechaFinFinal = "${fechaFin[2]}-$mesFin-$diaFin 00:00:00"
         }
-
-        val diaFinInt = fechaFin[0].toInt()
-        val mesFinInt = fechaFin[1].toInt()
-        var diaFin = "$diaFinInt"
-        var mesFin = "$mesFinInt"
-        if(diaFinInt < 10){
-            diaFin = "0$diaFinInt"
-        }
-        if(mesFinInt < 10){
-            mesFin = "0$mesFinInt"
-        }
-        Log.e("DATE", "${fechaInicio[2]}-$fechaInicio[1]-$fechaInicio[0] 00:00:00")
+        //Log.e("DATE", "${fechaInicio[2]}-${fechaInicio[1]}-${fechaInicio[0]} 00:00:00")
         val createProjectRequest = ProjectRequest(
-            nombre = nombre_proyecto,
-            inicio = "${fechaInicio[2]}-$mesInicio-$diaInicio 00:00:00",
-            fin = "${fechaFin[2]}-$mesFin-$diaFin 00:00:00",
+            nombre = nombreProyecto,
+            inicio = fechaInicioFinal,
+            fin = fechaFinFinal,
             descripcion = findViewById<EditText>(R.id.descripcionProyecto).text.toString(),
             estado = selectedState
         )
@@ -232,8 +215,6 @@ class CreateProject : AppCompatActivity() {
         })
     }
     private fun performUpdateProject(projectId: Long){
-
-
         var fechaInicio: String = ""
         if(findViewById<EditText>(R.id.inicioProyecto).text.toString().isNotEmpty()){
             val ini = findViewById<EditText>(R.id.inicioProyecto).text.toString()

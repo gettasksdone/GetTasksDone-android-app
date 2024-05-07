@@ -57,7 +57,7 @@ class AnadirTask : AppCompatActivity(), NewContextDialogFragment.NewContextDialo
     private val jwtHelper: JwtHelper by lazy {
         JwtHelper(this)
     }
-    private lateinit var et_fecha: EditText
+    private lateinit var etFecha: EditText
     private lateinit var spinner1: Spinner
     private lateinit var spinner2: Spinner
     private lateinit var spinner3: Spinner
@@ -79,7 +79,7 @@ class AnadirTask : AppCompatActivity(), NewContextDialogFragment.NewContextDialo
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
             insets
         }
-        et_fecha = findViewById(R.id.et_fecha)
+        etFecha = findViewById(R.id.et_fecha)
         spinner1 = findViewById(R.id.contexto)
         adapter1 = ArrayAdapter(this, R.layout.spinner_list, mutableListOf())
         adapter1.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
@@ -270,16 +270,20 @@ class AnadirTask : AppCompatActivity(), NewContextDialogFragment.NewContextDialo
             val fechaVencimiento = findViewById<EditText>(R.id.et_fecha).text.toString()
             val formatter = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss", Locale.getDefault())
             val date = formatter.parse(fechaVencimiento)
-            val calendar = Calendar.getInstance().apply { time = date }
+            val calendar = Calendar.getInstance().apply {
+                if (date != null) {
+                    time = date
+                }
+            }
 
             val diaVencimientoInt = calendar.get(Calendar.DAY_OF_MONTH)
             val mesVencimientoInt = calendar.get(Calendar.MONTH) + 1 // Sumar 1 porque en Calendar.MONTH enero es 0
-            val añoVencimiento = calendar.get(Calendar.YEAR)
+            val anioVencimiento = calendar.get(Calendar.YEAR)
 
             val diaVencimiento = if (diaVencimientoInt < 10) "0$diaVencimientoInt" else "$diaVencimientoInt"
             val mesVencimiento = if (mesVencimientoInt < 10) "0$mesVencimientoInt" else "$mesVencimientoInt"
 
-            vencimiento = "$añoVencimiento-$mesVencimiento-$diaVencimiento 00:00:00"
+            vencimiento = "$anioVencimiento-$mesVencimiento-$diaVencimiento 00:00:00"
         }
 
         val contexto = Context(
@@ -391,7 +395,11 @@ class AnadirTask : AppCompatActivity(), NewContextDialogFragment.NewContextDialo
         // Por ejemplo, puedes agregarlo a la lista de contextos y actualizar el Spinner
         // En este ejemplo, simplemente lo mostraremos en un Toast
         //Toast.makeText(applicationContext, "Nuevo contexto: $newContextName", Toast.LENGTH_SHORT).show()
-
+        if(newContextName == ""){
+            Toast.makeText(applicationContext, "El contexto debe tener un nombre", Toast.LENGTH_SHORT).show()
+            openNewContextActivity()
+            return
+        }
         val createContextoRequest = ContextRequest(
             nombre = newContextName
         )
@@ -441,7 +449,7 @@ class AnadirTask : AppCompatActivity(), NewContextDialogFragment.NewContextDialo
         val newFragment = DatePickerFragment.newInstance(DatePickerDialog.OnDateSetListener { _, year, month, day ->
             // +1 porque enero es cero
             val selectedDate = day.toString() + "/" + (month+1) + "/" + year
-            et_fecha.setText(selectedDate)
+            etFecha.setText(selectedDate)
         })
 
         newFragment.show(supportFragmentManager, "datePicker")
