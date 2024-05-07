@@ -28,7 +28,7 @@ class AgendadoFragment : Fragment(), TaskCompletionListener {
 
   private lateinit var agendadoViewModel: AgendadoViewModel
 
-  private val apiService: ApiService by lazy {
+  private val apiService: ApiService? by lazy {
     ApiService.create()
   }
 

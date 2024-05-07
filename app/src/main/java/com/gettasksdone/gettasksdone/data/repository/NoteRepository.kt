@@ -16,20 +16,22 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.withContext
 
 open class NoteRepository(
-    private val api: ApiService,
+    private val api: ApiService?,
     private val jwtHelper: JwtHelper,
     private val noteDao: NoteDao) {
     suspend fun getAll(): List<Note>{
         return withContext(Dispatchers.IO){
             try{
                 val authHeader = "Bearer ${jwtHelper.getToken()}"
-                val call = api.getNotes(authHeader)
-                val response = call.execute()
-                if(response.isSuccessful){
-                    noteDao.deleteAll()
-                    val remoteNotes = response.body() ?: emptyList()
-                    remoteNotes.forEach{
-                        noteDao.insertAll(it.toEntity())
+                val call = api?.getNotes(authHeader)
+                val response = call?.execute()
+                if (response != null) {
+                    if(response.isSuccessful){
+                        noteDao.deleteAll()
+                        val remoteNotes = response.body() ?: emptyList()
+                        remoteNotes.forEach{
+                            noteDao.insertAll(it.toEntity())
+                        }
                     }
                 }
             }catch (e: Exception){

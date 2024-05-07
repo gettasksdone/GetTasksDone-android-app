@@ -17,7 +17,7 @@ class ContextosViewModelFactory(
     private val context: Context,
     private val viewModelScope: CoroutineScope
 ) : ViewModelProvider.Factory {
-    private val apiService: ApiService by lazy { ApiService.create() }
+    private val apiService: ApiService? by lazy { ApiService.create() }
     private val database: AppDatabase by lazy { AppDatabase.getDatabase(context, viewModelScope) }
     private val contextRepo by lazy { ContextRepository(apiService, jwtHelper, database.contextDao()) }
     override fun <T : ViewModel> create(modelClass: Class<T>): T {

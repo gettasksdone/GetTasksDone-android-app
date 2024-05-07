@@ -17,7 +17,7 @@ import retrofit2.Response
 
 class CompletarRegistro : AppCompatActivity() {
 
-    private val apiService : ApiService by lazy {
+    private val apiService : ApiService? by lazy {
         ApiService.create()
     }
 
@@ -77,37 +77,39 @@ class CompletarRegistro : AppCompatActivity() {
 
         val authHeader = "Bearer ${jwtHelper.getToken()}"
 
-        val call = apiService.completeRegister(authHeader, registerRequest)
-        call.enqueue(object : Callback<String> {
+        val call = apiService?.completeRegister(authHeader, registerRequest)
+        if (call != null) {
+            call.enqueue(object : Callback<String> {
 
-            override fun onResponse(call: Call<String>, response: Response<String>) {
-                val registerResponse = response.body()
-                if(response.isSuccessful) {
-                    if (registerResponse == null) {
-                        Toast.makeText(
-                            applicationContext,
-                            "Se produjo un error en el servidor (onResponse)",
-                            Toast.LENGTH_SHORT
-                        ).show()
-                        return
+                override fun onResponse(call: Call<String>, response: Response<String>) {
+                    val registerResponse = response.body()
+                    if(response.isSuccessful) {
+                        if (registerResponse == null) {
+                            Toast.makeText(
+                                applicationContext,
+                                "Se produjo un error en el servidor (onResponse)",
+                                Toast.LENGTH_SHORT
+                            ).show()
+                            return
+                        }
+                        Toast.makeText(applicationContext, "Informacion actualizada correctamente", Toast.LENGTH_SHORT).show()
+                        goToMenu()
+
+                    } else {
+                        // Añade aquí el manejo del caso en el que la respuesta HTTP no es exitosa
+                        Toast.makeText(applicationContext, "Error actualizando datos de usuario", Toast.LENGTH_SHORT).show()
                     }
-                    Toast.makeText(applicationContext, "Informacion actualizada correctamente", Toast.LENGTH_SHORT).show()
-                    goToMenu()
-
-                } else {
-                    // Añade aquí el manejo del caso en el que la respuesta HTTP no es exitosa
-                    Toast.makeText(applicationContext, "Error actualizando datos de usuario", Toast.LENGTH_SHORT).show()
                 }
-            }
 
-            override fun onFailure(call: Call<String>, t: Throwable) {
-                Log.e("API_CALL", "Error en onFailure(): ${t.message}")
+                override fun onFailure(call: Call<String>, t: Throwable) {
+                    Log.e("API_CALL", "Error en onFailure(): ${t.message}")
 
-                Toast.makeText(applicationContext, "Se produjo un error en el servidor", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(applicationContext, "Se produjo un error en el servidor", Toast.LENGTH_SHORT).show()
 
-            }
+                }
 
-        })
+            })
+        }
 
     }
 }

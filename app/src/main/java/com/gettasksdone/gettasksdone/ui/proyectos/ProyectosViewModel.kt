@@ -21,7 +21,7 @@ class ProyectosViewModel(
     private val repository: ProjectRepository
 ) : ViewModel() {
 
-    private val apiService: ApiService by lazy {
+    private val apiService: ApiService? by lazy {
         ApiService.create()
     }
 

@@ -6,7 +6,7 @@ import com.gettasksdone.gettasksdone.io.ApiService
 
 class OFProjectRepository(
     private val projectDao: ProjectDao,
-    private val network: ApiService,
+    private val network: ApiService?,
     private val jwtHelper: JwtHelper
 ): ProjectRepository(network, jwtHelper, projectDao) {
 }

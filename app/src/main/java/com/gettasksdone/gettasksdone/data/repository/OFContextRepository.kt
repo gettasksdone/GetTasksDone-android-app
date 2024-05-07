@@ -6,7 +6,7 @@ import com.gettasksdone.gettasksdone.io.ApiService
 
 class OFContextRepository(
     private val contextDao: ContextDao,
-    private val network: ApiService,
+    private val network: ApiService?,
     private val jwtHelper: JwtHelper
 ): ContextRepository(network, jwtHelper, contextDao) {
 }

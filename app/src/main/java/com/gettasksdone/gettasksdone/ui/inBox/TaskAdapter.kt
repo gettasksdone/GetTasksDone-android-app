@@ -30,7 +30,7 @@ import java.util.Locale
 
 class TaskAdapter(
     val tasks: List<Task>,
-    private val apiService: ApiService,
+    private val apiService: ApiService?,
     private val jwtHelper: JwtHelper,
     private val fragment: Fragment,
     private val taskCompletionListener: TaskCompletionListener
@@ -126,45 +126,47 @@ class TaskAdapter(
                 )
 
                 val authHeader = "Bearer ${jwtHelper.getToken()}"
-                val call = apiService.updateTask(task.id, authHeader, createTaskRequest)
+                val call = apiService?.updateTask(task.id, authHeader, createTaskRequest)
 
-                call.enqueue(object : Callback<String> {
-                    override fun onResponse(call: Call<String>, response: Response<String>) {
-                        val registerResponse = response.body()
-                        if (response.isSuccessful) {
-                            if (registerResponse == null) {
+                if (call != null) {
+                    call.enqueue(object : Callback<String> {
+                        override fun onResponse(call: Call<String>, response: Response<String>) {
+                            val registerResponse = response.body()
+                            if (response.isSuccessful) {
+                                if (registerResponse == null) {
+                                    Toast.makeText(
+                                        context,
+                                        "Se produjo un error en el servidor (onResponse)",
+                                        Toast.LENGTH_SHORT
+                                    ).show()
+                                    return
+                                }
+                                Toast.makeText(context, "Tarea completada", Toast.LENGTH_SHORT).show()
+                                //goToMenu()
+                                taskCompletionListener.onTaskCompleted()
+
+                            } else {
+                                // Añade aquí el manejo del caso en el que la respuesta HTTP no es exitosa
                                 Toast.makeText(
                                     context,
-                                    "Se produjo un error en el servidor (onResponse)",
+                                    "Error al actualizar la tarea",
                                     Toast.LENGTH_SHORT
                                 ).show()
-                                return
                             }
-                            Toast.makeText(context, "Tarea completada", Toast.LENGTH_SHORT).show()
-                            //goToMenu()
-                            taskCompletionListener.onTaskCompleted()
+                        }
 
-                        } else {
-                            // Añade aquí el manejo del caso en el que la respuesta HTTP no es exitosa
+                        override fun onFailure(call: Call<String>, t: Throwable) {
+                            Log.e("API_CALL", "Error en onFailure(): ${t.message}")
+
                             Toast.makeText(
                                 context,
-                                "Error al actualizar la tarea",
+                                "Se produjo un error en el servidor",
                                 Toast.LENGTH_SHORT
                             ).show()
+
                         }
-                    }
-
-                    override fun onFailure(call: Call<String>, t: Throwable) {
-                        Log.e("API_CALL", "Error en onFailure(): ${t.message}")
-
-                        Toast.makeText(
-                            context,
-                            "Se produjo un error en el servidor",
-                            Toast.LENGTH_SHORT
-                        ).show()
-
-                    }
-                })
+                    })
+                }
 
                 notifyItemChanged(position)
 

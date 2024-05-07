@@ -2,6 +2,7 @@ package com.gettasksdone.gettasksdone
 
 import android.content.Context
 import android.content.Intent
+import android.net.ConnectivityManager
 import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -10,6 +11,7 @@ import android.util.Patterns
 import android.widget.Button
 import android.widget.ImageView
 import android.widget.Toast
+import androidx.appcompat.app.AlertDialog
 import com.gettasksdone.gettasksdone.io.ApiService
 import com.gettasksdone.gettasksdone.ui.Utils.AgregarUrlDialogFragment
 import com.gettasksdone.gettasksdone.ui.Utils.NewContextDialogFragment
@@ -22,20 +24,36 @@ class MainActivity : AppCompatActivity(), AgregarUrlDialogFragment.NewUrlDialogL
         // Comprueba las preferencias compartidas para ver si el fondo debe ser blanco
         val preferences = getSharedPreferences("MyPreferences", Context.MODE_PRIVATE)
         val whiteBackground = preferences.getBoolean("whiteBackground", false)
-
         // Establece el tema correspondiente
         if (whiteBackground) {
             setTheme(R.style.Theme_MyApplication_WhiteBackground)
         } else {
             setTheme(R.style.Theme_MyApplication)
         }
-
+        // Configura las comprobaciones de conexión del dispositivo
+        val networkManager = getSystemService(ConnectivityManager::class.java)
+        val offlineDialogBuilder: AlertDialog.Builder = AlertDialog.Builder(this)
+        offlineDialogBuilder
+            .setTitle("No hay conexión a internet")
+            .setMessage("La aplicación se ejecutará en modo de solo lectura. Para activar las funciones de escritura, conecte el dispositivo a internet y reinicie la aplicación.")
+            .setPositiveButton("Aceptar") { _, _ ->
+                val i = Intent(this, Menu::class.java)
+                startActivity(i)
+                finish()
+            }
+        val offlineDialog = offlineDialogBuilder.create()
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
         val tvGoLogin = findViewById<ImageView>(R.id.startButton)
         tvGoLogin.setOnClickListener{
-            goToLogin()
+            //Si no tiene conexión a internet, le iniciará la aplicación en solo lectura
+            val networkInfo = networkManager.activeNetwork
+            if(networkInfo == null){
+                offlineDialog.show()
+            }else{
+                goToLogin()
+            }
         }
         val myButton = findViewById<Button>(R.id.myButton)
         myButton.setOnClickListener {

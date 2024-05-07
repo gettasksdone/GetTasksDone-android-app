@@ -14,20 +14,22 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.withContext
 
 open class CheckItemRepository(
-    private val api: ApiService,
+    private val api: ApiService?,
     private val jwtHelper: JwtHelper,
     private val checkItemDao: CheckItemDao) {
     suspend fun getAll(): List<CheckItem> {
         return withContext(Dispatchers.IO){
             try{
                 val authHeader = "Bearer ${jwtHelper.getToken()}"
-                val call = api.getChecks(authHeader)
-                val response = call.execute()
-                if(response.isSuccessful){
-                    checkItemDao.deleteAll()
-                    val remoteChecks = response.body() ?: emptyList()
-                    remoteChecks.forEach{
-                        checkItemDao.insertAll(it.toEntity())
+                val call = api?.getChecks(authHeader)
+                val response = call?.execute()
+                if (response != null) {
+                    if(response.isSuccessful){
+                        checkItemDao.deleteAll()
+                        val remoteChecks = response.body() ?: emptyList()
+                        remoteChecks.forEach{
+                            checkItemDao.insertAll(it.toEntity())
+                        }
                     }
                 }
             }catch (e: Exception){

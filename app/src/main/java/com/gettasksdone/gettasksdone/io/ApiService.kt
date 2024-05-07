@@ -290,18 +290,19 @@ interface ApiService {
                 throw IllegalArgumentException("Invalid URL")
             }
         }
-        fun create(): ApiService {
-            if (BASE_URL.isEmpty()) {
-                throw IllegalStateException("Base URL is not set. Call setBaseUrl() first.")
+        fun create(): ApiService? {
+            try{
+                Log.d("ApiServiceFactory", "Base URL set to: $BASE_URL")
+                val retrofit = Retrofit.Builder()
+                    .baseUrl(BASE_URL)
+                    .addConverterFactory(ScalarsConverterFactory.create())
+                    .addConverterFactory(GsonConverterFactory.create(provideGson()))
+                    .build()
+                return retrofit.create((ApiService::class.java))
+            }catch (ex: Exception){
+                Log.e("ApiServiceFactory", "Base URL not set")
+                return null
             }
-
-            Log.d("ApiServiceFactory", "Base URL set to: $BASE_URL")
-            val retrofit = Retrofit.Builder()
-                .baseUrl(BASE_URL)
-                .addConverterFactory(ScalarsConverterFactory.create())
-                .addConverterFactory(GsonConverterFactory.create(provideGson()))
-                .build()
-            return retrofit.create((ApiService::class.java))
         }
     }
     //---END OF API CONNECTION SETTINGS---

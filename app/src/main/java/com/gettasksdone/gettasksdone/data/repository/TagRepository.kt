@@ -16,7 +16,7 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.withContext
 
 open class TagRepository(
-    private val api: ApiService,
+    private val api: ApiService?,
     private val jwtHelper: JwtHelper,
     private val tagDao: TagDao) {
 
@@ -24,13 +24,15 @@ open class TagRepository(
         return withContext(Dispatchers.IO){
             try{
                 val authHeader = "Bearer ${jwtHelper.getToken()}"
-                val call = api.getTags(authHeader)
-                val response = call.execute()
-                if(response.isSuccessful){
-                    tagDao.deleteAll()
-                    val remoteTags = response.body() ?: emptyList()
-                    remoteTags.forEach {
-                        tagDao.insertAll(it.toEntity())
+                val call = api?.getTags(authHeader)
+                val response = call?.execute()
+                if (response != null) {
+                    if(response.isSuccessful){
+                        tagDao.deleteAll()
+                        val remoteTags = response.body() ?: emptyList()
+                        remoteTags.forEach {
+                            tagDao.insertAll(it.toEntity())
+                        }
                     }
                 }
             }catch (e: Exception){

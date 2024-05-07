@@ -17,7 +17,7 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.withContext
 
 open class UserRepository(
-    private val api: ApiService,
+    private val api: ApiService?,
     private val jwtHelper: JwtHelper,
     private val userDao: UserDao) {
 
@@ -25,12 +25,14 @@ open class UserRepository(
         return withContext(Dispatchers.IO){
             try{
                 val authHeader = "Bearer ${jwtHelper.getToken()}"
-                val call = api.getAuthedUser(authHeader)
-                val response = call.execute()
-                if(response.isSuccessful){
-                    userDao.deleteAll()
-                    val remoteUser = response.body()
-                    userDao.insertAll(remoteUser?.toEntity()!!)
+                val call = api?.getAuthedUser(authHeader)
+                val response = call?.execute()
+                if (response != null) {
+                    if(response.isSuccessful){
+                        userDao.deleteAll()
+                        val remoteUser = response.body()
+                        userDao.insertAll(remoteUser?.toEntity()!!)
+                    }
                 }
             }catch (e: Exception){
                 Log.w("UserRepository", "No hay conexión con la red")

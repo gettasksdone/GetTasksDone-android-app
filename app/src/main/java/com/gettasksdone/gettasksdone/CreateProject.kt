@@ -30,7 +30,7 @@ import java.util.Locale
 
 class CreateProject : AppCompatActivity() {
 
-    private val apiService: ApiService by lazy {
+    private val apiService: ApiService? by lazy {
         val url = baseUrl()
         ApiService.setBaseUrl(url.toString())
         ApiService.create()
@@ -191,36 +191,38 @@ class CreateProject : AppCompatActivity() {
         val authHeader = "Bearer ${jwtHelper.getToken()}"
 
         ApiService.setBaseUrl(baseUrl().toString())
-        val call = apiService.createProject(authHeader, createProjectRequest)
+        val call = apiService?.createProject(authHeader, createProjectRequest)
 
-        call.enqueue(object : Callback<String> {
-            override fun onResponse(call: Call<String>, response: Response<String>) {
-                val registerResponse = response.body()
-                if(response.isSuccessful) {
-                    if (registerResponse == null) {
-                        Toast.makeText(
-                            applicationContext,
-                            "Se produjo un error en el servidor (onResponse)",
-                            Toast.LENGTH_SHORT
-                        ).show()
-                        return
+        if (call != null) {
+            call.enqueue(object : Callback<String> {
+                override fun onResponse(call: Call<String>, response: Response<String>) {
+                    val registerResponse = response.body()
+                    if(response.isSuccessful) {
+                        if (registerResponse == null) {
+                            Toast.makeText(
+                                applicationContext,
+                                "Se produjo un error en el servidor (onResponse)",
+                                Toast.LENGTH_SHORT
+                            ).show()
+                            return
+                        }
+                        Toast.makeText(applicationContext, "Proyecto creado correctamente", Toast.LENGTH_SHORT).show()
+                        goToMenu()
+
+                    } else {
+                        // Añade aquí el manejo del caso en el que la respuesta HTTP no es exitosa
+                        Toast.makeText(applicationContext, "Error al crear el proyecto", Toast.LENGTH_SHORT).show()
                     }
-                    Toast.makeText(applicationContext, "Proyecto creado correctamente", Toast.LENGTH_SHORT).show()
-                    goToMenu()
-
-                } else {
-                    // Añade aquí el manejo del caso en el que la respuesta HTTP no es exitosa
-                    Toast.makeText(applicationContext, "Error al crear el proyecto", Toast.LENGTH_SHORT).show()
                 }
-            }
 
-            override fun onFailure(call: Call<String>, t: Throwable) {
-                Log.e("API_CALL", "Error en onFailure(): ${t.message}")
+                override fun onFailure(call: Call<String>, t: Throwable) {
+                    Log.e("API_CALL", "Error en onFailure(): ${t.message}")
 
-                Toast.makeText(applicationContext, "Se produjo un error en el servidor", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(applicationContext, "Se produjo un error en el servidor", Toast.LENGTH_SHORT).show()
 
-            }
-        })
+                }
+            })
+        }
     }
     private fun performUpdateProject(projectId: Long){
         var fechaInicio: String = ""
@@ -265,36 +267,38 @@ class CreateProject : AppCompatActivity() {
         )
 
         val authHeader = "Bearer ${jwtHelper.getToken()}"
-        val call = apiService.updateProject(projectId, authHeader, updateProjectRequest)
+        val call = apiService?.updateProject(projectId, authHeader, updateProjectRequest)
 
-        call.enqueue(object : Callback<String> {
-            override fun onResponse(call: Call<String>, response: Response<String>) {
-                val registerResponse = response.body()
-                if(response.isSuccessful) {
-                    if (registerResponse == null) {
-                        Toast.makeText(
-                            applicationContext,
-                            "Se produjo un error en el servidor",
-                            Toast.LENGTH_SHORT
-                        ).show()
-                        return
+        if (call != null) {
+            call.enqueue(object : Callback<String> {
+                override fun onResponse(call: Call<String>, response: Response<String>) {
+                    val registerResponse = response.body()
+                    if(response.isSuccessful) {
+                        if (registerResponse == null) {
+                            Toast.makeText(
+                                applicationContext,
+                                "Se produjo un error en el servidor",
+                                Toast.LENGTH_SHORT
+                            ).show()
+                            return
+                        }
+                        Toast.makeText(applicationContext, "Proyecto actualizado correctamente", Toast.LENGTH_SHORT).show()
+                        goToMenu()
+
+                    } else {
+                        // Añade aquí el manejo del caso en el que la respuesta HTTP no es exitosa
+                        Toast.makeText(applicationContext, "Error al actualizar el proyecto", Toast.LENGTH_SHORT).show()
                     }
-                    Toast.makeText(applicationContext, "Proyecto actualizado correctamente", Toast.LENGTH_SHORT).show()
-                    goToMenu()
-
-                } else {
-                    // Añade aquí el manejo del caso en el que la respuesta HTTP no es exitosa
-                    Toast.makeText(applicationContext, "Error al actualizar el proyecto", Toast.LENGTH_SHORT).show()
                 }
-            }
 
-            override fun onFailure(call: Call<String>, t: Throwable) {
-                Log.e("API_CALL", "Error en onFailure(): ${t.message}")
+                override fun onFailure(call: Call<String>, t: Throwable) {
+                    Log.e("API_CALL", "Error en onFailure(): ${t.message}")
 
-                Toast.makeText(applicationContext, "Se produjo un error en el servidor", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(applicationContext, "Se produjo un error en el servidor", Toast.LENGTH_SHORT).show()
 
-            }
-        })
+                }
+            })
+        }
 
     }
 }

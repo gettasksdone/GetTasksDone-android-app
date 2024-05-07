@@ -6,7 +6,7 @@ import com.gettasksdone.gettasksdone.io.ApiService
 
 class OFCheckItemRepository(
     private val checkItemDao: CheckItemDao,
-    private val network: ApiService,
+    private val network: ApiService?,
     private val jwtHelper: JwtHelper
 ): CheckItemRepository(network, jwtHelper, checkItemDao) {
 }

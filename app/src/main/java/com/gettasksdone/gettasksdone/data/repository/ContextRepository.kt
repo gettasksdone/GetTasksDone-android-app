@@ -16,7 +16,7 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.withContext
 
 open class ContextRepository(
-    private val api: ApiService,
+    private val api: ApiService?,
     private val jwtHelper: JwtHelper,
     private val contextDao: ContextDao
 ) {
@@ -24,13 +24,15 @@ open class ContextRepository(
         return withContext(Dispatchers.IO){
             try{
                 val authHeader = "Bearer ${jwtHelper.getToken()}"
-                val call = api.getContexts(authHeader)
-                val response = call.execute()
-                if(response.isSuccessful){
-                    contextDao.deleteAll()
-                    val remoteContexts = response.body() ?: emptyList()
-                    remoteContexts.forEach{
-                        contextDao.insertAll(it.toEntity())
+                val call = api?.getContexts(authHeader)
+                val response = call?.execute()
+                if (response != null) {
+                    if(response.isSuccessful){
+                        contextDao.deleteAll()
+                        val remoteContexts = response.body() ?: emptyList()
+                        remoteContexts.forEach{
+                            contextDao.insertAll(it.toEntity())
+                        }
                     }
                 }
             }catch (e: Exception){

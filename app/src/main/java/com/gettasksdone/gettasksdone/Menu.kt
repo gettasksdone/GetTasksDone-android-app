@@ -99,7 +99,7 @@ class Menu : AppCompatActivity() {
                 JwtHelper(this)
             }
 
-            val apiService : ApiService by lazy {
+            val apiService : ApiService? by lazy {
                 ApiService.create()
             }
             when (menuItem.itemId) {
@@ -116,7 +116,7 @@ class Menu : AppCompatActivity() {
 
                 R.id.nav_perfil -> {
                     val authHeader = "Bearer ${jwtHelper.getToken()}"
-                    apiService.getUserData(authHeader).enqueue(object : Callback<UserInfo> {
+                    apiService?.getUserData(authHeader)?.enqueue(object : Callback<UserInfo> {
                         override fun onResponse(call: Call<UserInfo>, response: Response<UserInfo>) {
                             if (response.isSuccessful) {
                                 val userInfo = response.body()

@@ -32,7 +32,7 @@ class AdFragment : Fragment(), TaskCompletionListener {
     // Define inboxViewModel a nivel de clase
     private lateinit var algunDiaViewModel: AdViewModel
 
-    private val apiService: ApiService by lazy {
+    private val apiService: ApiService? by lazy {
         ApiService.create()
     }
 

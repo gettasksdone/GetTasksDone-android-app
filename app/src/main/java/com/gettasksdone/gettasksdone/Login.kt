@@ -34,7 +34,7 @@ class Login : AppCompatActivity(), AgregarUrlDialogFragment.NewUrlDialogListener
         private const val RC_SIGN_IN = 9001
     }
 
-    private val apiService: ApiService by lazy{
+    private val apiService: ApiService? by lazy{
         ApiService.create()
     }
 
@@ -218,38 +218,40 @@ class Login : AppCompatActivity(), AgregarUrlDialogFragment.NewUrlDialogListener
         val loginRequest = LoginRequest(username = etUsername, password = etPassword)
         //Log.d("username:", "$etEmail")
         //Log.d("password:", "$etPassword")
-        val call = apiService.postLogin(loginRequest)
-        call.enqueue(object : Callback<String> {
+        val call = apiService?.postLogin(loginRequest)
+        if (call != null) {
+            call.enqueue(object : Callback<String> {
 
-            override fun onResponse(call: Call<String>, response: Response<String>) {
-                val loginResponse = response.body()
-                if(response.isSuccessful) {
-                    if (loginResponse == null) {
-                        Toast.makeText(
-                            applicationContext,
-                            "Se produjo un error en el servidor (onResponse)",
-                            Toast.LENGTH_SHORT
-                        ).show()
-                        return
+                override fun onResponse(call: Call<String>, response: Response<String>) {
+                    val loginResponse = response.body()
+                    if(response.isSuccessful) {
+                        if (loginResponse == null) {
+                            Toast.makeText(
+                                applicationContext,
+                                "Se produjo un error en el servidor (onResponse)",
+                                Toast.LENGTH_SHORT
+                            ).show()
+                            return
+                        }
+                        Log.e("API_RESPONSE", "Response from server: $loginResponse")
+                        createSessionPreference(loginResponse)
+                        goToMenu()
+
+                    } else {
+                        // Añade aquí el manejo del caso en el que la respuesta HTTP no es exitosa
+                        Toast.makeText(applicationContext, "Usuario o contraseña no válido", Toast.LENGTH_SHORT).show()
                     }
-                    Log.e("API_RESPONSE", "Response from server: $loginResponse")
-                    createSessionPreference(loginResponse)
-                    goToMenu()
-
-                } else {
-                    // Añade aquí el manejo del caso en el que la respuesta HTTP no es exitosa
-                    Toast.makeText(applicationContext, "Usuario o contraseña no válido", Toast.LENGTH_SHORT).show()
                 }
-            }
 
-            override fun onFailure(call: Call<String>, t: Throwable) {
-                Log.e("API_CALL", "Error en onFailure(): ${t.message}")
+                override fun onFailure(call: Call<String>, t: Throwable) {
+                    Log.e("API_CALL", "Error en onFailure(): ${t.message}")
 
-                Toast.makeText(applicationContext, "Se produjo un error en el servidor (onFailure)", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(applicationContext, "Se produjo un error en el servidor (onFailure)", Toast.LENGTH_SHORT).show()
 
-            }
+                }
 
-        })
+            })
+        }
 
     }
 

@@ -21,7 +21,7 @@ class ContextosViewModel(
     private val repository: ContextRepository
 ) : ViewModel() {
 
-    private val apiService: ApiService by lazy{
+    private val apiService: ApiService? by lazy{
         ApiService.create()
     }
 
@@ -42,7 +42,7 @@ class ContextosViewModel(
         // Aquí puedes hacer la llamada a la API para eliminar el contexto
         // Asegúrate de manejar correctamente las respuestas de la API y los posibles errores
         val authHeader = "Bearer ${jwtHelper.getToken()}"
-        apiService.deleteContext(contextId, authHeader).enqueue(object : Callback<String> {
+        apiService?.deleteContext(contextId, authHeader)?.enqueue(object : Callback<String> {
             override fun onResponse(call: Call<String>, response: Response<String>) {
                 if (response.isSuccessful) {
                     // Si la respuesta es exitosa, actualiza tu lista de contextos
@@ -60,7 +60,7 @@ class ContextosViewModel(
     fun updateContextName(contextId: Long, newName: String) { //TODO: Revisar lógica de actualización con offline
         val authHeader = "Bearer ${jwtHelper.getToken()}"
         val request = ContextRequest(newName)  // Asume que ContextRequest es una clase que representa la solicitud de actualización
-        apiService.updateContext(contextId, authHeader, request).enqueue(object : Callback<String> {
+        apiService?.updateContext(contextId, authHeader, request)?.enqueue(object : Callback<String> {
             override fun onResponse(call: Call<String>, response: Response<String>) {
                 if (response.isSuccessful) {
                     // Si la respuesta es exitosa, actualiza tu lista de contextos

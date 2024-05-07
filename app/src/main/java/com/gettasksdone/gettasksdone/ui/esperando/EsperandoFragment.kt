@@ -33,7 +33,7 @@ class EsperandoFragment : Fragment(), TaskCompletionListener {
     // Define inboxViewModel a nivel de clase
     private lateinit var esperandoViewModel: EsperandoViewModel
 
-    private val apiService: ApiService by lazy {
+    private val apiService: ApiService? by lazy {
         ApiService.create()
     }
 

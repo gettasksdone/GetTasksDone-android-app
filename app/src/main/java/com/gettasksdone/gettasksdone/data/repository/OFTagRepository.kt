@@ -6,7 +6,7 @@ import com.gettasksdone.gettasksdone.io.ApiService
 
 class OFTagRepository(
     private val tagDao: TagDao,
-    private val network: ApiService,
+    private val network: ApiService?,
     private val jwtHelper: JwtHelper
 ): TagRepository(network, jwtHelper, tagDao) {
 }

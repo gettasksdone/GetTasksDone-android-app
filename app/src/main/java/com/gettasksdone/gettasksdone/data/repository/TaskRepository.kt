@@ -21,7 +21,7 @@ import retrofit2.Callback
 import retrofit2.Response
 
 open class TaskRepository(
-    private val api: ApiService,
+    private val api: ApiService?,
     private val jwtHelper: JwtHelper,
     private val taskDao: TaskDao
 ) {
@@ -30,13 +30,15 @@ open class TaskRepository(
             //Hay que darle prioridad a la informacion que venga desde red
             try {
                 val authHeader = "Bearer ${jwtHelper.getToken()}"
-                val call = api.getTasks(authHeader)
-                val response = call.execute() // Realizar la llamada de manera síncrona
-                if (response.isSuccessful) {
-                    taskDao.deleteAll()
-                    val remoteTasks = response.body() ?: emptyList() // Devolver la lista de tareas si la respuesta no es nula
-                    remoteTasks.forEach{
-                        taskDao.insertAll(it.toEntity())
+                val call = api?.getTasks(authHeader)
+                val response = call?.execute() // Realizar la llamada de manera síncrona
+                if (response != null) {
+                    if (response.isSuccessful) {
+                        taskDao.deleteAll()
+                        val remoteTasks = response.body() ?: emptyList() // Devolver la lista de tareas si la respuesta no es nula
+                        remoteTasks.forEach{
+                            taskDao.insertAll(it.toEntity())
+                        }
                     }
                 }
             } catch (e: Exception) { //No hay conexión con la red, por lo que nos limitamos a recuperar la información de la base de datos local

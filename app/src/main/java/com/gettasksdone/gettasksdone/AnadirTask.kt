@@ -38,7 +38,7 @@ import kotlin.properties.Delegates
 
 class AnadirTask : AppCompatActivity(), NewContextDialogFragment.NewContextDialogListener {
 
-    private val apiService: ApiService by lazy {
+    private val apiService: ApiService? by lazy {
         val url = baseUrl()
         ApiService.setBaseUrl(url.toString())
         ApiService.create()
@@ -236,36 +236,38 @@ class AnadirTask : AppCompatActivity(), NewContextDialogFragment.NewContextDialo
         )
 
         val authHeader = "Bearer ${jwtHelper.getToken()}"
-        val call = apiService.createTask(authHeader, selectedProject, createTaskRequest)
+        val call = apiService?.createTask(authHeader, selectedProject, createTaskRequest)
 
-        call.enqueue(object : Callback<String> {
-            override fun onResponse(call: Call<String>, response: Response<String>) {
-                val registerResponse = response.body()
-                if(response.isSuccessful) {
-                    if (registerResponse == null) {
-                        Toast.makeText(
-                            applicationContext,
-                            "Se produjo un error en el servidor (onResponse)",
-                            Toast.LENGTH_SHORT
-                        ).show()
-                        return
+        if (call != null) {
+            call.enqueue(object : Callback<String> {
+                override fun onResponse(call: Call<String>, response: Response<String>) {
+                    val registerResponse = response.body()
+                    if(response.isSuccessful) {
+                        if (registerResponse == null) {
+                            Toast.makeText(
+                                applicationContext,
+                                "Se produjo un error en el servidor (onResponse)",
+                                Toast.LENGTH_SHORT
+                            ).show()
+                            return
+                        }
+                        Toast.makeText(applicationContext, "Tarea creada correctamente", Toast.LENGTH_SHORT).show()
+                        goToMenu()
+
+                    } else {
+                        // Añade aquí el manejo del caso en el que la respuesta HTTP no es exitosa
+                        Toast.makeText(applicationContext, "Error al crear la tarea", Toast.LENGTH_SHORT).show()
                     }
-                    Toast.makeText(applicationContext, "Tarea creada correctamente", Toast.LENGTH_SHORT).show()
-                    goToMenu()
-
-                } else {
-                    // Añade aquí el manejo del caso en el que la respuesta HTTP no es exitosa
-                    Toast.makeText(applicationContext, "Error al crear la tarea", Toast.LENGTH_SHORT).show()
                 }
-            }
 
-            override fun onFailure(call: Call<String>, t: Throwable) {
-                Log.e("API_CALL", "Error en onFailure(): ${t.message}")
+                override fun onFailure(call: Call<String>, t: Throwable) {
+                    Log.e("API_CALL", "Error en onFailure(): ${t.message}")
 
-                Toast.makeText(applicationContext, "Se produjo un error en el servidor", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(applicationContext, "Se produjo un error en el servidor", Toast.LENGTH_SHORT).show()
 
-            }
-        })
+                }
+            })
+        }
     }
 
     private fun performUpdateTask(taskId: Long){
@@ -308,93 +310,99 @@ class AnadirTask : AppCompatActivity(), NewContextDialogFragment.NewContextDialo
         )
 
         val authHeader = "Bearer ${jwtHelper.getToken()}"
-        val call = apiService.updateTask(taskId, authHeader, updateTaskRequest)
+        val call = apiService?.updateTask(taskId, authHeader, updateTaskRequest)
 
-        call.enqueue(object : Callback<String> {
-            override fun onResponse(call: Call<String>, response: Response<String>) {
-                val registerResponse = response.body()
-                if(response.isSuccessful) {
-                    if (registerResponse == null) {
-                        Toast.makeText(
-                            applicationContext,
-                            "Se produjo un error en el servidor",
-                            Toast.LENGTH_SHORT
-                        ).show()
-                        return
+        if (call != null) {
+            call.enqueue(object : Callback<String> {
+                override fun onResponse(call: Call<String>, response: Response<String>) {
+                    val registerResponse = response.body()
+                    if(response.isSuccessful) {
+                        if (registerResponse == null) {
+                            Toast.makeText(
+                                applicationContext,
+                                "Se produjo un error en el servidor",
+                                Toast.LENGTH_SHORT
+                            ).show()
+                            return
+                        }
+                        Toast.makeText(applicationContext, "Tarea actualizada correctamente", Toast.LENGTH_SHORT).show()
+                        goToMenu()
+
+                    } else {
+                        // Añade aquí el manejo del caso en el que la respuesta HTTP no es exitosa
+                        Toast.makeText(applicationContext, "Error al actualizar la tarea", Toast.LENGTH_SHORT).show()
                     }
-                    Toast.makeText(applicationContext, "Tarea actualizada correctamente", Toast.LENGTH_SHORT).show()
-                    goToMenu()
-
-                } else {
-                    // Añade aquí el manejo del caso en el que la respuesta HTTP no es exitosa
-                    Toast.makeText(applicationContext, "Error al actualizar la tarea", Toast.LENGTH_SHORT).show()
                 }
-            }
 
-            override fun onFailure(call: Call<String>, t: Throwable) {
-                Log.e("API_CALL", "Error en onFailure(): ${t.message}")
+                override fun onFailure(call: Call<String>, t: Throwable) {
+                    Log.e("API_CALL", "Error en onFailure(): ${t.message}")
 
-                Toast.makeText(applicationContext, "Se produjo un error en el servidor", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(applicationContext, "Se produjo un error en el servidor", Toast.LENGTH_SHORT).show()
 
-            }
-        })
+                }
+            })
+        }
     }
 
     private fun loadContexts() {
         val authHeader = "Bearer ${jwtHelper.getToken()}"
-        val call = apiService.getContexts(authHeader)
+        val call = apiService?.getContexts(authHeader)
 
-        call.enqueue(object : Callback<List<Context>> {
-            override fun onResponse(call: Call<List<Context>>, response: Response<List<Context>>) {
-                if (response.isSuccessful) {
-                    val contextResponse = response.body()
-                    if (contextResponse != null) {
-                        contextList = contextResponse
-                        val contextNames = contextResponse.map { it.nombre }.toMutableList()
-                        contextNames.add("Crear nuevo contexto")
-                        adapter1.clear()
-                        adapter1.addAll(contextNames)
+        if (call != null) {
+            call.enqueue(object : Callback<List<Context>> {
+                override fun onResponse(call: Call<List<Context>>, response: Response<List<Context>>) {
+                    if (response.isSuccessful) {
+                        val contextResponse = response.body()
+                        if (contextResponse != null) {
+                            contextList = contextResponse
+                            val contextNames = contextResponse.map { it.nombre }.toMutableList()
+                            contextNames.add("Crear nuevo contexto")
+                            adapter1.clear()
+                            adapter1.addAll(contextNames)
+                        } else {
+                            Toast.makeText(applicationContext, "La respuesta de la API está vacía", Toast.LENGTH_SHORT).show()
+                        }
                     } else {
-                        Toast.makeText(applicationContext, "La respuesta de la API está vacía", Toast.LENGTH_SHORT).show()
+                        Toast.makeText(applicationContext, "Error al obtener los contextos", Toast.LENGTH_SHORT).show()
                     }
-                } else {
-                    Toast.makeText(applicationContext, "Error al obtener los contextos", Toast.LENGTH_SHORT).show()
                 }
-            }
 
-            override fun onFailure(call: Call<List<Context>>, t: Throwable) {
-                Log.e("API_CALL", "Error en onFailure(): ${t.message}")
-                Toast.makeText(applicationContext, "Se produjo un error en el servidor", Toast.LENGTH_SHORT).show()
-            }
-        })
+                override fun onFailure(call: Call<List<Context>>, t: Throwable) {
+                    Log.e("API_CALL", "Error en onFailure(): ${t.message}")
+                    Toast.makeText(applicationContext, "Se produjo un error en el servidor", Toast.LENGTH_SHORT).show()
+                }
+            })
+        }
     }
 
     private fun loadProjects() {
         val authHeader = "Bearer ${jwtHelper.getToken()}"
-        val call = apiService.getProjects(authHeader)
+        val call = apiService?.getProjects(authHeader)
 
-        call.enqueue(object : Callback<List<Project>> {
-            override fun onResponse(call: Call<List<Project>>, response: Response<List<Project>>) {
-                if (response.isSuccessful) {
-                    val projectResponse = response.body()
-                    if (projectResponse != null) {
-                        projectList = projectResponse
-                        val projectNames = projectResponse.map { it.nombre }
-                        adapter3.clear()
-                        adapter3.addAll(projectNames)
+        if (call != null) {
+            call.enqueue(object : Callback<List<Project>> {
+                override fun onResponse(call: Call<List<Project>>, response: Response<List<Project>>) {
+                    if (response.isSuccessful) {
+                        val projectResponse = response.body()
+                        if (projectResponse != null) {
+                            projectList = projectResponse
+                            val projectNames = projectResponse.map { it.nombre }
+                            adapter3.clear()
+                            adapter3.addAll(projectNames)
+                        } else {
+                            Toast.makeText(applicationContext, "La respuesta de la API está vacía", Toast.LENGTH_SHORT).show()
+                        }
                     } else {
-                        Toast.makeText(applicationContext, "La respuesta de la API está vacía", Toast.LENGTH_SHORT).show()
+                        Toast.makeText(applicationContext, "Error al obtener los proyectos", Toast.LENGTH_SHORT).show()
                     }
-                } else {
-                    Toast.makeText(applicationContext, "Error al obtener los proyectos", Toast.LENGTH_SHORT).show()
                 }
-            }
 
-            override fun onFailure(call: Call<List<Project>>, t: Throwable) {
-                Log.e("API_CALL", "Error en onFailure(): ${t.message}")
-                Toast.makeText(applicationContext, "Se produjo un error en el servidor", Toast.LENGTH_SHORT).show()
-            }
-        })
+                override fun onFailure(call: Call<List<Project>>, t: Throwable) {
+                    Log.e("API_CALL", "Error en onFailure(): ${t.message}")
+                    Toast.makeText(applicationContext, "Se produjo un error en el servidor", Toast.LENGTH_SHORT).show()
+                }
+            })
+        }
     }
 
     override fun onDialogPositiveClick(newContextName: String) {
@@ -412,35 +420,37 @@ class AnadirTask : AppCompatActivity(), NewContextDialogFragment.NewContextDialo
         )
 
         val authHeader = "Bearer ${jwtHelper.getToken()}"
-        val call = apiService.createContext(authHeader, createContextoRequest)
-        call.enqueue(object : Callback<String> {
-            override fun onResponse(call: Call<String>, response: Response<String>) {
-                val registerResponse = response.body()
-                if(response.isSuccessful) {
-                    if (registerResponse == null) {
-                        Toast.makeText(
-                            applicationContext,
-                            "Se produjo un error en el servidor (onResponse)",
-                            Toast.LENGTH_SHORT
-                        ).show()
-                        return
+        val call = apiService?.createContext(authHeader, createContextoRequest)
+        if (call != null) {
+            call.enqueue(object : Callback<String> {
+                override fun onResponse(call: Call<String>, response: Response<String>) {
+                    val registerResponse = response.body()
+                    if(response.isSuccessful) {
+                        if (registerResponse == null) {
+                            Toast.makeText(
+                                applicationContext,
+                                "Se produjo un error en el servidor (onResponse)",
+                                Toast.LENGTH_SHORT
+                            ).show()
+                            return
+                        }
+                        Toast.makeText(applicationContext, "Contexto creado correctamente", Toast.LENGTH_SHORT).show()
+                        loadContexts()
+
+                    } else {
+                        // Añade aquí el manejo del caso en el que la respuesta HTTP no es exitosa
+                        Toast.makeText(applicationContext, "Error al crear el contexto", Toast.LENGTH_SHORT).show()
                     }
-                    Toast.makeText(applicationContext, "Contexto creado correctamente", Toast.LENGTH_SHORT).show()
-                    loadContexts()
-
-                } else {
-                    // Añade aquí el manejo del caso en el que la respuesta HTTP no es exitosa
-                    Toast.makeText(applicationContext, "Error al crear el contexto", Toast.LENGTH_SHORT).show()
                 }
-            }
 
-            override fun onFailure(call: Call<String>, t: Throwable) {
-                Log.e("API_CALL", "Error en onFailure(): ${t.message}")
+                override fun onFailure(call: Call<String>, t: Throwable) {
+                    Log.e("API_CALL", "Error en onFailure(): ${t.message}")
 
-                Toast.makeText(applicationContext, "Se produjo un error en el servidor", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(applicationContext, "Se produjo un error en el servidor", Toast.LENGTH_SHORT).show()
 
-            }
-        })
+                }
+            })
+        }
 
     }
 

@@ -6,7 +6,7 @@ import com.gettasksdone.gettasksdone.io.ApiService
 
 class OFUserRepository(
     private val userDao: UserDao,
-    private val network: ApiService,
+    private val network: ApiService?,
     private val jwtHelper: JwtHelper
 ): UserRepository(network, jwtHelper, userDao) {
 }

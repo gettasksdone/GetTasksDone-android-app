@@ -20,7 +20,7 @@ class InboxViewModel(
     private val repository: TaskRepository
 ) : ViewModel() {
 
-    private val apiService: ApiService by lazy{
+    private val apiService: ApiService? by lazy{
         ApiService.create()
     }
 

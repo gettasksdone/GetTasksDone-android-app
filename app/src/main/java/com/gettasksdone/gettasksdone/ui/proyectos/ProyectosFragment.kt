@@ -34,7 +34,7 @@ class ProyectosFragment : Fragment(), TaskCompletionListener {
     private lateinit var proyectosViewModel: ProyectosViewModel
     private lateinit var proyectosAdapter: ProyectosAdapter
 
-    private val apiService: ApiService by lazy {
+    private val apiService: ApiService? by lazy {
         ApiService.create()
     }
     private lateinit var jwtHelper: JwtHelper
@@ -110,34 +110,36 @@ class ProyectosFragment : Fragment(), TaskCompletionListener {
                         setPositiveButton("Sí") { dialog, _ ->
 
                             val authHeader = "Bearer ${jwtHelper.getToken()}"
-                            val call = apiService.deleteProject(proyecto.id, authHeader)
-                            call.enqueue(object : Callback<String> {
-                                override fun onResponse(call: Call<String>, response: Response<String>) {
-                                    val registerResponse = response.body()
-                                    if(response.isSuccessful) {
-                                        if (registerResponse == null) {
-                                            Toast.makeText(
-                                                context,
-                                                "Se produjo un error en el servidor",
-                                                Toast.LENGTH_SHORT
-                                            ).show()
-                                            return
+                            val call = apiService?.deleteProject(proyecto.id, authHeader)
+                            if (call != null) {
+                                call.enqueue(object : Callback<String> {
+                                    override fun onResponse(call: Call<String>, response: Response<String>) {
+                                        val registerResponse = response.body()
+                                        if(response.isSuccessful) {
+                                            if (registerResponse == null) {
+                                                Toast.makeText(
+                                                    context,
+                                                    "Se produjo un error en el servidor",
+                                                    Toast.LENGTH_SHORT
+                                                ).show()
+                                                return
+                                            }
+                                            Toast.makeText(context, "Proyecto borrado correctamente", Toast.LENGTH_SHORT).show()
+                                            proyectosViewModel.getProjects()
+                                        } else {
+                                            // Añade aquí el manejo del caso en el que la respuesta HTTP no es exitosa
+                                            Toast.makeText(context, "Error al borrar el proyecto", Toast.LENGTH_SHORT).show()
                                         }
-                                        Toast.makeText(context, "Proyecto borrado correctamente", Toast.LENGTH_SHORT).show()
-                                        proyectosViewModel.getProjects()
-                                    } else {
-                                        // Añade aquí el manejo del caso en el que la respuesta HTTP no es exitosa
-                                        Toast.makeText(context, "Error al borrar el proyecto", Toast.LENGTH_SHORT).show()
                                     }
-                                }
 
-                                override fun onFailure(call: Call<String>, t: Throwable) {
-                                    Log.e("API_CALL", "Error en onFailure(): ${t.message}")
+                                    override fun onFailure(call: Call<String>, t: Throwable) {
+                                        Log.e("API_CALL", "Error en onFailure(): ${t.message}")
 
-                                    Toast.makeText(context, "Se produjo un error en el servidor", Toast.LENGTH_SHORT).show()
+                                        Toast.makeText(context, "Se produjo un error en el servidor", Toast.LENGTH_SHORT).show()
 
-                                }
-                            })
+                                    }
+                                })
+                            }
 
                             dialog.dismiss()
 

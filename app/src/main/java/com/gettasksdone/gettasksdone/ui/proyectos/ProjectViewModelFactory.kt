@@ -15,7 +15,7 @@ class ProjectViewModelFactory(
     private val context: Context,
     private val viewModelScope: CoroutineScope
 ): ViewModelProvider.Factory {
-    private val apiService by lazy { ApiService.create() }
+    private val apiService: ApiService? by lazy { ApiService.create() }
     private val database: AppDatabase by lazy { AppDatabase.getDatabase(context, viewModelScope) }
     private val projectRepo by lazy { ProjectRepository(apiService, jwtHelper, database.projectDao()) }
     override fun <T : ViewModel> create(modelClass: Class<T>): T {

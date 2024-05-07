@@ -28,7 +28,7 @@ import kotlinx.coroutines.SupervisorJob
 class MainApplication: Application() {
     private val applicationScope = CoroutineScope(SupervisorJob())
 
-    private val apiService: ApiService by lazy {
+    private val apiService: ApiService? by lazy {
         val url = baseUrl()
         ApiService.setBaseUrl(url.toString())
         ApiService.create()
