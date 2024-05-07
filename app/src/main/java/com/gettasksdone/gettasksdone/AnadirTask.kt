@@ -110,7 +110,6 @@ class AnadirTask : AppCompatActivity(), NewContextDialogFragment.NewContextDialo
         loadContexts()
 
 
-
         val estados = mutableListOf("empezar", "esperando", "algún día")
         spinner2 = findViewById(R.id.estado)
         adapter2 = ArrayAdapter(this, R.layout.spinner_list, estados)
@@ -359,6 +358,9 @@ class AnadirTask : AppCompatActivity(), NewContextDialogFragment.NewContextDialo
                             contextNames.add("Crear nuevo contexto")
                             adapter1.clear()
                             adapter1.addAll(contextNames)
+                            if (contextList.isNotEmpty()) {
+                                selectedContext = contextList[0].id
+                            }
                         } else {
                             Toast.makeText(applicationContext, "La respuesta de la API está vacía", Toast.LENGTH_SHORT).show()
                         }
