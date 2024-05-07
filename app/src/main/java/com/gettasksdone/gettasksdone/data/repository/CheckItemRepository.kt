@@ -1,5 +1,6 @@
 package com.gettasksdone.gettasksdone.data.repository
 
+import android.util.Log
 import androidx.annotation.WorkerThread
 import com.gettasksdone.gettasksdone.data.JwtHelper
 import com.gettasksdone.gettasksdone.data.local.dao.CheckItemDao
@@ -18,34 +19,25 @@ open class CheckItemRepository(
     private val checkItemDao: CheckItemDao) {
     suspend fun getAll(): List<CheckItem> {
         return withContext(Dispatchers.IO){
-            var localChecks = checkItemDao.getAll()
-            if(localChecks.isEmpty()){
-                val remoteChecks = getChecksRemote()
-                remoteChecks.forEach{
-                    checkItemDao.insertAll(it.toEntity())
-                }
-                localChecks = checkItemDao.getAll()
-            }
-            localChecks.map { it.toDomain() }
-        }
-    }
-
-    private suspend fun getChecksRemote(): List<CheckItem>{
-        return withContext(Dispatchers.IO){
             try{
                 val authHeader = "Bearer ${jwtHelper.getToken()}"
                 val call = api.getChecks(authHeader)
                 val response = call.execute()
                 if(response.isSuccessful){
-                    response.body() ?: emptyList()
-                }else{
-                    emptyList()
+                    checkItemDao.deleteAll()
+                    val remoteChecks = response.body() ?: emptyList()
+                    remoteChecks.forEach{
+                        checkItemDao.insertAll(it.toEntity())
+                    }
                 }
             }catch (e: Exception){
-                emptyList()
+                Log.w("CheckItemRepository", "No hay conexión con la red")
             }
+            val localChecks: List<CheckItemEntity> = checkItemDao.getAll()
+            localChecks.map { it.toDomain() }
         }
     }
+
     @WorkerThread
     fun get(checkItem: Long): Flow<List<CheckItemEntity>>{
         return checkItemDao.loadById(checkItem)

@@ -21,4 +21,6 @@ interface UserInfoDao {
     suspend fun upsert(userData: UserInfoEntity)
     @Delete
     suspend fun delete(userData: UserInfoEntity)
+    @Query("DELETE FROM userInfo")
+    suspend fun deleteAll()
 }

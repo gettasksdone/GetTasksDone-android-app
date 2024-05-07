@@ -43,4 +43,6 @@ interface TaskDao {
     suspend fun upsert(task: TaskEntity)
     @Delete
     suspend fun delete(task: TaskEntity)
+    @Query("DELETE FROM task")
+    suspend fun deleteAll()
 }

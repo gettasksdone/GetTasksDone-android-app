@@ -21,4 +21,6 @@ interface NoteDao {
     suspend fun upsert(note: NoteEntity)
     @Delete
     suspend fun delete(note: NoteEntity)
+    @Query("DELETE FROM note")
+    suspend fun deleteAll()
 }

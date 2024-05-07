@@ -21,4 +21,6 @@ interface CheckItemDao {
     suspend fun upsert(check: CheckItemEntity)
     @Delete
     suspend fun delete(check: CheckItemEntity)
+    @Query("DELETE FROM checkItem")
+    suspend fun deleteAll()
 }

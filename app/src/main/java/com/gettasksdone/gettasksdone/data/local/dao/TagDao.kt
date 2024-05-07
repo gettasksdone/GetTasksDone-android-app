@@ -36,4 +36,6 @@ interface TagDao {
     suspend fun upsert(tag: TagEntity)
     @Delete
     suspend fun delete(tag: TagEntity)
+    @Query("DELETE FROM tag")
+    suspend fun deleteAll()
 }

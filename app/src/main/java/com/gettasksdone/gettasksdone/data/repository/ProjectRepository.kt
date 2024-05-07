@@ -1,5 +1,6 @@
 package com.gettasksdone.gettasksdone.data.repository
 
+import android.util.Log
 import androidx.annotation.WorkerThread
 import com.gettasksdone.gettasksdone.data.JwtHelper
 import com.gettasksdone.gettasksdone.data.layout.ProjectEM
@@ -21,34 +22,25 @@ open class ProjectRepository(
 
     suspend fun getAll(): List<Project>{
         return withContext(Dispatchers.IO){
-            var localProjects = projectDao.getAll()
-            if(localProjects.isEmpty()){
-                val remoteProjects = getProjectsRemote()
-                remoteProjects.forEach {
-                    projectDao.insertAll(it.toEntity())
-                }
-                localProjects = projectDao.getAll()
-            }
-            localProjects.map { it.toDomain() }
-        }
-    }
-
-    private suspend fun getProjectsRemote(): List<Project>{
-        return withContext(Dispatchers.IO){
             try{
                 val authHeader = "Bearer ${jwtHelper.getToken()}"
                 val call = api.getProjects(authHeader)
                 val response = call.execute()
                 if(response.isSuccessful){
-                    response.body() ?: emptyList()
-                }else{
-                    emptyList()
+                    projectDao.deleteAll()
+                    val remoteProjects = response.body() ?: emptyList()
+                    remoteProjects.forEach {
+                        projectDao.insertAll(it.toEntity())
+                    }
                 }
             }catch (e: Exception){
-                emptyList()
+                Log.w("ProjectRepository", "No hay conexión con la red")
             }
+            val localProjects: List<ProjectEntity> = projectDao.getAll()
+            localProjects.map { it.toDomain() }
         }
     }
+
     @WorkerThread
     fun get(project: Long): Flow<List<ProjectEntity>> {
         return projectDao.loadById(project)

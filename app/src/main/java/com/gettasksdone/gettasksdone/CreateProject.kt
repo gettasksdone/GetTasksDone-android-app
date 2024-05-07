@@ -38,9 +38,7 @@ class CreateProject : AppCompatActivity() {
     private fun baseUrl(): String? {
         val  preferencesTest = PreferenceHelper.defaultPrefs(applicationContext)
         val urlBase = preferencesTest.getString("urlBase", "")
-        Toast.makeText(applicationContext, "Debug server $urlBase", Toast.LENGTH_SHORT).show()
-
-
+        //Toast.makeText(applicationContext, "Debug server $urlBase", Toast.LENGTH_SHORT).show()
         return urlBase
 
     }
@@ -140,7 +138,7 @@ class CreateProject : AppCompatActivity() {
         val fechaInicio = findViewById<EditText>(R.id.inicioProyecto).text.toString().split("/")
         //Toast.makeText(applicationContext, "Debug fechaInicio ${fechaInicio.size}" , Toast.LENGTH_SHORT).show()
         if(fechaInicio.size < 3){
-                Toast.makeText(applicationContext, "DEBUG: FechaInicio empty", Toast.LENGTH_SHORT).show()
+                //Toast.makeText(applicationContext, "DEBUG: FechaInicio empty", Toast.LENGTH_SHORT).show()
         }else{
             val diaInicioInt = fechaInicio[0].toInt()
             val mesInicioInt = fechaInicio[1].toInt()
@@ -157,7 +155,7 @@ class CreateProject : AppCompatActivity() {
         val fechaFin = findViewById<EditText>(R.id.finProyecto).text.toString().split("/")
         //Toast.makeText(applicationContext, "Debug fechaInicio ${fechaFin.size}" , Toast.LENGTH_SHORT).show()
         if(fechaFin.size < 3){
-            Toast.makeText(applicationContext, "DEBUG: FechaFin empty", Toast.LENGTH_SHORT).show()
+            //Toast.makeText(applicationContext, "DEBUG: FechaFin empty", Toast.LENGTH_SHORT).show()
         }else{
             val diaFinInt = fechaFin[0].toInt()
             val mesFinInt = fechaFin[1].toInt()

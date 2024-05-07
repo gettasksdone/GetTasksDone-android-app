@@ -33,7 +33,11 @@ class InboxViewModel(
     }
     fun getTasks() {
         viewModelScope.launch {
-            _tasks.value = repository.getAll()
+            val tasks = repository.getAll()
+            val filteredTasks = tasks.filter { task ->
+                task.estado != "completado"
+            }
+            _tasks.value = filteredTasks
             Log.d("[DEBUG]TASKS:",tasks.toString())
         }
     }

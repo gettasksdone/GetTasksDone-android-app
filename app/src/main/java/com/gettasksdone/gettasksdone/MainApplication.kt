@@ -37,8 +37,7 @@ class MainApplication: Application() {
     private fun baseUrl(): String? {
         val  preferencesTest = PreferenceHelper.defaultPrefs(applicationContext)
         val urlBase = preferencesTest.getString("urlBase", "")
-        Toast.makeText(applicationContext, "Debug server $urlBase", Toast.LENGTH_SHORT).show()
-
+        //Toast.makeText(applicationContext, "Debug server $urlBase", Toast.LENGTH_SHORT).show()
         return urlBase
 
     }

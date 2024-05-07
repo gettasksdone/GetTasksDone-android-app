@@ -46,4 +46,6 @@ interface ProjectDao {
     suspend fun upsert(project: ProjectEntity)
     @Delete
     suspend fun delete(project: ProjectEntity)
+    @Query("DELETE FROM project")
+    suspend fun deleteAll()
 }

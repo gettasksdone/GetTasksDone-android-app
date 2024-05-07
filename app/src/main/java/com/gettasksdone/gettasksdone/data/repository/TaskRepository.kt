@@ -1,5 +1,7 @@
 package com.gettasksdone.gettasksdone.data.repository
 
+import android.util.Log
+import android.widget.Toast
 import androidx.annotation.WorkerThread
 import com.gettasksdone.gettasksdone.data.JwtHelper
 import com.gettasksdone.gettasksdone.data.layout.TaskEM
@@ -25,34 +27,23 @@ open class TaskRepository(
 ) {
     suspend fun getAll(): List<Task>{
         return withContext(Dispatchers.IO) {
-            var localTasks = taskDao.getAll()
-
-            if(localTasks.isEmpty()) {
-                val remoteTasks = getTasksRemote()
-                remoteTasks.forEach{
-                    taskDao.insertAll(it.toEntity())
-                }
-                localTasks = taskDao.getAll()
-            }
-
-            localTasks.map{ it.toDomain() }
-        }
-    }
-
-    private suspend fun getTasksRemote(): List<Task> {
-        return withContext(Dispatchers.IO) {
+            //Hay que darle prioridad a la informacion que venga desde red
             try {
                 val authHeader = "Bearer ${jwtHelper.getToken()}"
                 val call = api.getTasks(authHeader)
                 val response = call.execute() // Realizar la llamada de manera síncrona
                 if (response.isSuccessful) {
-                    response.body() ?: emptyList() // Devolver la lista de tareas si la respuesta no es nula
-                } else {
-                    emptyList() // Devolver una lista vacía si la respuesta no es exitosa
+                    taskDao.deleteAll()
+                    val remoteTasks = response.body() ?: emptyList() // Devolver la lista de tareas si la respuesta no es nula
+                    remoteTasks.forEach{
+                        taskDao.insertAll(it.toEntity())
+                    }
                 }
-            } catch (e: Exception) {
-                emptyList() // Manejar cualquier excepción y devolver una lista vacía
+            } catch (e: Exception) { //No hay conexión con la red, por lo que nos limitamos a recuperar la información de la base de datos local
+                Log.w("TaskRepository", "No hay conexión con la red")
             }
+            val localTasks: List<TaskEntity> = taskDao.getAll()
+            localTasks.map{ it.toDomain() }
         }
     }
 

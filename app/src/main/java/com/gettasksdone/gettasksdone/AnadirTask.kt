@@ -47,9 +47,7 @@ class AnadirTask : AppCompatActivity(), NewContextDialogFragment.NewContextDialo
     private fun baseUrl(): String? {
         val  preferencesTest = PreferenceHelper.defaultPrefs(applicationContext)
         val urlBase = preferencesTest.getString("urlBase", "")
-        Toast.makeText(applicationContext, "Debug server $urlBase", Toast.LENGTH_SHORT).show()
-
-
+        //Toast.makeText(applicationContext, "Debug server $urlBase", Toast.LENGTH_SHORT).show()
         return urlBase
 
     }
@@ -188,7 +186,7 @@ class AnadirTask : AppCompatActivity(), NewContextDialogFragment.NewContextDialo
 
         val  preferencesTest = PreferenceHelper.defaultPrefs(applicationContext)
         val urlBase = preferencesTest.getString("urlBase", "")
-        Toast.makeText(applicationContext, "Debug server $urlBase", Toast.LENGTH_SHORT).show()
+        //Toast.makeText(applicationContext, "Debug server $urlBase", Toast.LENGTH_SHORT).show()
 
         val etTitulo = findViewById<EditText>(R.id.titulo).text.toString()
 

@@ -1,5 +1,6 @@
 package com.gettasksdone.gettasksdone.data.repository
 
+import android.util.Log
 import androidx.annotation.WorkerThread
 import com.gettasksdone.gettasksdone.data.JwtHelper
 import com.gettasksdone.gettasksdone.data.layout.ContextEM
@@ -21,33 +22,25 @@ open class ContextRepository(
 ) {
     suspend fun getAll(): List<Context>{
         return withContext(Dispatchers.IO){
-            var localContexts = contextDao.getAll()
-            if(localContexts.isEmpty()){
-                val remoteContexts = getContextsRemote()
-                remoteContexts.forEach{
-                    contextDao.insertAll(it.toEntity())
-                }
-                localContexts = contextDao.getAll()
-            }
-            localContexts.map { it.toDomain() }
-        }
-    }
-    private suspend fun getContextsRemote(): List<Context>{
-        return withContext(Dispatchers.IO){
             try{
                 val authHeader = "Bearer ${jwtHelper.getToken()}"
                 val call = api.getContexts(authHeader)
                 val response = call.execute()
                 if(response.isSuccessful){
-                    response.body() ?: emptyList()
-                }else{
-                    emptyList()
+                    contextDao.deleteAll()
+                    val remoteContexts = response.body() ?: emptyList()
+                    remoteContexts.forEach{
+                        contextDao.insertAll(it.toEntity())
+                    }
                 }
             }catch (e: Exception){
-                emptyList()
+                Log.w("ContextRepository", "No hay conexión con la red")
             }
+            val localContexts: List<ContextEntity> = contextDao.getAll()
+            localContexts.map { it.toDomain() }
         }
     }
+
     @WorkerThread
     fun getAllWithTasks(): Flow<List<ContextWithTasks>>{
         return contextDao.getAllWithTasks()

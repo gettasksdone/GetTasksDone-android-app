@@ -1,5 +1,6 @@
 package com.gettasksdone.gettasksdone.data.repository
 
+import android.util.Log
 import androidx.annotation.WorkerThread
 import com.gettasksdone.gettasksdone.data.JwtHelper
 import com.gettasksdone.gettasksdone.data.layout.UserInfoEM
@@ -21,33 +22,23 @@ open class UserInfoRepository(
 
     suspend fun getAll(): List<UserInfo>{
         return withContext(Dispatchers.IO){
-            var localUserData = userInfoDao.getAll()
-            if(localUserData.isEmpty()){
-                val remoteUserData = getUserInfoRemote()
-                if (remoteUserData != null) {
-                    userInfoDao.insertAll(remoteUserData.toEntity())
-                }
-                localUserData = userInfoDao.getAll()
-            }
-            localUserData.map { it.toDomain() }
-        }
-    }
-    private suspend fun getUserInfoRemote(): UserInfo?{
-        return withContext(Dispatchers.IO){
             try{
                 val authHeader = "Bearer ${jwtHelper.getToken()}"
                 val call = api.getUserData(authHeader)
                 val response = call.execute()
                 if(response.isSuccessful){
-                    response.body()
-                }else{
-                    null
+                    userInfoDao.deleteAll()
+                    val remoteUserData = response.body()
+                    userInfoDao.insertAll(remoteUserData?.toEntity()!!)
                 }
             }catch (e: Exception){
-                null
+                Log.w("UserInfoRepository", "No hay conexión con la red")
             }
+            val localUserData: List<UserInfoEntity> = userInfoDao.getAll()
+            localUserData.map { it.toDomain() }
         }
     }
+
     @WorkerThread
     fun get(userData: Long): Flow<List<UserInfoEntity>> {
         return userInfoDao.loadById(userData)
