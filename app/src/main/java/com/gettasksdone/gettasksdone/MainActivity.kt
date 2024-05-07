@@ -5,6 +5,7 @@ import android.content.Intent
 import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import android.util.Patterns
 import android.widget.Button
 import android.widget.ImageView
@@ -48,7 +49,6 @@ class MainActivity : AppCompatActivity(), AgregarUrlDialogFragment.NewUrlDialogL
         }
     }
     private fun goToLogin(){
-
         val preferencesTest = PreferenceHelper.defaultPrefs(applicationContext)
         val urlList = preferencesTest.getStringSet("urlList", emptySet())
 
@@ -58,7 +58,6 @@ class MainActivity : AppCompatActivity(), AgregarUrlDialogFragment.NewUrlDialogL
                 openNewUrlActivity()
             }else{
                 //Toast.makeText(applicationContext, "DEBUG: urlList NOT empty ${urlList.toString()}" , Toast.LENGTH_SHORT).show()
-
                 val i = Intent(this, Login::class.java)
                 startActivity(i)
             }
@@ -66,7 +65,6 @@ class MainActivity : AppCompatActivity(), AgregarUrlDialogFragment.NewUrlDialogL
     }
 
     override fun onDialogPositiveClick(newUrl: String) {
-
         if(newUrl.isEmpty()) {
             Toast.makeText(
                 applicationContext,
@@ -80,18 +78,8 @@ class MainActivity : AppCompatActivity(), AgregarUrlDialogFragment.NewUrlDialogL
                 "La URL del servidor debe empezar con http:// o https://",
                 Toast.LENGTH_SHORT
             ).show()
-
-            /*
-             else if(!isValidDomain(newUrl) && !isValidDomain(newUrl)){
-
-           Toast.makeText(applicationContext, "La URL del servidor no es válida", Toast.LENGTH_SHORT).show()
-        }
-
-             */
-
         }
         else{
-
             val preferencesTest = PreferenceHelper.defaultPrefs(applicationContext)
             val urlList = preferencesTest.getStringSet("urlList", emptySet())
             val newUrlList = mutableSetOf<String>()

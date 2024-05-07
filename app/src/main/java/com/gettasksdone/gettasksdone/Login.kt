@@ -119,6 +119,7 @@ class Login : AppCompatActivity(), AgregarUrlDialogFragment.NewUrlDialogListener
                 this.urlList.clear()
                 this.urlList = urlList
                 this.urlList.add("Añadir un nuevo servidor")
+                this.urlList = this.urlList.sortedDescending().toMutableSet()
                 serverAdapter.clear()
                 serverAdapter.addAll(this.urlList)
             }
@@ -199,7 +200,7 @@ class Login : AppCompatActivity(), AgregarUrlDialogFragment.NewUrlDialogListener
         ApiService.Factory.setBaseUrl(textSpinner)
 
 
-        Toast.makeText(applicationContext, "Debug server bien $textSpinner", Toast.LENGTH_SHORT).show()
+        //Toast.makeText(applicationContext, "Debug server bien $textSpinner", Toast.LENGTH_SHORT).show()
 
 
         try {
