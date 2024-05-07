@@ -34,8 +34,12 @@ class AdViewModel(
 
     fun getTasks() {
         viewModelScope.launch {
-            _tasks.value = repository.getAll()
-            Log.d("TASKS:", tasks.toString())
+            val tasks = repository.getAll()
+            val filteredTasks = tasks.filter { task ->
+                task.estado != "completado"
+            }
+            _tasks.value = filteredTasks
+            Log.d("TASKS:", _tasks.toString())
         }
     }
 
