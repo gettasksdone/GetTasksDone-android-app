@@ -4,8 +4,10 @@ import android.app.DatePickerDialog
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
+import android.text.InputType
 import android.util.Log
 import android.view.View
+import android.view.inputmethod.EditorInfo
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import android.widget.Button
@@ -71,6 +73,12 @@ class CreateProject : AppCompatActivity() {
             insets
         }
 
+        //modificar el numero maximo de lineas de la descripcion para que funcione mejor el teclado
+        val descripcion = findViewById<EditText>(R.id.descripcionProyecto)
+        descripcion.maxLines = 2;
+        descripcion.setImeOptions(EditorInfo.IME_ACTION_DONE);
+        descripcion.setRawInputType(InputType.TYPE_CLASS_TEXT);
+
         val estados = mutableListOf("empezar", "esperando", "algún día")
         spinner1 = findViewById(R.id.estadoProyecto)
         adapter1 = ArrayAdapter(this, R.layout.spinner_list, estados)
@@ -117,15 +125,13 @@ class CreateProject : AppCompatActivity() {
     }
 
     fun showDatePickerDialog(view: View) {
-        val calendar = Calendar.getInstance()
-        val year = calendar.get(Calendar.YEAR)
-        val month = calendar.get(Calendar.MONTH)
-        val day = calendar.get(Calendar.DAY_OF_MONTH)
-
-        DatePickerDialog(this, { _, selectedYear, selectedMonth, selectedDay ->
-            val selectedDate = "$selectedDay/${selectedMonth+1}/$selectedYear"
+        val newFragment = DatePickerFragment.newInstance(DatePickerDialog.OnDateSetListener { _, year, month, day ->
+            // +1 porque enero es cero
+            val selectedDate = day.toString() + "/" + (month+1) + "/" + year
             (view as EditText).setText(selectedDate)
-        }, year, month, day).show()
+        })
+
+        newFragment.show(supportFragmentManager, "datePicker")
     }
     private fun goToMenu(){
         val i = Intent(this, Menu::class.java)

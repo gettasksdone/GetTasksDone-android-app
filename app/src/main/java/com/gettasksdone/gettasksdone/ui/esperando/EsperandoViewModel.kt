@@ -36,7 +36,7 @@ class EsperandoViewModel(
         viewModelScope.launch {
             val tasks = repository.getAll()
             val filteredTasks = tasks.filter { task ->
-                task.estado != "completado"
+                task.estado == "esperando"
             }
             _tasks.value = filteredTasks
             Log.d("EsperandoViewModel", "Tareas: ${_tasks.value}")

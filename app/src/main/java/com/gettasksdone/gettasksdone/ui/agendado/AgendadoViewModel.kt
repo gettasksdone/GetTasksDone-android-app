@@ -36,7 +36,7 @@ class AgendadoViewModel(
         viewModelScope.launch {
             val tasks = repository.getAll()
             val filteredTasks = tasks.filter { task ->
-                task.estado != "completado"
+                task.vencimiento != null && task.estado != "completado"
             }
             _tasks.value = filteredTasks
             Log.d("AgendadoViewModel", "Tareas obtenidas: ${_tasks.value}")
