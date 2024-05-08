@@ -20,28 +20,39 @@ open class ProjectRepository(
     private val jwtHelper: JwtHelper,
     private val projectDao: ProjectDao) {
 
-    suspend fun getAll(): List<Project>{
-        return withContext(Dispatchers.IO){
-            try{
+    suspend fun getAll(): List<Project> {
+        return withContext(Dispatchers.IO) {
+            var remoteProjects = emptyList<Project>()
+            try {
                 val authHeader = "Bearer ${jwtHelper.getToken()}"
                 val call = api?.getProjects(authHeader)
                 val response = call?.execute()
+
                 if (response != null) {
-                    if(response.isSuccessful){
+                    if (response.isSuccessful) {
                         projectDao.deleteAll()
-                        val remoteProjects = response.body() ?: emptyList()
+                        remoteProjects = response.body() ?: emptyList()
                         remoteProjects.forEach {
                             projectDao.insertAll(it.toEntity())
                         }
                     }
                 }
-            }catch (e: Exception){
+            } catch (e: Exception) {
                 Log.w("ProjectRepository", "No hay conexión con la red")
             }
-            val localProjects: List<ProjectEntity> = projectDao.getAll()
-            localProjects.map { it.toDomain() }
+
+            // Verifica si remoteProjects está vacío y devuelve la lista local si es así
+            if (remoteProjects.isEmpty()) {
+                val localProjects: List<ProjectEntity> = projectDao.getAll()
+                return@withContext localProjects.map { it.toDomain() }
+            }
+
+            // Si remoteProjects no está vacío, devuélvelo
+            return@withContext remoteProjects
         }
     }
+
+
 
     @WorkerThread
     fun get(project: Long): Flow<List<ProjectEntity>> {
