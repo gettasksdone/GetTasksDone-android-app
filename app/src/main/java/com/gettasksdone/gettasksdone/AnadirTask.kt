@@ -146,7 +146,13 @@ class AnadirTask : AppCompatActivity(), NewContextDialogFragment.NewContextDialo
 
         val starButton = findViewById<ImageButton>(R.id.starButton)
         starButton.setOnClickListener {
-            val newColor = if (isStarred) Color.YELLOW else Color.GRAY
+            val attrs = intArrayOf(R.attr.starColor) // Atributo definido en tu tema
+            val typedArray = theme.obtainStyledAttributes(attrs)
+            val defaultColor = Color.GRAY  // Usa un color por defecto si el atributo no está definido
+            val starColor = typedArray.getColor(0, defaultColor)
+            typedArray.recycle()
+
+            val newColor = if (isStarred) Color.YELLOW else starColor
             starButton.backgroundTintList = ColorStateList.valueOf(newColor)
             isStarred = !isStarred
         }
