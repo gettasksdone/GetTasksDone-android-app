@@ -29,6 +29,7 @@ import retrofit2.Callback
 import retrofit2.Response
 
 interface TaskCompletionListener {
+
     fun onTaskCompleted()
 }
 class InBoxFragment : Fragment(), TaskCompletionListener {

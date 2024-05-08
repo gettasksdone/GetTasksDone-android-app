@@ -36,6 +36,11 @@
         android:label="Contextos"
         tools:layout="@layout/fragment_contextos" />
     <fragment
+        android:id="@+id/nav_completadas"
+        android:name="com.gettasksdone.gettasksdone.ui.completadas.CompletadasFragment"
+        android:label="Completadas"
+        tools:layout="@layout/fragment_completadas" />
+    <fragment
         android:id="@+id/nav_home"
         android:name="com.gettasksdone.gettasksdone.ui.home.HomeFragment"
         android:label="@string/menu_home"

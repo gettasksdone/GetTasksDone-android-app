@@ -12,22 +12,16 @@
       android:layout_height="wrap_content"
       tools:context=".CreateProject">
 
-    <!-- Campo: Nombre -->
-
-    <!-- Campo: Inicio -->
-
     <EditText
         android:id="@+id/nombreProyecto"
         android:layout_width="300dp"
         android:layout_height="wrap_content"
-        android:layout_gravity="center"
         android:layout_marginTop="60dp"
         android:hint="@string/pistaNombreProyecto"
         android:importantForAutofill="no"
         android:inputType="text"
         android:minHeight="48dp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.497"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textCrearProyecto" />
 
@@ -35,7 +29,6 @@
         android:id="@+id/inicioProyecto"
         android:layout_width="300dp"
         android:layout_height="wrap_content"
-        android:layout_gravity="center"
         android:layout_marginTop="24dp"
         android:drawableEnd="@android:drawable/ic_menu_today"
         android:hint="@string/pistaFechaInicio"
@@ -52,7 +45,6 @@
         android:id="@+id/finProyecto"
         android:layout_width="300dp"
         android:layout_height="wrap_content"
-        android:layout_gravity="center"
         android:layout_marginTop="24dp"
         android:drawableEnd="@android:drawable/ic_menu_today"
         android:hint="@string/ejemploFechaFin"
@@ -69,7 +61,6 @@
         android:id="@+id/descripcionProyecto"
         android:layout_width="300dp"
         android:layout_height="wrap_content"
-        android:layout_gravity="center"
         android:layout_marginTop="24dp"
         android:hint="@string/hintDescripcion"
         android:importantForAutofill="no"
@@ -97,7 +88,6 @@
         android:id="@+id/estadoProyecto"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_gravity="center"
         android:layout_marginStart="16dp"
         android:layout_marginTop="8dp"
         android:layout_marginEnd="16dp"

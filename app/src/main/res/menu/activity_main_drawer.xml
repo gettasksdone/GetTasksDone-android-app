@@ -27,6 +27,10 @@
             android:id="@+id/nav_ad"
             android:icon="@drawable/mountain_sun_solid"
             android:title="@string/navAD" />
+        <item
+            android:id="@+id/nav_completadas"
+            android:icon="@drawable/mountain_sun_solid"
+            android:title="Completadas" />
     </group>
     <!-- Nuevo grupo para el ítem de menú de cierre de sesión -->
     <group android:checkableBehavior="none">

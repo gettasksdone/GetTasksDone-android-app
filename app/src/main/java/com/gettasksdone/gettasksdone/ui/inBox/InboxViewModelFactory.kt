@@ -10,6 +10,7 @@ import com.gettasksdone.gettasksdone.data.repository.TaskRepository
 import com.gettasksdone.gettasksdone.io.ApiService
 import com.gettasksdone.gettasksdone.ui.ad.AdViewModel
 import com.gettasksdone.gettasksdone.ui.agendado.AgendadoViewModel
+import com.gettasksdone.gettasksdone.ui.completadas.CompletadasViewModel
 import com.gettasksdone.gettasksdone.ui.esperando.EsperandoViewModel
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.currentCoroutineContext
@@ -31,6 +32,8 @@ class InboxViewModelFactory(
                 return AdViewModel(jwtHelper, taskRepo) as T
             }   else if (modelClass.isAssignableFrom(AgendadoViewModel::class.java)) {
                 return AgendadoViewModel(jwtHelper, taskRepo) as T
+            }else if (modelClass.isAssignableFrom(CompletadasViewModel::class.java)) {
+                return CompletadasViewModel(jwtHelper, taskRepo) as T
             }
             throw IllegalArgumentException("Unknown ViewModel class")
         }

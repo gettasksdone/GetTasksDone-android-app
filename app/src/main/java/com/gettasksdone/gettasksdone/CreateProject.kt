@@ -65,7 +65,7 @@ class CreateProject : AppCompatActivity() {
             setTheme(R.style.Theme_MyApplication)
         }
         super.onCreate(savedInstanceState)
-        enableEdgeToEdge()
+        //enableEdgeToEdge()
         setContentView(R.layout.activity_create_project)
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main)) { v, insets ->
             val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
