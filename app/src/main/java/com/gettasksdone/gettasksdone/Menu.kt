@@ -2,10 +2,14 @@ package com.gettasksdone.gettasksdone
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
+import android.text.SpannableString
+import android.text.style.TextAppearanceSpan
 import android.view.Menu
 import android.view.MenuItem
 import android.widget.ImageView
+import android.widget.LinearLayout
 import android.widget.PopupMenu
+import android.widget.Switch
 import android.widget.TextView
 import android.widget.Toast
 import com.google.android.material.navigation.NavigationView
@@ -61,6 +65,12 @@ class Menu : AppCompatActivity() {
         binding.appBarMenu.fab.setOnClickListener { view ->
             val popupMenu = PopupMenu(this, view)
             popupMenu.menuInflater.inflate(R.menu.fab_menu, popupMenu.menu)
+            for (i in 0 until popupMenu.menu.size()) {
+                val menuItem = popupMenu.menu.getItem(i)
+                val spannableString = SpannableString(menuItem.title)
+                spannableString.setSpan(TextAppearanceSpan(this, R.style.MyMenuItemTextStyle), 0, spannableString.length, 0)
+                menuItem.title = spannableString
+            }
             popupMenu.setOnMenuItemClickListener { menuItem ->
                 when (menuItem.itemId) {
                     R.id.action_tarea -> {
@@ -149,6 +159,12 @@ class Menu : AppCompatActivity() {
                     val editor = preferences.edit()
                     editor.putBoolean("whiteBackground", !whiteBackground)
                     editor.apply()
+                    // Encuentra el Switch en el NavigationView
+                    val menuItem = binding.navView.menu.findItem(R.id.nav_theme)
+                    val switch = (menuItem.actionView as LinearLayout).findViewById<Switch>(R.id.theme_switch)
+
+                    // Actualiza el estado del Switch
+                    switch.isChecked = whiteBackground
 
                     // Recrea la actividad para aplicar el nuevo tema
                     recreate()
