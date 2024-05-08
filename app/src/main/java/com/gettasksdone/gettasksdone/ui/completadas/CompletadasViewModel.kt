@@ -32,7 +32,7 @@ class CompletadasViewModel(
         viewModelScope.launch {
             val tasks = repository.getAll()
             val filteredTasks = tasks.filter { task ->
-                task.estado == "completada"
+                task.estado == "completado"
             }
             _tasks.value = filteredTasks
             Log.d("CompletadasViewModel", "Tareas: ${_tasks.value}")

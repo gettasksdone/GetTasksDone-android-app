@@ -28,6 +28,7 @@ open class TaskRepository(
     suspend fun getAll(): List<Task>{
         return withContext(Dispatchers.IO) {
             //Hay que darle prioridad a la informacion que venga desde red
+            var remoteTasks = emptyList<Task>()
             try {
                 val authHeader = "Bearer ${jwtHelper.getToken()}"
                 val call = api?.getTasks(authHeader)
@@ -35,7 +36,7 @@ open class TaskRepository(
                 if (response != null) {
                     if (response.isSuccessful) {
                         taskDao.deleteAll()
-                        val remoteTasks = response.body() ?: emptyList() // Devolver la lista de tareas si la respuesta no es nula
+                        remoteTasks = response.body() ?: emptyList() // Devolver la lista de tareas si la respuesta no es nula
                         remoteTasks.forEach{
                             taskDao.insertAll(it.toEntity())
                         }
@@ -44,8 +45,13 @@ open class TaskRepository(
             } catch (e: Exception) { //No hay conexión con la red, por lo que nos limitamos a recuperar la información de la base de datos local
                 Log.w("TaskRepository", "No hay conexión con la red")
             }
+
+            if (remoteTasks.isNotEmpty()) {
+                return@withContext remoteTasks
+            }
+
             val localTasks: List<TaskEntity> = taskDao.getAll()
-            localTasks.map{ it.toDomain() }
+            return@withContext localTasks.map { it.toDomain() }
         }
     }
 

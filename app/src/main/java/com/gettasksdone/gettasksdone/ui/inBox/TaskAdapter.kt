@@ -189,7 +189,7 @@ class TaskAdapter(
                 intent.putExtra("taskTitle", task.titulo)
                 intent.putExtra("taskDescription", task.descripcion)
                 intent.putExtra("taskDueDate", task.vencimiento)
-                intent.putExtra("taskContextId", task.contexto.id)
+                intent.putExtra("taskContext", task.contexto.nombre)
                 intent.putExtra("taskState", task.estado)
                 // Agrega más extras según sea necesario
                 context.startActivity(intent)

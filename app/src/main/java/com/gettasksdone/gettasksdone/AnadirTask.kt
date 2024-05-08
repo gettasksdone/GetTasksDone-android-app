@@ -170,7 +170,7 @@ class AnadirTask : AppCompatActivity(), NewContextDialogFragment.NewContextDialo
             val taskTitle = intent.getStringExtra("taskTitle") ?: ""
             val taskDescription = intent.getStringExtra("taskDescription") ?: ""
             val taskDueDate = intent.getStringExtra("taskDueDate") ?: ""
-            val taskContextId = intent.getLongExtra("taskContextId", 0)
+            val taskContext = intent.getStringExtra("taskContextId") ?: ""
             val taskState = intent.getStringExtra("taskState") ?: ""
 
             // Rellenar los campos del formulario con los valores de la tarea seleccionada
@@ -179,7 +179,7 @@ class AnadirTask : AppCompatActivity(), NewContextDialogFragment.NewContextDialo
             findViewById<EditText>(R.id.et_fecha).setText(taskDueDate)
             // Configurar los valores seleccionados en los Spinners
             // (puedes necesitar cargar las listas de contextos y proyectos nuevamente para tener la selección correcta)
-            spinner1.setSelection(adapter1.getPosition(taskContextId.toString()))
+            spinner1.setSelection(adapter1.getPosition(taskContext))
             spinner2.setSelection(adapter2.getPosition(taskState))
             btnCrear.setOnClickListener{
                 performUpdateTask(taskId)
