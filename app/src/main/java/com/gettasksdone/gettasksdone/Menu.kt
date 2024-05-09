@@ -3,6 +3,7 @@ import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.text.SpannableString
+import android.text.style.ForegroundColorSpan
 import android.text.style.TextAppearanceSpan
 import android.view.Menu
 import android.view.MenuItem
@@ -20,6 +21,7 @@ import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.ContextCompat
 import androidx.core.view.GravityCompat
 import androidx.navigation.ui.NavigationUI
 import androidx.preference.PreferenceManager
@@ -63,12 +65,13 @@ class Menu : AppCompatActivity() {
             binding.appBarMenu.fab.hide()
         }
         binding.appBarMenu.fab.setOnClickListener { view ->
-            val popupMenu = PopupMenu(this, view)
+            val popupMenu = PopupMenu(this, view, 0, 0, R.style.MyPopupMenu) //si se ve raro dejar asi  val popupMenu = PopupMenu(this, view)
             popupMenu.menuInflater.inflate(R.menu.fab_menu, popupMenu.menu)
             for (i in 0 until popupMenu.menu.size()) {
                 val menuItem = popupMenu.menu.getItem(i)
+                val color = if (whiteBackground) R.color.black else R.color.white
                 val spannableString = SpannableString(menuItem.title)
-                spannableString.setSpan(TextAppearanceSpan(this, R.style.MyMenuItemTextStyle), 0, spannableString.length, 0)
+                spannableString.setSpan(ForegroundColorSpan(ContextCompat.getColor(this, color)), 0, spannableString.length, 0)
                 menuItem.title = spannableString
             }
             popupMenu.setOnMenuItemClickListener { menuItem ->
