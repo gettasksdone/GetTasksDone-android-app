@@ -81,7 +81,7 @@ class CreateProject : AppCompatActivity() {
 
         val estados = mutableListOf("empezar", "esperando", "algún día")
         spinner1 = findViewById(R.id.estadoProyecto)
-        adapter1 = ArrayAdapter(this, R.layout.spinner_list, estados)
+        adapter1 = ArrayAdapter(this,R.layout.spinnercolor, estados)
         spinner1.adapter = adapter1
         spinner1.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
             override fun onItemSelected(parent: AdapterView<*>, view: View, position: Int, id: Long) {

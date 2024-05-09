@@ -4,4 +4,7 @@
 
     <!-- Atributo personalizado para el color de la estrella -->
     <attr name="starColor" format="color" />
+    <!-- Atributo personalizado para el color de fondo del Spinner -->
+    <attr name="spinnerBackgroundColor" format="color" />
+    <attr name="spinnerTextColor" format="color" />
 </resources>

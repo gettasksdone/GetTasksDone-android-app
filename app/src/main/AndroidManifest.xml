@@ -17,11 +17,14 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.MyApplication"
         android:usesCleartextTraffic="true"
-        tools:targetApi="31" >
+        tools:targetApi="31">
+        <activity
+            android:name=".MySpinnerAdapter"
+            android:exported="false" />
         <activity
             android:name=".CreateProject"
-            android:windowSoftInputMode="stateVisible|adjustResize"
-            android:exported="false" />
+            android:exported="false"
+            android:windowSoftInputMode="stateVisible|adjustResize" />
         <activity
             android:name=".SettingsActivity"
             android:exported="false"

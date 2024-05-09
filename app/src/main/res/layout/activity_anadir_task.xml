@@ -57,6 +57,7 @@
         <Spinner
             android:id="@+id/proyecto"
             android:layout_width="317dp"
+            android:background="?attr/spinnerBackgroundColor"
             android:layout_height="53dp"
             android:layout_marginTop="8dp"
             android:visibility="visible"
@@ -119,6 +120,7 @@
 
         <Spinner
             android:id="@+id/estado"
+            android:background="?attr/spinnerBackgroundColor"
             android:layout_width="323dp"
             android:layout_height="52dp"
             android:layout_marginTop="8dp"
@@ -140,6 +142,7 @@
 
         <Spinner
             android:id="@+id/contexto"
+            android:background="?attr/spinnerBackgroundColor"
             android:layout_width="317dp"
             android:layout_height="53dp"
             android:layout_marginTop="8dp"

@@ -89,7 +89,7 @@ class AnadirTask : AppCompatActivity(), NewContextDialogFragment.NewContextDialo
         etFecha = findViewById(R.id.et_fecha)
         spinner1 = findViewById(R.id.contexto)
         adapter1 = ArrayAdapter(this, R.layout.spinner_list, mutableListOf())
-        adapter1.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+        adapter1.setDropDownViewResource(R.layout.spinnercolor)
         spinner1.adapter = adapter1
         spinner1.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
             override fun onItemSelected(parent: AdapterView<*>, view: View, position: Int, id: Long) {
@@ -113,7 +113,7 @@ class AnadirTask : AppCompatActivity(), NewContextDialogFragment.NewContextDialo
         val estados = mutableListOf("empezar", "esperando", "algún día")
         spinner2 = findViewById(R.id.estado)
         adapter2 = ArrayAdapter(this, R.layout.spinner_list, estados)
-        adapter2.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+        adapter2.setDropDownViewResource(R.layout.spinnercolor)
         spinner2.adapter = adapter2
         spinner2.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
             override fun onItemSelected(parent: AdapterView<*>, view: View, position: Int, id: Long) {
@@ -129,7 +129,7 @@ class AnadirTask : AppCompatActivity(), NewContextDialogFragment.NewContextDialo
 
         spinner3 = findViewById(R.id.proyecto)
         adapter3 = ArrayAdapter(this, R.layout.spinner_list, mutableListOf())
-        adapter3.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+        adapter3.setDropDownViewResource(R.layout.spinnercolor)
         spinner3.adapter = adapter3
         spinner3.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
             override fun onItemSelected(parent: AdapterView<*>, view: View, position: Int, id: Long) {

@@ -57,7 +57,7 @@ class Login : AppCompatActivity(), AgregarUrlDialogFragment.NewUrlDialogListener
         setContentView(R.layout.activity_login2)
         serverSpinner = findViewById(R.id.selector_servidor)
         serverAdapter = ArrayAdapter(this, R.layout.spinner_list, mutableListOf())
-        serverAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+        serverAdapter.setDropDownViewResource(R.layout.spinnercolor)
         serverSpinner.adapter = serverAdapter
         serverSpinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener{
             override fun onItemSelected(
