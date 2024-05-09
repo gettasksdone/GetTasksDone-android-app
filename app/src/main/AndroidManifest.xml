@@ -19,9 +19,6 @@
         android:usesCleartextTraffic="true"
         tools:targetApi="31">
         <activity
-            android:name=".MySpinnerAdapter"
-            android:exported="false" />
-        <activity
             android:name=".CreateProject"
             android:exported="false"
             android:windowSoftInputMode="stateVisible|adjustResize" />
@@ -35,8 +32,7 @@
         <activity
             android:name=".Menu"
             android:exported="false"
-            android:label="@string/title_activity_menu"
-            android:theme="@style/Theme.MyApplication.NoActionBar" />
+            android:label="@string/title_activity_menu" />
         <activity
             android:name=".PantallaPrincipal"
             android:exported="false" />
