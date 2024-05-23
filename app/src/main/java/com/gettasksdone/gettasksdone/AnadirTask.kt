@@ -81,12 +81,29 @@ class AnadirTask : AppCompatActivity(), NewContextDialogFragment.NewContextDialo
         }
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_anadir_task)
+
+        // Obtiene el color de texto del tema actual
+        val attrs = intArrayOf(android.R.attr.textColor) // Atributo definido en tu tema
+        val typedArray = theme.obtainStyledAttributes(attrs)
+        val defaultColor = Color.BLACK  // Usa un color por defecto si el atributo no está definido
+        val textColor = typedArray.getColor(0, defaultColor)
+        typedArray.recycle()
+
+        // Establece el color del texto de los campos de texto al color de texto del tema
+        val etTitulo = findViewById<EditText>(R.id.titulo)
+        etTitulo.setTextColor(textColor)
+
+        val etFecha = findViewById<EditText>(R.id.et_fecha)
+        etFecha.setTextColor(textColor)
+
+        val etDescripcion = findViewById<EditText>(R.id.etDescripcion)
+        etDescripcion.setTextColor(textColor)
+
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main)) { v, insets ->
             val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
             insets
         }
-        etFecha = findViewById(R.id.et_fecha)
         spinner1 = findViewById(R.id.contexto)
         adapter1 = ArrayAdapter(this, R.layout.spinner_list, mutableListOf())
         adapter1.setDropDownViewResource(R.layout.spinnercolor)
