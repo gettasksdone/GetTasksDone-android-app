@@ -59,10 +59,10 @@ class Login : AppCompatActivity(), AgregarUrlDialogFragment.NewUrlDialogListener
         setContentView(R.layout.activity_login2)
 
         // Obtiene el color de texto del tema actual
-        val attrs = intArrayOf(android.R.attr.textColor) // Atributo definido en tu tema
+        val attrs = intArrayOf(R.attr.editTextColor) // Atributo definido en tu tema
         val typedArray = theme.obtainStyledAttributes(attrs)
-        val defaultColor = Color.BLACK  // Usa un color por defecto si el atributo no está definido
-        val textColor = typedArray.getColor(0, defaultColor)
+        val defaultColor = Color.parseColor("#0000FF") // Azul brillante
+        val textColor = typedArray.getColor(0, defaultColor) // Usa el azul brillante como color por defecto si el atributo no está definido
         typedArray.recycle()
 
         // Establece el color del texto y del texto de sugerencia de los campos de texto al color de texto del tema
@@ -73,7 +73,6 @@ class Login : AppCompatActivity(), AgregarUrlDialogFragment.NewUrlDialogListener
         val etPassword = findViewById<EditText>(R.id.et_password)
         etPassword.setTextColor(textColor)
         etPassword.setHintTextColor(textColor)
-
 
         serverSpinner = findViewById(R.id.selector_servidor)
         serverAdapter = ArrayAdapter(this, R.layout.spinner_list, mutableListOf())

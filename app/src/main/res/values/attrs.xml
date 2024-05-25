@@ -7,4 +7,5 @@
     <!-- Atributo personalizado para el color de fondo del Spinner -->
     <attr name="spinnerBackgroundColor" format="color" />
     <attr name="spinnerTextColor" format="color" />
+    <attr name="editTextColor" format="color" />
 </resources>

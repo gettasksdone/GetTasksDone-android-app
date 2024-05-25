@@ -13,6 +13,7 @@
         <!-- Color del spinner -->
         <item name="spinnerBackgroundColor">#001928</item>
         <item name="spinnerTextColor">@android:color/white</item>
+        <item name="editTextColor">@android:color/white</item>
 
 
     </style>
@@ -20,11 +21,13 @@
         <item name="android:windowBackground">@android:color/white</item>
         <!-- Añade aquí el color de la letra. -->
         <item name="android:textColor">#001928</item>
+        <item name="editTextColor">#001928</item>
         <!-- Color de la estrella -->
         <item name="starColor">#000000</item> <!-- Negro -->
         <!-- Color del spinner -->
         <item name="spinnerBackgroundColor">@android:color/white</item>
         <item name="spinnerTextColor">#001928</item>
+
     </style>
     <style name="MyPopupMenu" parent="ThemeOverlay.AppCompat.Light">
         <item name="android:textColor">#000000</item> <!-- Color de texto azul -->
