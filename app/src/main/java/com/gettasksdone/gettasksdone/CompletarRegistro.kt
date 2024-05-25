@@ -43,11 +43,11 @@ class CompletarRegistro : AppCompatActivity() {
         // Obtiene el color de texto del tema actual
         val attrs = intArrayOf(android.R.attr.textColor) // Atributo definido en tu tema
         val typedArray = theme.obtainStyledAttributes(attrs)
-        val defaultColor = Color.BLACK  // Usa un color por defecto si el atributo no está definido
+        val defaultColor = Color.parseColor("#0000FF")  // Usa un azul brillante como color por defecto si el atributo no está definido
         val textColor = typedArray.getColor(0, defaultColor)
         typedArray.recycle()
 
-        // Establece el color del texto de los campos de texto al color de texto del tema
+// Establece el color del texto de los campos de texto al color de texto del tema
         val etNombre = findViewById<EditText>(R.id.etNombre)
         etNombre.setTextColor(textColor)
         etNombre.setHintTextColor(textColor)
@@ -63,6 +63,7 @@ class CompletarRegistro : AppCompatActivity() {
         val etPuesto = findViewById<EditText>(R.id.etPuesto)
         etPuesto.setTextColor(textColor)
         etPuesto.setHintTextColor(textColor)
+
 
 
         val nombre = intent.getStringExtra("nombre")

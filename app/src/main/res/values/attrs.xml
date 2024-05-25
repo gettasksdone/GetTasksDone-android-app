@@ -8,4 +8,5 @@
     <attr name="spinnerBackgroundColor" format="color" />
     <attr name="spinnerTextColor" format="color" />
     <attr name="editTextColor" format="color" />
+    <attr name="colorBackground" format="color" />
 </resources>

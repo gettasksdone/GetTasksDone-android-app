@@ -76,11 +76,11 @@ class CreateProject : AppCompatActivity() {
         // Obtiene el color de texto del tema actual
         val attrs = intArrayOf(android.R.attr.textColor) // Atributo definido en tu tema
         val typedArray = theme.obtainStyledAttributes(attrs)
-        val defaultColor = Color.BLACK  // Usa un color por defecto si el atributo no está definido
+        val defaultColor = Color.parseColor("#0000FF")  // Usa un azul brillante como color por defecto si el atributo no está definido
         val textColor = typedArray.getColor(0, defaultColor)
         typedArray.recycle()
 
-        // Establece el color del texto y del texto de sugerencia de los campos de texto al color de texto del tema
+// Establece el color del texto de los campos de texto al color de texto del tema
         val etNombreProyecto = findViewById<EditText>(R.id.nombreProyecto)
         etNombreProyecto.setTextColor(textColor)
         etNombreProyecto.setHintTextColor(textColor)
@@ -96,6 +96,8 @@ class CreateProject : AppCompatActivity() {
         val etDescripcionProyecto = findViewById<EditText>(R.id.descripcionProyecto)
         etDescripcionProyecto.setTextColor(textColor)
         etDescripcionProyecto.setHintTextColor(textColor)
+
+
         super.onCreate(savedInstanceState)
         //enableEdgeToEdge()
         setContentView(R.layout.activity_create_project)

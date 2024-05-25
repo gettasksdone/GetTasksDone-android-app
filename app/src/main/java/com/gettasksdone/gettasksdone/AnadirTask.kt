@@ -85,11 +85,11 @@ class AnadirTask : AppCompatActivity(), NewContextDialogFragment.NewContextDialo
         // Obtiene el color de texto del tema actual
         val attrs = intArrayOf(android.R.attr.textColor) // Atributo definido en tu tema
         val typedArray = theme.obtainStyledAttributes(attrs)
-        val defaultColor = Color.BLACK  // Usa un color por defecto si el atributo no está definido
+        val defaultColor = Color.parseColor("#0000FF")  // Usa un azul brillante como color por defecto si el atributo no está definido
         val textColor = typedArray.getColor(0, defaultColor)
         typedArray.recycle()
 
-        // Establece el color del texto de los campos de texto al color de texto del tema
+// Establece el color del texto de los campos de texto al color de texto del tema
         val etTitulo = findViewById<EditText>(R.id.titulo)
         etTitulo.setTextColor(textColor)
         etTitulo.setHintTextColor(textColor)
@@ -101,6 +101,7 @@ class AnadirTask : AppCompatActivity(), NewContextDialogFragment.NewContextDialo
         val etDescripcion = findViewById<EditText>(R.id.etDescripcion)
         etDescripcion.setTextColor(textColor)
         etDescripcion.setHintTextColor(textColor)
+
 
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main)) { v, insets ->
             val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())

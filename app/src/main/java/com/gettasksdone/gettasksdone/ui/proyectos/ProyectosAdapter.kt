@@ -42,16 +42,27 @@ class ProyectosAdapter(
 
     override fun onBindViewHolder(holder: ProyectoViewHolder, position: Int) {
         val currentProject = proyectos[position]
-        // Obtiene el color de texto del tema actual
-        val attrs = intArrayOf(android.R.attr.textColor) // Atributo definido en tu tema
+
+// Define los atributos que quieres obtener del tema
+        val attrs = intArrayOf(android.R.attr.textColor) // Solo obtenemos el color del texto
+
+// Obtiene los atributos del tema
         val typedArray = context.theme.obtainStyledAttributes(attrs)
-        val defaultColor = Color.BLACK  // Usa un color por defecto si el atributo no está definido
-        val textColor = typedArray.getColor(0, defaultColor)
+
+// Obtiene el color de texto
+        val defaultTextColor = Color.BLACK
+        val textColor = typedArray.getColor(0, defaultTextColor)
+
+// No olvides reciclar el TypedArray cuando hayas terminado de usarlo
         typedArray.recycle()
 
+// Para el color de fondo, puedes definir un color por defecto
+        val defaultBackgroundColor = Color.WHITE
+
+        // Aplica los colores a los elementos de la vista
+        holder.itemView.setBackgroundColor(defaultBackgroundColor)
         val nombreProyectoTextView = holder.itemView.findViewById<TextView>(R.id.textNombreProyecto)
         nombreProyectoTextView.setTextColor(textColor)
-
         val numTareasTextView = holder.itemView.findViewById<TextView>(R.id.textNumeroTareas)
         numTareasTextView.setTextColor(textColor)
 
