@@ -49,7 +49,7 @@ class Registro : AppCompatActivity() , AgregarUrlDialogFragment.NewUrlDialogList
         setContentView(R.layout.activity_registro)
 
         // Obtiene el color de texto del tema actual
-        val attrs = intArrayOf(android.R.attr.textColor) // Atributo definido en tu tema
+        val attrs = intArrayOf(android.R.attr.editTextColor) // Atributo definido en tu tema
         val typedArray = theme.obtainStyledAttributes(attrs)
         val defaultColor = Color.parseColor("#0000FF")  // Usa un azul brillante como color por defecto si el atributo no está definido
         val textColor = typedArray.getColor(0, defaultColor)
