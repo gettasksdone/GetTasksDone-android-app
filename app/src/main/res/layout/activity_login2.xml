@@ -83,7 +83,8 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/textUsername"
             app:layout_constraintVertical_bias="0.464"
-            tools:text="Username" />
+            tools:text="Username"
+            android:textColor="?attr/android:textColor" />/>
 
         <!-- Texto y campo de contraseña -->
 
@@ -161,7 +162,8 @@
             app:layout_constraintBottom_toTopOf="@+id/textPassword"
             android:layout_centerHorizontal="true"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent" />
+            app:layout_constraintStart_toStartOf="parent"
+            android:textColor="?attr/android:textColor" />
 
 
         <LinearLayout
