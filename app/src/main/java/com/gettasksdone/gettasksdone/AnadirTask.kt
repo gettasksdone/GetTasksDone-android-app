@@ -92,12 +92,15 @@ class AnadirTask : AppCompatActivity(), NewContextDialogFragment.NewContextDialo
         // Establece el color del texto de los campos de texto al color de texto del tema
         val etTitulo = findViewById<EditText>(R.id.titulo)
         etTitulo.setTextColor(textColor)
+        etTitulo.setHintTextColor(textColor)
 
         val etFecha = findViewById<EditText>(R.id.et_fecha)
         etFecha.setTextColor(textColor)
+        etFecha.setHintTextColor(textColor)
 
         val etDescripcion = findViewById<EditText>(R.id.etDescripcion)
         etDescripcion.setTextColor(textColor)
+        etDescripcion.setHintTextColor(textColor)
 
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main)) { v, insets ->
             val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())

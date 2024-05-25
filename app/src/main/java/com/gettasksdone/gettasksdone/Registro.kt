@@ -1,6 +1,7 @@
 package com.gettasksdone.gettasksdone
 
 import android.content.Intent
+import android.graphics.Color
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
@@ -46,6 +47,26 @@ class Registro : AppCompatActivity() , AgregarUrlDialogFragment.NewUrlDialogList
         }
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_registro)
+
+        // Obtiene el color de texto del tema actual
+        val attrs = intArrayOf(android.R.attr.textColor) // Atributo definido en tu tema
+        val typedArray = theme.obtainStyledAttributes(attrs)
+        val defaultColor = Color.BLACK  // Usa un color por defecto si el atributo no está definido
+        val textColor = typedArray.getColor(0, defaultColor)
+        typedArray.recycle()
+
+        // Establece el color del texto de los campos de texto al color de texto del tema
+        val etUsername = findViewById<EditText>(R.id.etUsername)
+        etUsername.setTextColor(textColor)
+        etUsername.setHintTextColor(textColor)
+
+        val etPassword = findViewById<EditText>(R.id.etPassword)
+        etPassword.setTextColor(textColor)
+        etPassword.setHintTextColor(textColor)
+
+        val etCorreo = findViewById<EditText>(R.id.etCorreo)
+        etCorreo.setTextColor(textColor)
+        etCorreo.setHintTextColor(textColor)
 
         val preferences = PreferenceHelper.defaultPrefs(this)
         if(preferences["jwt",""].contains(".")) {

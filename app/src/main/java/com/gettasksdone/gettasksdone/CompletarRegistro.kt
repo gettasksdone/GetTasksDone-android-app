@@ -2,6 +2,7 @@ package com.gettasksdone.gettasksdone
 
 import android.content.Context
 import android.content.Intent
+import android.graphics.Color
 import android.os.Bundle
 import android.util.Log
 import android.widget.Button
@@ -35,8 +36,34 @@ class CompletarRegistro : AppCompatActivity() {
         } else {
             setTheme(R.style.Theme_MyApplication)
         }
+
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_completar_registro2)
+
+        // Obtiene el color de texto del tema actual
+        val attrs = intArrayOf(android.R.attr.textColor) // Atributo definido en tu tema
+        val typedArray = theme.obtainStyledAttributes(attrs)
+        val defaultColor = Color.BLACK  // Usa un color por defecto si el atributo no está definido
+        val textColor = typedArray.getColor(0, defaultColor)
+        typedArray.recycle()
+
+        // Establece el color del texto de los campos de texto al color de texto del tema
+        val etNombre = findViewById<EditText>(R.id.etNombre)
+        etNombre.setTextColor(textColor)
+        etNombre.setHintTextColor(textColor)
+
+        val etTelefono = findViewById<EditText>(R.id.etTelefono)
+        etTelefono.setTextColor(textColor)
+        etTelefono.setHintTextColor(textColor)
+
+        val etDepartamento = findViewById<EditText>(R.id.etDepartamento)
+        etDepartamento.setTextColor(textColor)
+        etDepartamento.setHintTextColor(textColor)
+
+        val etPuesto = findViewById<EditText>(R.id.etPuesto)
+        etPuesto.setTextColor(textColor)
+        etPuesto.setHintTextColor(textColor)
+
 
         val nombre = intent.getStringExtra("nombre")
         val telefono = intent.getStringExtra("telefono")

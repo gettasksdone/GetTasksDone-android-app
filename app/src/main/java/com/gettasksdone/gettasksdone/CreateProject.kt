@@ -3,6 +3,7 @@ package com.gettasksdone.gettasksdone
 import android.app.DatePickerDialog
 import android.content.Context
 import android.content.Intent
+import android.graphics.Color
 import android.os.Bundle
 import android.text.InputType
 import android.util.Log
@@ -64,6 +65,37 @@ class CreateProject : AppCompatActivity() {
         } else {
             setTheme(R.style.Theme_MyApplication)
         }
+
+        setContentView(R.layout.activity_create_project)
+        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main)) { v, insets ->
+            val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
+            v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
+            insets
+        }
+
+        // Obtiene el color de texto del tema actual
+        val attrs = intArrayOf(android.R.attr.textColor) // Atributo definido en tu tema
+        val typedArray = theme.obtainStyledAttributes(attrs)
+        val defaultColor = Color.BLACK  // Usa un color por defecto si el atributo no está definido
+        val textColor = typedArray.getColor(0, defaultColor)
+        typedArray.recycle()
+
+        // Establece el color del texto y del texto de sugerencia de los campos de texto al color de texto del tema
+        val etNombreProyecto = findViewById<EditText>(R.id.nombreProyecto)
+        etNombreProyecto.setTextColor(textColor)
+        etNombreProyecto.setHintTextColor(textColor)
+
+        val etInicioProyecto = findViewById<EditText>(R.id.inicioProyecto)
+        etInicioProyecto.setTextColor(textColor)
+        etInicioProyecto.setHintTextColor(textColor)
+
+        val etFinProyecto = findViewById<EditText>(R.id.finProyecto)
+        etFinProyecto.setTextColor(textColor)
+        etFinProyecto.setHintTextColor(textColor)
+
+        val etDescripcionProyecto = findViewById<EditText>(R.id.descripcionProyecto)
+        etDescripcionProyecto.setTextColor(textColor)
+        etDescripcionProyecto.setHintTextColor(textColor)
         super.onCreate(savedInstanceState)
         //enableEdgeToEdge()
         setContentView(R.layout.activity_create_project)

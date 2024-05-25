@@ -2,6 +2,7 @@ package com.gettasksdone.gettasksdone
 
 import android.content.ContentValues.TAG
 import android.content.Intent
+import android.graphics.Color
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
@@ -53,8 +54,27 @@ class Login : AppCompatActivity(), AgregarUrlDialogFragment.NewUrlDialogListener
         } else {
             setTheme(R.style.Theme_MyApplication)
         }
+
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_login2)
+
+        // Obtiene el color de texto del tema actual
+        val attrs = intArrayOf(android.R.attr.textColor) // Atributo definido en tu tema
+        val typedArray = theme.obtainStyledAttributes(attrs)
+        val defaultColor = Color.BLACK  // Usa un color por defecto si el atributo no está definido
+        val textColor = typedArray.getColor(0, defaultColor)
+        typedArray.recycle()
+
+        // Establece el color del texto y del texto de sugerencia de los campos de texto al color de texto del tema
+        val etUsername = findViewById<EditText>(R.id.et_username)
+        etUsername.setTextColor(textColor)
+        etUsername.setHintTextColor(textColor)
+
+        val etPassword = findViewById<EditText>(R.id.et_password)
+        etPassword.setTextColor(textColor)
+        etPassword.setHintTextColor(textColor)
+
+
         serverSpinner = findViewById(R.id.selector_servidor)
         serverAdapter = ArrayAdapter(this, R.layout.spinner_list, mutableListOf())
         serverAdapter.setDropDownViewResource(R.layout.spinnercolor)

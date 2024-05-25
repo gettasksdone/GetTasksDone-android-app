@@ -10,6 +10,7 @@ import com.gettasksdone.gettasksdone.model.Project
 import com.gettasksdone.gettasksdone.R
 import android.content.Context
 import android.content.Intent
+import android.graphics.Color
 import android.widget.Button
 import android.widget.ImageView
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -41,6 +42,19 @@ class ProyectosAdapter(
 
     override fun onBindViewHolder(holder: ProyectoViewHolder, position: Int) {
         val currentProject = proyectos[position]
+        // Obtiene el color de texto del tema actual
+        val attrs = intArrayOf(android.R.attr.textColor) // Atributo definido en tu tema
+        val typedArray = context.theme.obtainStyledAttributes(attrs)
+        val defaultColor = Color.BLACK  // Usa un color por defecto si el atributo no está definido
+        val textColor = typedArray.getColor(0, defaultColor)
+        typedArray.recycle()
+
+        val nombreProyectoTextView = holder.itemView.findViewById<TextView>(R.id.textNombreProyecto)
+        nombreProyectoTextView.setTextColor(textColor)
+
+        val numTareasTextView = holder.itemView.findViewById<TextView>(R.id.textNumeroTareas)
+        numTareasTextView.setTextColor(textColor)
+
         holder.bind(currentProject)
     }
 
@@ -60,6 +74,14 @@ class ProyectosAdapter(
 
         @SuppressLint("SetTextI18n")
         fun bind(project: Project) {
+            // Obtiene el color de texto del tema actual
+            val attrs = intArrayOf(android.R.attr.textColor) // Atributo definido en tu tema
+            val typedArray = context.theme.obtainStyledAttributes(attrs)
+            val defaultColor = Color.BLACK  // Usa un color por defecto si el atributo no está definido
+            val textColor = typedArray.getColor(0, defaultColor)
+            typedArray.recycle()
+
+            nombreProyectoTextView.setTextColor(textColor)
             nombreProyectoTextView.text = project.nombre
             numTareasTextView.text = "Número de tareas: ${project.tareas.size}"
         }
